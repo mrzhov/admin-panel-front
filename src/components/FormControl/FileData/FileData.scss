@@ -1,0 +1,51 @@
+.file-upload-wrapper {
+  $defaultColor: #4daf7c;
+  $height: 53px;
+
+  position: relative;
+  width: 100%;
+  height: $height;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  &:after {
+    content: attr(data-text);
+    position: absolute;
+    padding: 15px 20px;
+    pointer-events: none;
+    z-index: 20;
+    color: var(--placeholder);
+  }
+
+  //&:before {
+  //  position: absolute;
+  //  top: 0;
+  //  right: 0;
+  //  display: block;
+  //  z-index: 25;
+  //  padding: 0 15px;
+  //  pointer-events: none;
+  //
+  //
+  //  content: ' ';
+  //  background-image: url('./upload.svg');
+  //  background-size: cover;
+  //  height: 30px;
+  //  width: 20px;
+  //}
+
+  input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    margin: 0;
+    padding: 0;
+    display: block;
+    cursor: pointer;
+    width: 100%;
+  }
+}

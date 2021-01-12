@@ -1,0 +1,14 @@
+#app.admin {
+  .adaptation-page {
+    .inputs-block {
+      width: 50%;
+      margin-top: 50px;
+      .Input {
+        margin-bottom: 30px;
+        &:last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+}

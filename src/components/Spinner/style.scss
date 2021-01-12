@@ -1,0 +1,11 @@
+@import '../../scss/variables';
+
+.spinner {
+  circle {
+    stroke: $spinner_stroke_color;
+  }
+
+  path {
+    stroke: $text_secondary;
+  }
+}

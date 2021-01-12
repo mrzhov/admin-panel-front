@@ -1,0 +1,193 @@
+@import '../../scss/_variables.scss';
+
+.nav-bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 18%;
+  height: 100vh;
+
+  padding-top: 15px;
+
+  background: #fff;
+  box-shadow: 15px 20px 30px rgba(114, 191, 68, 0.09);
+
+  z-index: 1;
+
+  .nav-bar__link-container {
+    display: flex;
+    flex-direction: column;
+
+    background: inherit;
+
+    padding-left: 10%;
+
+    z-index: 2; // z-index выше чем у лодера на таблице
+  }
+
+  .nav-bar__link-container > a {
+    width: fit-content;
+  }
+
+  .nav-bar__logo {
+    display: flex;
+    justify-content: center;
+    border: none;
+    outline: none;
+    background: transparent;
+    margin: 10px 0 15px -5px;
+
+
+    img {
+      width: 200px;
+    }
+  }
+
+  .nav-bar__logo-pixiu {
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+    img {
+      width: 100%;
+    }
+  }
+
+  .nav-bar__logoMobile {
+    display: none;
+
+    @media screen and (max-width: $screen_breakpoint) {
+      display: block;
+    }
+  }
+
+  .nav-bar__link {
+    font-size: 16px;
+
+    margin-bottom: 25px;
+    text-decoration: none;
+
+    color: gray;
+
+    transition-property: color, opacity;
+    transition-duration: 400ms;
+
+    &:not(.nav-bar__button):hover {
+      opacity: 0.6;
+    }
+  }
+
+  .nav-bar__link_active {
+    color: $text_primary;
+
+    &:hover {
+      opacity: 1 !important; // просто выше селектор тяжелее *50
+    }
+  }
+
+  .nav-bar__user-info {
+    color: $theme_color;
+
+    .user-info__name {
+      font-size: 20px;
+    }
+
+    .user-info__descr {
+      margin: 20px 0;
+
+      font-size: 16px;
+    }
+  }
+
+  .nav-bar__button {
+    font-size: 14px;
+
+    color: $text_primary;
+    opacity: 0.4;
+
+    &:hover {
+      opacity: 1;
+      color: $text_primary;
+    }
+  }
+
+  .nav-bar__burger {
+    display: none;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: $screen_breakpoint_1300) {
+  .nav-bar {
+    .nav-bar__logo {
+      img {
+        width: 80%;
+        margin-left: -25px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $screen_breakpoint) {
+  .nav-bar {
+    position: fixed;
+
+    width: 100%;
+    max-width: 100vw;
+    height: $mobile_nav_bar_height;
+
+    padding-top: 0;
+
+    .nav-bar__burger {
+      display: block;
+    }
+
+    .nav-bar__app-bar {
+      padding: 20px 10px 20px 30px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      height: 100%;
+    }
+
+    .nav-bar__logo {
+      margin-bottom: 0;
+      width: 150px;
+      padding: 0;
+
+      div {
+        width: 100%;
+      }
+    }
+
+    .nav-bar__logo-pixiu {
+      margin-right: 10px;
+    }
+
+    .nav-bar__link-container {
+      position: absolute;
+      top: 100%;
+      left: 0;
+
+      width: 100%;
+      height: 0;
+
+      padding-top: 20px;
+      padding-left: $page_padding_upper;
+
+      overflow: hidden;
+
+      transition: height 400ms;
+    }
+
+    .nav-bar__link-container_open {
+      height: calc(100vh - #{$mobile_nav_bar_height});
+    }
+  }
+}

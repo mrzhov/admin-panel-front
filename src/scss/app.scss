@@ -1,0 +1,300 @@
+@import "./_variables.scss";
+
+#app.admin {
+  position: relative;
+
+  display: flex;
+  justify-content: flex-end;
+
+  min-height: 100vh;
+
+  background: $app_background;
+
+  a {
+    text-decoration: none;
+  }
+
+  .headerContainer {
+    font-size: 15px;
+    background: #eee;
+    border-radius: 3px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: $screen_breakpoint) {
+      flex-direction: column;
+
+      h1 {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .header-leftSection {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin: 0 10px 0 0;
+    }
+
+    button {
+      margin-left: 5px;
+    }
+
+    @media screen and (max-width: $screen_breakpoint_800) {
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h1 {
+        margin: 0 0 10px 0;
+      }
+
+      margin-bottom: 10px;
+    }
+  }
+
+  .header-rightSection {
+    display: flex;
+
+    a:first-child {
+      margin: 0 10px 0 0;
+    }
+
+    @media screen and (max-width: $screen_breakpoint) {
+      flex-direction: column;
+      a:first-child {
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+
+  .filterField {
+    width: 100%;
+  }
+
+  @media screen and (max-width: $screen_breakpoint) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .page-container {
+    width: calc(100% - 18%);
+    padding: $wrapper_padding;
+
+    @media screen and (max-width: $screen_breakpoint) {
+      width: 100%;
+      padding: $mobile_nav_bar_height + $page_padding_upper $page_padding_sideMobile $wrapper_paddingMobile;
+    }
+  }
+
+  .cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 45px);
+    row-gap: 5px;
+  }
+
+  .communityCards {
+    grid-template-columns: repeat(5, 45px);
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    @media screen and (max-width: $screen_breakpoint_800) {
+      flex-direction: column;
+
+      h1 {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .page-subtitle {
+    margin-bottom: 20px;
+
+    h1 {
+      font-size: 18px;
+    }
+
+    @media screen and (max-width: $screen_breakpoint_800) {
+      h1 {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .page-checkboxContainer {
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+
+    .checkbox {
+      margin-bottom: 5px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .page-button {
+    display: flex;
+
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .page-block {
+    width: 400px;
+
+    > * + * {
+      margin-top: 20px;
+    }
+
+    a {
+      display: flex;
+    }
+  }
+
+  .page-block-half {
+    width: 500px;
+
+    @media screen and (max-width: $screen_breakpoint) {
+      width: 100%;
+    }
+
+    > * + * {
+      margin-top: 20px;
+    }
+
+    a {
+      display: flex;
+    }
+
+    .inline {
+    }
+    .label {
+      display: inline;
+      font-size: 16px;
+      font-weight: bolder;
+    }
+
+    .label-info {
+      display: inline;
+      font-size: 16px;
+    }
+  }
+
+  .errorPrompt {
+    margin: 0;
+
+    p {
+      color: red;
+      margin-left: 5px;
+    }
+  }
+
+  .block-half-container {
+    width: 500px;
+    margin-top: 20px;
+
+    @media screen and (max-width: $screen_breakpoint) {
+      width: 100%;
+    }
+  }
+
+  .spinner-container {
+    width: 100px;
+    height: 100px;
+    margin: 60px auto 0;
+  }
+
+  .noFound {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 40px auto;
+
+    p {
+      color: #3c3c46;
+      font-size: 22px;
+    }
+  }
+
+  .spinner_bigMargin {
+    margin: 300px auto 0;
+  }
+
+  h1 {
+    color: $dark;
+    font-size: 22px;
+  }
+
+  h2 {
+    margin: 30px 0;
+
+    color: $dark;
+
+    font-size: 18px;
+  }
+
+  .speaker {
+    &-list {
+      margin: 40px 0;
+
+      .table-container {
+        margin-top: 20px;
+      }
+    }
+
+    &-photo {
+      width: 100px;
+      height: 100px;
+
+      img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+      }
+    }
+  }
+
+  .event-submit {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 40px;
+  }
+}
+
+.scroll-break {
+  overflow: hidden;
+}
+
+.flex {
+  display: flex;
+
+  &.ai {
+    &-center {
+      align-items: center;
+    }
+  }
+
+  &.dir {
+    &-column {
+      flex-direction: column;
+    }
+  }
+
+  &.jc {
+    &-sb {
+      justify-content: space-between;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@import '../../scss/variables';
+
+$default_color: $theme_color;
+$focused_color: $theme_color_secondary;
+
+.Input {
+  position: relative;
+
+  font-family: 'Roboto', sans-serif;
+
+  .Input__TextField {
+    width: 100%;
+    padding: 15px 20px;
+
+    font-size: 14px;
+
+    border: 1px solid $gray;
+    border-radius: 4px;
+
+    color: rgb(145, 143, 143);
+
+    &::placeholder {
+      color: $default_color;
+    }
+
+    &:focus {
+      border-color: $focused_color;
+      outline: none;
+    }
+  }
+
+
+  label {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+
+    padding: 5px;
+
+    font-size: 14px;
+    color: $default_color;
+    cursor: text;
+
+    transform: translateY(-50%);
+
+    transition: all 300ms;
+  }
+
+  &.Input_active label,
+  .Input__TextField:focus + label {
+    top: 0 !important;
+    left: 10px;
+
+    font-size: 12px;
+
+    background: $white;
+    color: $focused_color;
+  }
+
+  &.Input_active label {
+    color: $default_color;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  &.TextArea {
+    label {
+      top: 20px;
+    }
+  }
+  &.main-input {
+    width: 350px;
+  }
+}

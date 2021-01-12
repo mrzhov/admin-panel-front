@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import createStore from '../redux/createStore';
+import createStore from './redux/createStore';
 
 import App from './app/app';
 
-import '../scss/index.scss';
+import './scss/index.scss';
 
 const store = createStore();
 

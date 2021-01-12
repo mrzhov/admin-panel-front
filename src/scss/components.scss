@@ -1,0 +1,120 @@
+@import "./_variables.scss";
+@import "./components/header.scss";
+@import "./components/control.scss";
+@import "./components/modals.scss";
+
+#app.admin {
+  .btn-reset {
+    cursor: pointer;
+    text-align: left;
+
+    border: none;
+    background: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btn-logout {
+    margin: 0;
+  }
+
+  %btn {
+    width: 175px;
+    padding: 15px 0;
+
+    cursor: pointer;
+    transition: box-shadow 300ms;
+    text-align: center;
+
+    border: none;
+    border-radius: $btn_border_r;
+
+    font: 13px "Roboto", sans-serif;
+    font-weight: 500;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      box-shadow: 0 0 15px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .btn {
+    @extend %btn;
+  }
+
+  .btn-primary {
+    color: $btn_primary_color;
+    background: $btn_primary_bg;
+
+    @extend %btn;
+  }
+
+  .btn_size_s {
+    padding: 15px 25px;
+  }
+
+  .btn_size_l {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .btn-link {
+    transition: opacity 400ms;
+
+    opacity: 0.5;
+    color: $theme_color_secondary;
+    background: none;
+
+    font-size: 11px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  %h {
+    display: inline-block;
+
+    color: $text_primary;
+  }
+
+  .h2 {
+    font-size: 30px;
+    font-weight: normal;
+
+    @extend %h;
+  }
+
+  .form-control {
+    margin-top: 20px;
+  }
+
+  form {
+    display: flex;
+  }
+
+  .calories {
+    color: $theme_color;
+
+    font-size: 18px;
+
+    .calories-value {
+      padding-left: 10px;
+
+      color: red;
+
+      &.in-range {
+        color: #172345;
+      }
+    }
+  }
+
+  .scroll-brake {
+    overflow-y: hidden;
+  }
+}

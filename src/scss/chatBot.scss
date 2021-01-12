@@ -1,0 +1,98 @@
+#app.admin {
+  .chat-bot {
+    .days {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .line {
+      display: flex;
+      align-items: center;
+
+      & + .line {
+        margin-top: 20px;
+      }
+    }
+
+    .column {
+      flex: none;
+
+      &:nth-child(1) {
+        width: 300px;
+      }
+
+      &:nth-child(2) {
+        width: 180px;
+      }
+
+      &:nth-child(3) {
+      }
+    }
+
+    .title {
+      font-size: 18px;
+    }
+
+    .file {
+      cursor: pointer;
+      user-select: none;
+
+      color: gray;
+
+      font-size: 12px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    .plus-btn {
+      display: flex;
+      align-items: center;
+
+      color: gray;
+      border: none;
+      outline: none;
+      background-color: transparent;
+
+      span {
+        white-space: nowrap;
+      }
+
+      &:not(.plus-btn-file) {
+        > div {
+          padding: 5px;
+
+          border: 1px solid gray;
+          border-radius: 4px;
+        }
+      }
+
+      > div {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      svg {
+        width: 100%;
+        height: 100%;
+
+        polygon,
+        path {
+          fill: gray;
+        }
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

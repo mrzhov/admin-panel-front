@@ -1,0 +1,39 @@
+@import "../../scss/variables";
+
+.submenu {
+  cursor: initial;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  transform: translateY(100%);
+  padding: 10px;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: normal;
+  color: $theme_color;
+  background: $white;
+  z-index: 1;
+  border: 1px solid $theme_color;
+  display: none;
+
+  &-open{
+    display: block;
+  }
+
+  &__item {
+    cursor: pointer;
+    white-space: nowrap;
+    cursor: pointer;
+    margin-bottom: 10px;
+    opacity: 0.6;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

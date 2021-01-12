@@ -1,0 +1,21 @@
+@import "variables";
+
+#app.admin {
+  .complains-page {
+    .status-filter {
+      width: 230px;
+      margin-top: 20px;
+    }
+
+    .table {
+      .select {
+        border-color: black;
+        background: $white;
+
+        &-label {
+          display: none;
+        }
+      }
+    }
+  }
+}
