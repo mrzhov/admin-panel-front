@@ -4,12 +4,7 @@ import {store} from '../../redux/createStore';
 import getQueryParameters from './functions';
 import {envConfig} from "../configs/env";
 
-const adminApi = process.env.NODE_ENV === 'development'
-  ? envConfig[process.env.NODE_ENV].adminApi
-  : envConfig["production"].adminApi
-
-
-export const BOT_API = '/adapt';
+const adminApi = envConfig[process.env.NODE_ENV].adminApi;
 
 const defaultErrors = {
     422: 'Заполните все поля',

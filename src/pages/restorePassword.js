@@ -9,6 +9,10 @@ import useUsersApi from "../api/usersApi";
 import useLegacyState from "../hooks/useLegacyState";
 import logo from "../image/logo.svg";
 
+const inputStyle = {
+    margin: '0 0 15px 0'
+};
+
 const RestorePasswordPage = (props) => {
     const usersApi = useUsersApi();
 
@@ -16,30 +20,23 @@ const RestorePasswordPage = (props) => {
         email: '',
         code: ''
     });
+    const [passwords, setPasswords] = useLegacyState({
+        newPassword: '',
+        confirmNewPassword: '',
+    });
 
     const [flags, setFlags] = useState({
         showCode: false,
         showNewPassword: false
-    });
-    const [passwords, setPasswords] = useLegacyState({
-        newPassword: '',
-        confirmNewPassword: '',
     });
 
     const handleInput = useCallback(
         name => e => {
             const {value} = e.target;
 
-            setData({[name]: value});
-        },
-        [data]
-    );
-
-    const handlePasswordInput = useCallback(
-        name => e => {
-            const {value} = e.target;
-
-            setPasswords({[name]: value});
+            Object.keys(data).includes(name)
+                ? setData({[name]: value})
+                : setPasswords({[name]: value});
         },
         [data]
     );
@@ -60,93 +57,98 @@ const RestorePasswordPage = (props) => {
                     const cb = () => {
                         setFlags({showCode: true})
                     };
-                    usersApi.restorePassword(data, cb);
+                    usersApi.checkEmail(data, cb);
                 }
             }
         },
         [data, passwords]
     );
 
-    return (
-        <div className='login-container'>
-            <div className='logoContainer'>
-                <img src={logo} alt="Logo"/>
+    const getDataFields = () => (
+        <>
+            <div style={inputStyle}>
+                <Input
+                    inputProps={{
+                        onChange: handleInput('email'),
+                        value: data.email,
+                        required: true
+                    }}
+                    label='Email'
+                />
             </div>
-            <form
-                className='login-form'
-                onSubmit={handleSubmit}
-            >
-                {!flags.showNewPassword && (
-                    <>
-                        <div style={{margin: '0 0 15px 0'}}>
-                            <Input
-                                inputProps={{
-                                    onChange: handleInput('email'),
-                                    value: data.email,
-                                    required: true
-                                }}
-                                label='Email'
-                            />
-                        </div>
-                        {flags.showCode && (
-                            <div style={{margin: '0 0 15px 0'}}>
-                                <Input
-                                    inputProps={{
-                                        onChange: handleInput('code'),
-                                        value: data.code,
-                                        required: true
-                                    }}
-                                    label='Confirmation code'
-                                />
-                            </div>
-                        )}
-                    </>
-                )}
-                {flags.showNewPassword && (
-                    <>
-                        <div style={{margin: '0 0 15px 0'}}>
-                            <Input
-                                inputProps={{
-                                    onChange: handlePasswordInput('newPassword'),
-                                    value: passwords.newPassword,
-                                    required: true
-                                }}
-                                label='New password'
-                                type='password'
-                            />
-                        </div>
-                        <div style={{margin: '0 0 15px 0'}}>
-                            <Input
-                                inputProps={{
-                                    onChange: handlePasswordInput('confirmNewPassword'),
-                                    value: passwords.confirmNewPassword,
-                                    required: true
-                                }}
-                                label='Confirm new password'
-                                type='password'
-                            />
-                        </div>
-                    </>
-                )}
-                <Button
-                    type='submit'
-                    variant='large'
+            {flags.showCode && (
+                <div style={inputStyle}>
+                    <Input
+                        inputProps={{
+                            onChange: handleInput('code'),
+                            value: data.code,
+                            required: true
+                        }}
+                        label='Confirmation code'
+                    />
+                </div>
+            )}
+        </>
+    )
+
+    const getPasswordsFields = () => (
+        <>
+            <div style={inputStyle}>
+                <Input
+                    inputProps={{
+                        onChange: handleInput('newPassword'),
+                        value: passwords.newPassword,
+                        required: true
+                    }}
+                    label='New password'
+                    type='password'
+                />
+            </div>
+            <div style={inputStyle}>
+                <Input
+                    inputProps={{
+                        onChange: handleInput('confirmNewPassword'),
+                        value: passwords.confirmNewPassword,
+                        required: true
+                    }}
+                    label='Confirm new password'
+                    type='password'
+                />
+            </div>
+        </>
+    )
+
+    return (
+        <div className='loginPage'>
+            <div className='loginPage__wrapper'>
+                <div className='loginPage__logo'>
+                    <img src={logo} alt="Logo"/>
+                </div>
+                <form
+                    className='loginPage__form'
+                    onSubmit={handleSubmit}
                 >
-                    {flags.showNewPassword
-                        ? 'Change Password'
-                        : flags.showCode
-                            ? 'Send confirmation code'
-                            : 'Send email'
-                    }
-                </Button>
+                    {!flags.showNewPassword && getDataFields()}
+                    {flags.showNewPassword && getPasswordsFields()}
+                    <Button
+                        type='submit'
+                        variant='large'
+                    >
+                        {flags.showNewPassword
+                            ? 'Change Password'
+                            : flags.showCode
+                                ? 'Send confirmation code'
+                                : 'Send email'
+                        }
+                    </Button>
+                </form>
                 <Button
-                    type='button'
                     variant='large'
                     onClick={props.goToAuthPage}
                 >
                     Back to login
                 </Button>
-            </form>
+            </div>
         </div>
     );
 }

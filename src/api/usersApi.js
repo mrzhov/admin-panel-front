@@ -6,7 +6,6 @@ import request from '../lib/request';
 import {store} from '../redux/createStore';
 import {CLOSE_RESTORE_PASSWORD, END_FETCHING, START_FETCHING} from "../redux/reducers/commonFlags";
 
-export const START_GET_USERS = 'START_GET_USERS';
 export const GET_USERS = 'GET_USERS';
 export const GET_CONFIRMED_USERS = 'GET_CONFIRMED_USERS';
 export const CREATE_USER = 'CREATE_USER';
@@ -27,14 +26,14 @@ class UsersApi {
         this.dispatch = dispatch;
     }
 
-    restorePassword = (body, cb) => {
+    checkEmail = (body, cb) => {
         const success = response => {
-            if (response.correct) {
+            if (response.data.success) {
                 if (cb) cb();
             }
         };
 
-        request('/users/restore-password', {
+        request('/users/check_email', {
             method: 'POST',
             body: JSON.stringify(body),
             success,
@@ -44,10 +43,8 @@ class UsersApi {
 
     checkResetKey = (body, cb) => {
         const success = response => {
-            if (response.correct) {
+            if (response.data.success) {
                 if (cb) cb();
-            } else {
-                alert('Invalid confirmation code');
             }
         };
 
@@ -61,11 +58,12 @@ class UsersApi {
 
     resetPassword = (body, cb) => {
         const success = response => {
-            this.dispatch({
-                type: CLOSE_RESTORE_PASSWORD
-            });
-
-            if (cb) cb();
+            if (response.data.success) {
+                this.dispatch({
+                    type: CLOSE_RESTORE_PASSWORD
+                });
+                if (cb) cb();
+            }
         };
 
         request('/users/reset-password', {
