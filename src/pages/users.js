@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 
 import useUsersApi from '../api/usersApi';
 import Button from '../components/button';
+import Table from '../components/table';
+import TableActions from '../components/tableActions';
 import {getQueryString} from '../lib/functions';
 import routes from '../route/routes';
 
@@ -12,6 +14,32 @@ const UsersPage = ({history}) => {
     const {page} = getQueryString();
 
     //const users = useSelector(state => state.users.list) || [];
+    const users = [
+        {
+            name: 'qqq',
+            email: 'www',
+            balance: '123',
+            minBalance: '-100',
+            couponDiscount: '10%',
+            role: 'Admin',
+        },
+        {
+            name: 'qqq',
+            email: 'www',
+            balance: '123',
+            minBalance: '-100',
+            couponDiscount: '10%',
+            role: 'Admin',
+        },
+        {
+            name: 'qqq',
+            email: 'www',
+            balance: '123',
+            minBalance: '-100',
+            couponDiscount: '10%',
+            role: 'Admin',
+        }
+    ];
     //const totalAgents = useSelector(state => state.users.totalAmount);
 
     const [flags, setFlags] = useState({getUsers: true});
@@ -83,106 +111,94 @@ const UsersPage = ({history}) => {
     }
 
     return (
-        <div className='pageContainer'>
-            <div className='pageWrapper'>
-                <div className='page-header'>
-                    <div className='header-leftSection'>
-                        <h1>Agents</h1>
-                        {/*<form onSubmit={handleSubmit}>*/}
-                        {/*    <FormControl*/}
-                        {/*        label='Search'*/}
-                        {/*        onChange={handleInput}*/}
-                        {/*        value={filterValue}*/}
-                        {/*        className='filterField'*/}
-                        {/*    />*/}
-                        {/*    <Button type='submit'>Search</Button>*/}
-                        {/*</form>*/}
-                    </div>
-
+        <div className='mainPage'>
+            <div className='mainPage__wrapper'>
+                <div className='mainPage__header'>
+                    <h3>Agents</h3>
                     <Link to={routes.userPage.path.replace(':id', 'new')}>
                         <Button>Create</Button>
                     </Link>
                 </div>
 
-                {/*<Table*/}
-                {/*    options={[*/}
-                {/*        {*/}
-                {/*            name: 'name',*/}
-                {/*            value: 'User'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'email',*/}
-                {/*            value: 'Email'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'balance',*/}
-                {/*            value: 'Balance',*/}
-                {/*            className: 'tableBoldFont'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'minBalance',*/}
-                {/*            value: 'MinBalance',*/}
-                {/*            className: 'tableBoldFont'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'couponDiscount',*/}
-                {/*            value: 'Coupon Discount'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'role',*/}
-                {/*            value: 'Role'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'isSuper',*/}
-                {/*            value: 'Super'*/}
-                {/*        },*/}
-                {/*        {*/}
-                {/*            name: 'actions',*/}
-                {/*            value: ''*/}
-                {/*        }*/}
-                {/*    ]}*/}
-                {/*    rows={users.map(user => ({*/}
-                {/*        ...user,*/}
-                {/*        balance: `${Math.floor(user.balance)}$`,*/}
-                {/*        minBalance: `${Math.floor(user.minBalance)}$`,*/}
-                {/*        couponDiscount: transformCouponDiscount(user),*/}
-                {/*        isSuper: user.isSuper ? "yes" : "no",*/}
-                {/*        actions: (*/}
-                {/*            <TableActions*/}
-                {/*                items={[*/}
-                {/*                    {*/}
-                {/*                        icon: 'info',*/}
-                {/*                        tooltipText: 'Agent information',*/}
-                {/*                        onClick: () =>*/}
-                {/*                            history.push(*/}
-                {/*                                routes.userInfo.path.replace(':id', user._id)*/}
-                {/*                            )*/}
-                {/*                    },*/}
-                {/*                    {*/}
-                {/*                        icon: 'edit',*/}
-                {/*                        tooltipText: 'Change information',*/}
-                {/*                        onClick: () =>*/}
-                {/*                            history.push(*/}
-                {/*                                routes.userPage.path.replace(':id', user._id)*/}
-                {/*                            )*/}
-                {/*                    },*/}
-                {/*                    {*/}
-                {/*                        icon: 'delete',*/}
-                {/*                        tooltipText: 'Remove agent',*/}
-                {/*                        onClick: () =>*/}
-                {/*                            window.confirm('Do you really want to delete the user?') &&*/}
-                {/*                            usersApi.deleteUser(user._id, getUsers)*/}
-                {/*                    }*/}
-                {/*                ]}*/}
-                {/*            />*/}
-                {/*        )*/}
-                {/*    }))}*/}
-                {/*    sort={true}*/}
-                {/*    filter={!!filterValue}*/}
-                {/*    totalAmount={totalAgents}*/}
-                {/*    setSortingField={config => setSortConfig(config)}*/}
-                {/*    parentSortConfig={sortConfig}*/}
-                {/*/>*/}
+                <Table
+                    options={[
+                        {
+                            name: 'name',
+                            value: 'User'
+                        },
+                        {
+                            name: 'email',
+                            value: 'Email'
+                        },
+                        {
+                            name: 'balance',
+                            value: 'Balance',
+                            className: 'tableBoldFont'
+                        },
+                        {
+                            name: 'minBalance',
+                            value: 'MinBalance',
+                            className: 'tableBoldFont'
+                        },
+                        {
+                            name: 'couponDiscount',
+                            value: 'Coupon Discount'
+                        },
+                        {
+                            name: 'role',
+                            value: 'Role'
+                        },
+                        {
+                            name: 'isSuper',
+                            value: 'Super'
+                        },
+                        {
+                            name: 'actions',
+                            value: ''
+                        }
+                    ]}
+                    rows={users.map(user => ({
+                        ...user,
+                        // balance: `${Math.floor(user.balance)}$`,
+                        // minBalance: `${Math.floor(user.minBalance)}$`,
+                        // couponDiscount: transformCouponDiscount(user),
+                        // isSuper: user.isSuper ? "yes" : "no",
+                        // actions: (
+                        //     <TableActions
+                        //         items={[
+                        //             {
+                        //                 icon: 'info',
+                        //                 tooltipText: 'Agent information',
+                        //                 onClick: () =>
+                        //                     history.push(
+                        //                         routes.userInfo.path.replace(':id', user._id)
+                        //                     )
+                        //             },
+                        //             {
+                        //                 icon: 'edit',
+                        //                 tooltipText: 'Change information',
+                        //                 onClick: () =>
+                        //                     history.push(
+                        //                         routes.userPage.path.replace(':id', user._id)
+                        //                     )
+                        //             },
+                        //             {
+                        //                 icon: 'delete',
+                        //                 tooltipText: 'Remove agent',
+                        //                 onClick: () =>
+                        //                     window.confirm('Do you really want to delete the user?') &&
+                        //                     usersApi.deleteUser(user._id, getUsers)
+                        //             }
+                        //         ]}
+                        //     />
+                        // )
+                    }))}
+                    // sort={true}
+                    // filter={!!filterValue}
+                    // totalAmount={totalAgents}
+                    // setSortingField={config => setSortConfig(config)}
+                    // parentSortConfig={sortConfig}
+                />
             </div>
         </div>
     );

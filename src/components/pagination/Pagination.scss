@@ -1,0 +1,34 @@
+@import '../../scss/variables';
+
+.pagination {
+  display: flex;
+  margin: 20px 0;
+  font-size: 16px;
+  justify-content: flex-end;
+
+  li {
+    a {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: $dark;
+      cursor: pointer;
+      outline: none;
+    }
+
+    &.next,
+    &.previous {
+      display: none;
+    }
+
+    &.active {
+      a {
+        background: $darkBlue;
+        color: $white;
+      }
+    }
+  }
+}
