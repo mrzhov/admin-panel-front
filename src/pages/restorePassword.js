@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Button from '../components/button';
 
 import Input from '../components/Input';
-import {CLOSE_RESTORE_PASSWORD} from "../redux/reducers/commonFlags";
+import {CLOSE_RESTORE_PASSWORD} from "../redux/actions/commonFlags";
 import useUsersApi from "../api/usersApi";
 import useLegacyState from "../hooks/useLegacyState";
 import logo from "../image/logo.svg";

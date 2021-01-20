@@ -105,8 +105,8 @@ class AppRoute extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    userRole: state.user.role,
-    userIsSuper: state.user.isSuper
+    userRole: state.authUser.role,
+    userIsSuper: state.authUser.isSuper
 });
 
 export default connect(mapStateToProps)(AppRoute);

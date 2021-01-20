@@ -1,0 +1,6 @@
+@import "src/scss/variables";
+
+.container-fluid {
+  min-height: calc(100vh - 63px);
+  display: flex;
+}

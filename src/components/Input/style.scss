@@ -1,12 +1,7 @@
 @import '../../scss/variables';
 
-$default_color: $theme_color;
-$focused_color: $theme_color_secondary;
-
 .Input {
   position: relative;
-
-  font-family: 'Roboto', sans-serif;
 
   .Input__TextField {
     width: 100%;
@@ -17,14 +12,14 @@ $focused_color: $theme_color_secondary;
     border: 1px solid $gray;
     border-radius: 4px;
 
-    color: rgb(145, 143, 143);
+    color: $input_primary;
 
     &::placeholder {
-      color: $default_color;
+      color: $input_primary;
     }
 
     &:focus {
-      border-color: $focused_color;
+      border-color: $input_primary_active;
       outline: none;
     }
   }
@@ -38,7 +33,7 @@ $focused_color: $theme_color_secondary;
     padding: 5px;
 
     font-size: 14px;
-    color: $default_color;
+    color: $input_primary_placeholder;
     cursor: text;
 
     transform: translateY(-50%);
@@ -54,11 +49,11 @@ $focused_color: $theme_color_secondary;
     font-size: 12px;
 
     background: $white;
-    color: $focused_color;
+    color: $input_primary_active;
   }
 
   &.Input_active label {
-    color: $default_color;
+    color: $input_primary;
   }
 
   textarea {

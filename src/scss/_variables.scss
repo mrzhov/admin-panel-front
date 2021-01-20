@@ -1,36 +1,23 @@
-$left_menu_width: 300px;
-$mobile_nav_bar_height: 80px;
-
-$screen_breakpoint: 700px;
-$screen_breakpoint_800: 800px;
-$screen_breakpoint_1300: 1300px;
-
-$page_padding_side: 50px;
-$page_padding_sideMobile: 20px;
-$page_padding_upper: 30px;
-$wrapper_padding: $page_padding_upper $page_padding_side;
-$wrapper_paddingMobile: $page_padding_upper $page_padding_sideMobile;
-
 $white: #ffffff;
+$blue: #1c45ef;
+$blueGradient: radial-gradient(circle, rgba(21,57,198,1) 0%, rgba(0,119,255,1) 100%);
+$darkBlue: #1539c6;
+$veryDarkBlue: #001737;
 $dark: #3c3c46;
-$blue: #4b66f8;
+$deepGray: #646464;
 $gray: #eeeeee;
-$green: #00A651;
-$golden_rain: linear-gradient(119.35deg, #e6be64 0%, #f0dc8c 100%);
-$blue_sky: linear-gradient(265.07deg, #2eaff7 0%, #5e59f2 100%);
+$lightGrey: #f3f3f3;
 
-$theme_color: rgba(78, 88, 112, 0.5);
-$theme_color_secondary: #131c37;
-$spinner_stroke_color: #e5e5e5;
+$app_background: $lightGrey;
+$header_background: $white;
+$auth_page_bg: $blueGradient;
 
-$app_background: $white;
-$nav_background: #72BF44;
+$sidebar_bg: $blue;
+$sidebar_btn_active: $darkBlue;
 
-$text_primary: black;
-$text_secondary: $theme_color_secondary;
-
-$btn_border_r: 4px;
-
-$btn_primary_bg: #253a6b;
-$btn_primary_bg_hover: #1a284c;
+$btn_primary_bg_hover: $darkBlue;
 $btn_primary_color: $white;
+
+$input_primary: $dark;
+$input_primary_placeholder: $deepGray;
+$input_primary_active: $darkBlue;

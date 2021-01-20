@@ -8,19 +8,18 @@ import burger from '../../image/burger.svg';
 import logo from '../../image/logo.svg';
 
 import './style.scss';
-import {logout} from '../../api/userApi';
+import {logout} from '../../api/authUserApi';
 
 class LeftMenu extends React.Component {
     state = {
-        isOpen: false,
-        pixiu: false
+        isOpen: false
     };
 
-    handleLogout() {
+    handleLogout = () => {
         this.props.logout();
     }
 
-    handleClick() {
+    handleClick = () => {
         this.setState({isOpen: !this.state.isOpen});
     }
 
@@ -29,7 +28,7 @@ class LeftMenu extends React.Component {
             <nav className='nav-bar'>
                 <div className='nav-bar__link-container'>
                     <Link to='/admin/start'>
-                        <button className='nav-bar__logo-pixiu'>
+                        <button className='nav-bar__logo'>
                             <img src={logo} alt="Logo"/>
                         </button>
                     </Link>
@@ -43,7 +42,7 @@ class LeftMenu extends React.Component {
                     </div>
                     <div className='nav-bar__logoMobile'>
                         <Link to='/admin/start'>
-                            <button className='nav-bar__logo-pixiu'>
+                            <button className='nav-bar__logo'>
                                 <img src={logo} alt="Logo"/>
                             </button>
                         </Link>

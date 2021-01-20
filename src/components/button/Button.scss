@@ -1,18 +1,16 @@
-@import '../../scss/_variables.scss';
+@import '../../scss/variables';
 
 .button {
   font-weight: 700;
-
-  color: $btn_primary_bg;
-
+  color: $dark;
   background: transparent;
 
   &:hover {
     background: $btn_primary_bg_hover;
-    color: $white;
+    color: $btn_primary_color;
   }
 
-  border: 1px solid $btn_primary_bg;
+  border: 1px solid $btn_primary_bg_hover;
   border-radius: 25px;
   display: flex;
   font-size: 16px;

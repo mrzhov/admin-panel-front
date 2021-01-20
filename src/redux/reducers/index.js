@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 
 import router from './router';
-import user from './user';
+import authUser from './authUser';
 import commonFlags from './commonFlags';
 import pages from './pages';
 
 export default combineReducers({
-  user,
+  authUser,
   router,
   commonFlags,
   pages

@@ -1,0 +1,76 @@
+@import '../../scss/_variables';
+
+.sidebar {
+  min-height: 100vh;
+  width: 270px;
+  background: $sidebar_bg;
+  padding: 0;
+  z-index: 11;
+  transition: all .25s ease-in-out;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    padding: 20px 25px 10px 25px;
+    cursor: default;
+
+    img {
+      height: 45px;
+      margin-right: 10px;
+    }
+
+    span {
+      font-size: 26px;
+      font-weight: 400;
+      color: $white;
+    }
+  }
+
+  &__menu {
+    a, button {
+      width: 100%;
+    }
+  }
+
+  &__link {
+    height: 50px;
+    padding: 15px 30px 15px 55px;
+    display: flex;
+    align-items: center;
+    transition: all .25s ease-in-out;
+
+    &_active {
+      background: $sidebar_btn_active;
+    }
+
+    &:hover {
+      background: $sidebar_btn_active;
+      span {
+        padding-left: 13px;
+      }
+    }
+
+    span {
+      font-family: 'Gilroy', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 16px;
+      color: $white;
+      transition: all .25s ease-in-out;
+      padding-left: 5px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 30px;
+      right: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 100%;
+      border: 2px solid $white;
+      display: block;
+    }
+  }
+}

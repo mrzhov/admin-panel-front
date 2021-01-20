@@ -3,11 +3,13 @@ import {hot} from 'react-hot-loader';
 import React, {PureComponent} from 'react';
 import {withRouter} from 'react-router-dom';
 
-import LeftMenu from '../components/left-menu';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 import AuthorizationPage from '../pages/authorization';
 import RestorePasswordPage from '../pages/restorePassword';
-
 import AppRoute from '../route/index';
+
+import './app.scss'
 
 class App extends PureComponent {
     render() {
@@ -20,22 +22,25 @@ class App extends PureComponent {
         if (this.props.restorePassword)
             return <RestorePasswordPage history={this.props.history}/>;
 
-        if (!this.props.token)
+        if (!this.props.accessToken)
             return <AuthorizationPage history={this.props.history}/>;
 
         return (
-            <>
-                <LeftMenu options={this.props.pages}/>
-                <AppRoute location={this.props.location}/>
-            </>
+            <div className='container-scroller'>
+                <Header />
+                <div className='container-fluid'>
+                    <Sidebar options={this.props.pages}/>
+                    <AppRoute location={this.props.location}/>
+                </div>
+            </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    token: state.user.token,
+    accessToken: state.authUser.accessToken,
     restorePassword: state.commonFlags.restorePassword,
-    userRole: state.user.role,
+    userRole: state.authUser.role,
     pages: state.pages.list
 });
 

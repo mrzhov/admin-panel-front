@@ -4,15 +4,16 @@ import {useDispatch} from 'react-redux';
 import request from '../lib/request';
 
 import {store} from '../redux/createStore';
-import {CLOSE_RESTORE_PASSWORD, END_FETCHING, START_FETCHING} from "../redux/reducers/commonFlags";
-
-export const GET_USERS = 'GET_USERS';
-export const GET_CONFIRMED_USERS = 'GET_CONFIRMED_USERS';
-export const CREATE_USER = 'CREATE_USER';
-export const GET_USER = 'GET_USER';
-export const GET_USER_PAGES = 'GET_USER_PAGES';
-export const UPDATE_USER = 'UPDATE_USER';
-export const DELETE_USER = 'DELETE_USER';
+import {CLOSE_RESTORE_PASSWORD, END_FETCHING, START_FETCHING} from "../redux/actions/commonFlags";
+import {
+    CREATE_USER,
+    DELETE_USER,
+    GET_CONFIRMED_USERS,
+    GET_USER,
+    GET_USER_PAGES,
+    GET_USERS,
+    UPDATE_USER
+} from "../redux/actions/users";
 
 const failed = response => {
     alert(response.message);

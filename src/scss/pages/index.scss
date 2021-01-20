@@ -1,0 +1,16 @@
+@import "src/scss/variables";
+
+.pageContainer {
+  width: calc(100% - 270px);
+  min-height: calc(100vh - 63px);
+  padding-top: 63px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pageWrapper {
+  background: $app_background;
+  padding: 25px 30px;
+  width: 100%;
+  flex-grow: 1;
+}

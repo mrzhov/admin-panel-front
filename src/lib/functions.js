@@ -3,6 +3,42 @@ import moment from 'moment';
 
 import {ADMIN, AGENT, SUB_AGENT} from './_variables';
 
+export const setLocalStorage = (name, item) => {
+  localStorage.setItem(name, JSON.stringify(item));
+};
+
+export const getLocalStorage = name => {
+  let response = 'Name is not found';
+  if (name) {
+    if (
+        localStorage.getItem(name) &&
+        localStorage.getItem(name) !== 'undefined' &&
+        localStorage.getItem(name) !== 'false'
+    ) {
+      const storage = localStorage.getItem(name);
+      const result = JSON.parse(storage);
+
+      if (result && result.timestamp) {
+        const currentTime = new Date().getTime();
+        const expireTime = 200000;
+
+        if (currentTime - result.timestamp > expireTime) {
+          response = false;
+          localStorage.setItem(name, JSON.stringify(false));
+        } else {
+          response = result;
+        }
+      } else {
+        response = result;
+      }
+    } else {
+      response = false;
+    }
+  }
+
+  return response;
+};
+
 export const getPages = (role, isSuper) => {
   const pagesList = []
 
@@ -32,10 +68,6 @@ export const getPages = (role, isSuper) => {
         name: 'Promotions',
         url: '/admin/promo'
       })
-      // pagesList.push({
-      //   name: 'Players',
-      //   url: '/admin/players'
-      // })
       pagesList.push({
         name: 'Applications',
         url: '/admin/apps'
@@ -82,42 +114,6 @@ export const getPages = (role, isSuper) => {
 
   return pagesList
 }
-
-export const getLocalStorage = name => {
-  let response = 'Name is not found';
-  if (name) {
-    if (
-        localStorage.getItem(name) &&
-        localStorage.getItem(name) !== 'undefined' &&
-        localStorage.getItem(name) !== 'false'
-    ) {
-      const storage = localStorage.getItem(name);
-      const result = JSON.parse(storage);
-
-      if (result && result.timestamp) {
-        const currentTime = new Date().getTime();
-        const expireTime = 200000;
-
-        if (currentTime - result.timestamp > expireTime) {
-          response = false;
-          localStorage.setItem(name, JSON.stringify(false));
-        } else {
-          response = result;
-        }
-      } else {
-        response = result;
-      }
-    } else {
-      response = false;
-    }
-  }
-
-  return response;
-};
-
-export const setLocalStorage = (name, item) => {
-  localStorage.setItem(name, JSON.stringify(item));
-};
 
 export const truncate = (str, maxlength) => {
   if (typeof str !== 'string') {

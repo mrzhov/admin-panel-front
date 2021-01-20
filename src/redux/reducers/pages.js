@@ -1,6 +1,5 @@
 import initialState from '../initialState';
-
-export const ADD_PAGES = 'ADD_PAGES';
+import {ADD_PAGES} from "../actions/pages";
 
 export default function (state = initialState.pages, action) {
     switch (action.type) {

@@ -1,4 +1,4 @@
-import {logout} from '../../api/userApi';
+import {logout} from '../../api/authUserApi';
 import {store} from '../../redux/createStore';
 
 import getQueryParameters from './functions';

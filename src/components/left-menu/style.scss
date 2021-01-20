@@ -1,4 +1,4 @@
-@import '../../scss/_variables.scss';
+@import '../../scss/variablesOld';
 
 .nav-bar {
   position: fixed;
@@ -41,19 +41,8 @@
     background: transparent;
     margin: 10px 0 15px -5px;
 
-
     img {
-      width: 200px;
-    }
-  }
-
-  .nav-bar__logo-pixiu {
-    background: transparent;
-    border: none;
-    outline: none;
-    margin-bottom: 10px;
-    img {
-      width: 100%;
+      width: 100px;
     }
   }
 

@@ -1,9 +1,5 @@
 import initialState from '../initialState';
-
-export const START_FETCHING = 'START_FETCHING';
-export const END_FETCHING = 'END_FETCHING';
-export const OPEN_RESTORE_PASSWORD = 'OPEN_RESTORE_PASSWORD';
-export const CLOSE_RESTORE_PASSWORD = 'CLOSE_RESTORE_PASSWORD';
+import {CLOSE_RESTORE_PASSWORD, END_FETCHING, OPEN_RESTORE_PASSWORD, START_FETCHING} from "../actions/commonFlags";
 
 export default function (state = initialState.commonFlags, action) {
     switch (action.type) {

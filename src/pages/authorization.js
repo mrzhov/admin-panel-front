@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {login} from '../api/userApi';
-import Button from '../components/button';
+import '../scss/pages/authorization.scss'
 
+import {login} from '../api/authUserApi';
+import Button from '../components/button';
 import Input from '../components/Input';
-import routes from '../route/routes';
-import {OPEN_RESTORE_PASSWORD} from "../redux/reducers/commonFlags";
 import logo from "../image/logo.svg";
+import {OPEN_RESTORE_PASSWORD} from "../redux/actions/commonFlags";
 
 class AuthorizationPage extends Component {
     state = {
@@ -27,10 +27,10 @@ class AuthorizationPage extends Component {
         };
     }
 
-    handleSubmit(event) {
+    handleSubmit = (event) => {
         event.preventDefault();
         this.props.login(this.state.form, () =>
-            this.props.history.push(routes.startPage.path)
+            this.props.history.push('/admin')
         );
     }
 

@@ -1,5 +1,5 @@
 import {getLocalStorage, getPages} from '../lib/functions';
-import {USER_ID, USER_IS_SUPER, USER_ROLE, USER_TOKEN} from '../lib/_variables';
+import {USER_ID, USER_IS_SUPER, USER_ROLE, USER_TOKEN} from "../lib/_variables";
 
 const initialState = {
   commonFlags: {
@@ -13,9 +13,8 @@ const initialState = {
     location: null,
     prevLocation: null
   },
-  user: {
-    info: {},
-    token: getLocalStorage(USER_TOKEN) || '',
+  authUser: {
+    accessToken: getLocalStorage(USER_TOKEN) || '',
     id: getLocalStorage(USER_ID) || '',
     role: getLocalStorage(USER_ROLE) || '',
     isSuper: getLocalStorage(USER_IS_SUPER) || false

@@ -1,28 +1,36 @@
 @import './reset.scss';
-@import './authorization.scss';
-@import './app.scss';
-@import './components.scss';
+@import './pages/index.scss';
+@import '../app/app';
+@import '../fonts/fonts.css';
 
 :root {
-  --second: #172345;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
 }
 
-@font-face {
-  font-family: 'San Francisco Text Light';
-  src: url('../fonts/SFUIText-Light.eot');
-  src: url('../fonts/SFUIText-Light.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/SFUIText-Light.woff') format('woff'),
-  url('../fonts/SFUIText-Light.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  }
+button {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
 
-  @font-face {
-    font-family: 'San Francisco Text Semibold';
-    src: url('../fonts/SFUIText-Light.eot');
-    src: url('../fonts/SFUIText-Light.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/SFUIText-Semibold.woff') format('woff'),
-    url('../fonts/SFUIText-Semibold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-    }
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
