@@ -3,9 +3,8 @@ import {useDispatch} from 'react-redux';
 
 import request from '../lib/request';
 
-import { store } from '../redux/createStore';
-import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
-import { GET_USERS } from "../redux/actions/users";
+import {END_FETCHING, START_FETCHING} from "../redux/actions/commonFlags";
+import {GET_USERS} from "../redux/actions/users";
 
 const failed = response => {
     alert(response.message);
@@ -58,13 +57,13 @@ class UsersApi {
 
     getUser = (id, cb) => {
         const success = response => {
-            const ownerName = response.owner.name;
-            const data = response;
-            data.ownerName = ownerName;
-            if (cb && typeof cb === 'function') cb(data);
+            if (cb && typeof cb === 'function') cb(response);
         };
 
-        request(`/users/${id}`, {success});
+        request(`/users/${id}`, {
+            success,
+            failed
+        });
     };
 
     getUserPages = (cb) => {
@@ -72,7 +71,10 @@ class UsersApi {
             if (cb && typeof cb === 'function') cb(response);
         };
 
-        request('/users/pages', {success});
+        request('/users/pages', {
+            success,
+            failed
+        });
     };
 
     updateUser = (body, id, cb) => {
@@ -83,7 +85,8 @@ class UsersApi {
         request(`/users/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success
+            success,
+            failed
         });
     };
 
@@ -94,7 +97,8 @@ class UsersApi {
 
         request(`/users/${id}`, {
             method: 'DELETE',
-            success
+            success,
+            failed
         });
     };
 
@@ -112,9 +116,7 @@ class UsersApi {
     };
 
     static async getConfirmedUsers(timetableId, eventId) {
-        const success = (response) => {
-
-        };
+        const success = (response) => {};
 
         await request(`/timetables/${timetableId}/events/${eventId}/confirmed_users`, {success});
     }

@@ -24,12 +24,14 @@
   &.text {
     padding: 0;
     background-color: transparent;
-    color: black;
+    color: $black;
     font-size: 14px;
   }
 
   &.small {
-    width: auto;
+    width: 100px;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   &.normal {
@@ -42,5 +44,14 @@
 
   &.disabled {
     background-color: $gray;
+  }
+
+  &.secondary {
+    background-color: $btn_secondary_bg;
+    color: $btn_secondary_color;
+
+    &:hover {
+      background: $btn_secondary_bg_hover;
+    }
   }
 }

@@ -25,7 +25,7 @@ class UserApi {
             }
         };
 
-        request('/users/check_email', {
+        request('/users/check-email', {
             method: 'POST',
             body: JSON.stringify(body),
             success,
@@ -40,7 +40,7 @@ class UserApi {
             }
         };
 
-        request('/users/check_reset_key', {
+        request('/users/check-reset-key', {
             method: 'POST',
             body: JSON.stringify(body),
             success,
@@ -58,7 +58,7 @@ class UserApi {
             }
         };
 
-        request('/users/reset_password', {
+        request('/users/reset-password', {
             method: 'POST',
             body: JSON.stringify(body),
             success,

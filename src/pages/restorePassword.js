@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import useUserApi from '../api/userApi';
 import {CLOSE_RESTORE_PASSWORD} from "../redux/actions/commonFlags";
 import useLegacyState from "../hooks/useLegacyState";
-import Button from '../components/button';
+import Button from '../components/Button';
 import Input from '../components/Input';
 import logo from "../image/logo.svg";
 
@@ -67,23 +67,19 @@ const RestorePasswordPage = (props) => {
         <>
             <div style={inputStyle}>
                 <Input
-                    inputProps={{
-                        onChange: handleInput('email'),
-                        value: data.email,
-                        required: true
-                    }}
                     label='Email'
+                    required
+                    value={data.email}
+                    onChange={handleInput('email')}
                 />
             </div>
             {flags.showCode && (
                 <div style={inputStyle}>
                     <Input
-                        inputProps={{
-                            onChange: handleInput('code'),
-                            value: data.code,
-                            required: true
-                        }}
                         label='Confirmation code'
+                        required
+                        value={data.code}
+                        onChange={handleInput('code')}
                     />
                 </div>
             )}
@@ -94,24 +90,20 @@ const RestorePasswordPage = (props) => {
         <>
             <div style={inputStyle}>
                 <Input
-                    inputProps={{
-                        onChange: handleInput('newPassword'),
-                        value: passwords.newPassword,
-                        required: true
-                    }}
                     label='New password'
                     type='password'
+                    required
+                    value={passwords.newPassword}
+                    onChange={handleInput('newPassword')}
                 />
             </div>
             <div style={inputStyle}>
                 <Input
-                    inputProps={{
-                        onChange: handleInput('confirmNewPassword'),
-                        value: passwords.confirmNewPassword,
-                        required: true
-                    }}
                     label='Confirm new password'
                     type='password'
+                    required
+                    value={passwords.confirmNewPassword}
+                    onChange={handleInput('confirmNewPassword')}
                 />
             </div>
         </>
@@ -144,6 +136,7 @@ const RestorePasswordPage = (props) => {
                 <Button
                     variant='large'
                     onClick={props.goToAuthPage}
+                    className='secondary'
                 >
                     Back to login
                 </Button>

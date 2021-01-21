@@ -2,6 +2,7 @@
 @import './pages/index.scss';
 @import '../app/app';
 @import '../fonts/fonts.css';
+@import './variables';
 
 :root {
   font-family: 'Roboto', sans-serif;
@@ -33,4 +34,28 @@ a {
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
+}
+
+h3 {
+  font-weight: 500;
+  font-size: 26px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  color: $veryDarkBlue;
+}
+
+p {
+  font-weight: 400;
+  font-size: 18px;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  color: $veryDarkBlue;
+}
+
+hr {
+  margin: 15px 0;
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.1);
 }

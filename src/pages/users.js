@@ -3,9 +3,9 @@ import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 import useUsersApi from '../api/usersApi';
-import Button from '../components/button';
-import Table from '../components/table';
-import TableActions from '../components/tableActions';
+import Button from '../components/Button';
+import Table from '../components/Table';
+import TableActions from '../components/TableActions';
 import {getQueryString} from '../lib/functions';
 import routes from '../route/routes';
 
@@ -121,7 +121,7 @@ const UsersPage = ({history}) => {
                                         icon: 'delete',
                                         tooltipText: 'Remove agent',
                                         onClick: () =>
-                                            window.confirm('Do you really want to delete the user?') &&
+                                            window.confirm('Do you really want to delete the agent?') &&
                                             usersApi.deleteUser(user._id, getUsers)
                                     }
                                 ]}

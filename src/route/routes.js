@@ -1,5 +1,6 @@
 import User from '../pages/user';
 import Users from '../pages/users';
+import UserInfo from '../pages/userInfo';
 import UserChangePassword from '../pages/userChangePassword';
 
 export default {
@@ -10,6 +11,10 @@ export default {
   usersPage: {
     path: '/admin/users',
     component: Users
+  },
+  userInfo: {
+    path: '/admin/users/:id',
+    component: UserInfo
   },
   userChangePassword: {
     path: '/admin/users/:id/change-password',

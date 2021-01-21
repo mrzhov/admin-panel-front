@@ -14,19 +14,59 @@
     flex-grow: 1;
   }
 
+  &__center {
+    display: flex;
+    justify-content: center;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid $gray;
     padding: 0 5px 25px 5px;
+  }
 
-    h3 {
-      font-weight: 400;
-      font-size: 26px;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
+  &__userInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .userInfoCard {
+      &:first-child {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.formContainer {
+  flex: 0 0 50%;
+  max-width: 50%;
+  background: $white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 8px 6px rgba(0,0,0,.02);
+  height: fit-content;
+}
+
+.form {
+  padding: 30px;
+
+  &__title {
+    margin-bottom: 20px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    button {
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }

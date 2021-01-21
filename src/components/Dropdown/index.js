@@ -6,6 +6,8 @@ import Transition from 'react-transition-group/Transition'
 import './style.scss';
 import {logout} from '../../api/userApi';
 import Avatar from "./img/avatar.jpg";
+import routes from "../../route/routes";
+import Button from "../Button";
 
 const Dropdown = props => {
     const [flags, setFlags] = useState({showDropdown: false});
@@ -48,15 +50,19 @@ const Dropdown = props => {
                             <div
                                 className={`dropdownMenu dropdownMenu_${state}`}
                             >
-                                <Link to='/admin'>
-                                    <button>
+                                <Link to={routes.userInfo.path.replace(':id', 'me')}>
+                                    <button
+                                        onClick={() => setFlags({showDropdown: false})}
+                                    >
                                         <div className='dropdownMenu__item'>
                                             <span>User info</span>
                                         </div>
                                     </button>
                                 </Link>
-                                <Link to='/admin'>
-                                    <button>
+                                <Link to={routes.userChangePassword.path.replace(':id', 'me')}>
+                                    <button
+                                        onClick={() => setFlags({showDropdown: false})}
+                                    >
                                         <div className='dropdownMenu__item'>
                                             <span>Change password</span>
                                         </div>

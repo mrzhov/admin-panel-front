@@ -1,46 +1,46 @@
 import React, {useCallback, useEffect} from 'react';
 
 import useUsersApi from '../api/usersApi';
-import Button from '../components/button';
+import Button from '../components/Button';
 import useLegacyState from '../hooks/useLegacyState';
-import routes from '../route/routes';
 import {useSelector} from "react-redux";
 import {ADMIN, AGENT, SUB_AGENT} from "../lib/_variables";
+import {Link} from "react-router-dom";
+import Checkbox from '../components/Checkbox'
+import FormControl from "../components/FormControl";
+import routes from "../route/routes";
 
 const initialState = {
-    id: '',
-    name: '',
     role: '',
-    balance: '',
+    email: '',
+    name: '',
     minBalance: -100,
     initDiscount: 0,
     isSuper: false
 };
 
 const UserPage = ({history, match}) => {
-    // const usersApi = useUserApi();
-
     const [user, setUser] = useLegacyState(initialState);
-    // const user = useSelector(state => state.user);
     const {id} = match.params;
     const usersApi = useUsersApi();
 
-    const authUserRole = useSelector(state => state.user.role)
+    const authUserRole = useSelector(state => state.authUser.role)
 
     useEffect(() => {
         if (id && id !== 'new') {
             usersApi.getUser(id, data => {
-                setUser(data)
+                const {role, name, email, minBalance, initDiscount, isSuper} = data;
+                setUser({
+                    role: {value: role, label: role},
+                    name,
+                    email,
+                    minBalance,
+                    initDiscount,
+                    isSuper
+                })
             });
         }
     }, [id]);
-
-
-    // const getRoles = [
-    //     {value: 'Admin', label: 'Admin'},
-    //     {value: 'Agent', label: 'Agent'},
-    //     {value: 'Sub-Agent', label: 'Sub-Agent'}
-    //   ]
 
     const getRoles = () => {
         switch (authUserRole) {
@@ -59,6 +59,14 @@ const UserPage = ({history, match}) => {
         }
     }
 
+    const handleSelect = useCallback(name => value => {
+        setUser({[name]: value});
+
+        value === 'Admin'
+            ? setUser({isSuper: true})
+            : setUser({isSuper: false})
+    }, [user])
+
     const handleInput = useCallback(
         name => e => {
             const {value} = e.target;
@@ -68,14 +76,6 @@ const UserPage = ({history, match}) => {
         [user]
     );
 
-    const handleSelect = useCallback(name => value => {
-        setUser({[name]: value});
-
-        value === 'Admin'
-            ? setUser({isSuper: true})
-            : setUser({isSuper: false})
-    }, [user])
-
     const handleCheck = useCallback(() => {
         setUser({isSuper: !user.isSuper});
     }, [user.isSuper]);
@@ -83,9 +83,9 @@ const UserPage = ({history, match}) => {
     const handleSubmit = useCallback(
         e => {
             e.preventDefault();
-
             const cb = () => history.push(routes.usersPage.path);
 
+            user.role = user.role.value;
             if (id && id !== 'new') {
                 usersApi.updateUser(user, id, cb);
             } else {
@@ -95,85 +95,111 @@ const UserPage = ({history, match}) => {
         [user]
     );
 
-    return (
-        <div className='page-container'>
-            <div className='page-header'>
-                <h1>Agent</h1>
-            </div>
+    const getTitlePage = () => {
+        if (id && id !== 'new') {
+            return <h3>Change agent information</h3>
+        } else {
+            return <h3>Create agent</h3>
+        }
+    }
 
-            {/*<form onSubmit={handleSubmit}>*/}
-            {/*    <div className='page-block-half'>*/}
-            {/*        <FormControl*/}
-            {/*            label='Select'*/}
-            {/*            onChange={handleSelect('role')}*/}
-            {/*            options={getRoles()}*/}
-            {/*            placeholder='Role'*/}
-            {/*            required={id && id === 'new'}*/}
-            {/*            select*/}
-            {/*            value={user.role}*/}
-            {/*        />*/}
-            {/*        <FormControl*/}
-            {/*            label='Email'*/}
-            {/*            maxLength={60}*/}
-            {/*            minLength={3}*/}
-            {/*            onChange={handleInput('email')}*/}
-            {/*            required*/}
-            {/*            value={user.email}*/}
-            {/*        />*/}
-            {/*        <FormControl*/}
-            {/*            label='Name'*/}
-            {/*            maxLength={60}*/}
-            {/*            minLength={3}*/}
-            {/*            onChange={handleInput('name')}*/}
-            {/*            required*/}
-            {/*            value={user.name}*/}
-            {/*        />*/}
-            {/*        {id === 'new' && (*/}
-            {/*            <FormControl*/}
-            {/*                autoComplete='new-password'*/}
-            {/*                label='Password'*/}
-            {/*                maxLength={60}*/}
-            {/*                minLength={3}*/}
-            {/*                onChange={handleInput('password')}*/}
-            {/*                required*/}
-            {/*                type='password'*/}
-            {/*                value={user.password}*/}
-            {/*            />*/}
-            {/*        )}*/}
-            {/*        <FormControl*/}
-            {/*            label='Initial Coupon Discount %'*/}
-            {/*            max='100'*/}
-            {/*            min='0'*/}
-            {/*            onChange={handleInput('initDiscount')}*/}
-            {/*            required*/}
-            {/*            step='1'*/}
-            {/*            type='number'*/}
-            {/*            value={user.initDiscount}*/}
-            {/*        />*/}
-            {/*        <FormControl*/}
-            {/*            label='Min Balance'*/}
-            {/*            onChange={handleInput('minBalance')}*/}
-            {/*            required*/}
-            {/*            min='-10000'*/}
-            {/*            step='1'*/}
-            {/*            type='number'*/}
-            {/*            value={user.minBalance}*/}
-            {/*        />*/}
-            {/*        {authUserRole === ADMIN && (*/}
-            {/*            <Checkbox*/}
-            {/*                label='SuperAgent'*/}
-            {/*                onChange={handleCheck}*/}
-            {/*                value={user.isSuper}*/}
-            {/*            />*/}
-            {/*        )}*/}
-            {/*        <Button*/}
-            {/*            style={{width: '100%'}}*/}
-            {/*            type='submit'*/}
-            {/*        >*/}
-            {/*            Save*/}
-            {/*        </Button>*/}
-            {/*    </div>*/}
-            {/*</form>*/}
+    return (
+        <div className='mainPage'>
+            <div className='mainPage__wrapper mainPage__center'>
+                <div className='formContainer'>
+                    <div className="form">
+                        <div className='form__title'>
+                            {getTitlePage()}
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <FormControl
+                                className='formItem'
+                                onChange={handleSelect('role')}
+                                options={getRoles()}
+                                placeholder='Role'
+                                required
+                                select
+                                value={user.role}
+                            />
+                            <FormControl
+                                label='Email'
+                                className='formItem'
+                                maxLength={60}
+                                minLength={3}
+                                onChange={handleInput('email')}
+                                required
+                                value={user.email}
+                            />
+                            <FormControl
+                                label='Name'
+                                className='formItem'
+                                maxLength={60}
+                                minLength={3}
+                                onChange={handleInput('name')}
+                                required
+                                value={user.name}
+                            />
+                            {id === 'new' && (
+                                <FormControl
+                                    label='Password'
+                                    className='formItem'
+                                    maxLength={60}
+                                    minLength={3}
+                                    onChange={handleInput('password')}
+                                    required
+                                    type='password'
+                                    value={user.password}
+                                />
+                            )}
+                            <FormControl
+                                label='Initial Coupon Discount %'
+                                className='formItem'
+                                max='100'
+                                min='0'
+                                onChange={handleInput('initDiscount')}
+                                required
+                                step='1'
+                                type='number'
+                                value={user.initDiscount}
+                            />
+                            <FormControl
+                                label='Min Balance'
+                                className='formItem'
+                                onChange={handleInput('minBalance')}
+                                required
+                                min='-10000'
+                                step='1'
+                                type='number'
+                                value={user.minBalance}
+                            />
+                            {authUserRole === ADMIN && (
+                                <Checkbox
+                                    label='SuperAgent'
+                                    onChange={handleCheck}
+                                    value={user.isSuper}
+                                />
+                            )}
+                            <div className='form__actions'>
+                                <Button
+                                    type='submit'
+                                    variant='small'
+                                >
+                                    {id && id === 'new' ? 'Create' : 'Save'}
+                                </Button>
+                                <Link to='/admin/users'>
+                                    <Button
+                                        type='button'
+                                        variant='small'
+                                        className='secondary'
+                                    >
+                                        Back
+                                    </Button>
+                                </Link>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import './style.scss';
-import Pagination from "../pagination";
+import Pagination from "../Pagination";
 import {useSelector} from "react-redux";
 import Spinner from "../Spinner";
 

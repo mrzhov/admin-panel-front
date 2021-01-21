@@ -1,4 +1,5 @@
 $white: #ffffff;
+$black: #000000;
 $lightBlue: #2196f3;
 $deepLightBlue: #1485dd;
 $blue: #254bf3;
@@ -20,9 +21,13 @@ $sidebar_btn_active: $darkBlue;
 $btn_primary_bg: $lightBlue;
 $btn_primary_bg_hover: $deepLightBlue;
 $btn_primary_color: $white;
+$btn_secondary_bg: $gray;
+$btn_secondary_bg_hover: #cbd1d9;
+$btn_secondary_color: $dark;
 
 $input_primary: $dark;
 $input_primary_placeholder: $deepGray;
+$input_primary_border_color: #9f9f9f;
 $input_primary_active: $deepLightBlue;
 
 $table_color_hover: $darkBlue;
