@@ -1,4 +1,4 @@
-import {logout} from '../../api/authUserApi';
+import {logout} from '../../api/userApi';
 import {store} from '../../redux/createStore';
 
 import getQueryParameters from './functions';
@@ -42,8 +42,8 @@ const request = async (pathname, options = defaultRequestOptions) => {
     else requestOptions.headers = {'Content-Type': 'application/json'};
 
     const state = store.getState();
-    if (state.user.token)
-        requestOptions.headers['x-access-token'] = state.user.token;
+    if (state.authUser.accessToken)
+        requestOptions.headers['x-access-token'] = state.authUser.accessToken;
 
     try {
         const serverRequest = await fetch(path, requestOptions);
@@ -83,9 +83,7 @@ const request = async (pathname, options = defaultRequestOptions) => {
 
         return response;
     } catch (error) {
-        // eslint-disable-next-line
         console.log(`ERROR FETCH: ${path}`);
-
         throw error;
     }
 };

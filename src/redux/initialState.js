@@ -19,6 +19,10 @@ const initialState = {
     role: getLocalStorage(USER_ROLE) || '',
     isSuper: getLocalStorage(USER_IS_SUPER) || false
   },
+  users: {
+    list: [],
+    totalAmount: 0,
+  },
 };
 
 export default initialState;

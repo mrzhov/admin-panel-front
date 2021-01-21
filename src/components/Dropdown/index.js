@@ -1,23 +1,35 @@
-import React from 'react';
+import React, {useState, createRef, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import Transition from 'react-transition-group/Transition'
 
 import './style.scss';
-import {logout} from '../../api/authUserApi';
+import {logout} from '../../api/userApi';
 import Avatar from "./img/avatar.jpg";
-import useLegacyState from "../../hooks/useLegacyState";
 
 const Dropdown = props => {
+    const [flags, setFlags] = useState({showDropdown: false});
+    const wrapperRef = createRef();
 
-    const [flags, setFlags] = useLegacyState({showDropdown: false});
+    useEffect(() => {
+        const handleClickOutside = event => {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setFlags({showDropdown: false})
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [wrapperRef]);
 
     const handleLogout = () => {
         props.logout();
     }
 
     return (
-        <div className='dropdown'>
+        <div className='dropdown' ref={wrapperRef}>
             <button
                 className={`dropdown__toggle ${flags.showDropdown ? 'dropdown__toggle_active' : ''}`}
                 onClick={() => setFlags({showDropdown: !flags.showDropdown})}

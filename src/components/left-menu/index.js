@@ -8,7 +8,7 @@ import burger from '../../image/burger.svg';
 import logo from '../../image/logo.svg';
 
 import './style.scss';
-import {logout} from '../../api/authUserApi';
+import {logout} from '../../api/userApi';
 
 class LeftMenu extends React.Component {
     state = {

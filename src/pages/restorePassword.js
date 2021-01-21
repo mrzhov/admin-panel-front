@@ -1,12 +1,11 @@
 import React, {useCallback, useState} from 'react';
 import {connect} from 'react-redux';
 
-import Button from '../components/button';
-
-import Input from '../components/Input';
+import useUserApi from '../api/userApi';
 import {CLOSE_RESTORE_PASSWORD} from "../redux/actions/commonFlags";
-import useUsersApi from "../api/usersApi";
 import useLegacyState from "../hooks/useLegacyState";
+import Button from '../components/button';
+import Input from '../components/Input';
 import logo from "../image/logo.svg";
 
 const inputStyle = {
@@ -14,7 +13,7 @@ const inputStyle = {
 };
 
 const RestorePasswordPage = (props) => {
-    const usersApi = useUsersApi();
+    const userApi = useUserApi();
 
     const [data, setData] = useLegacyState({
         email: '',
@@ -46,18 +45,18 @@ const RestorePasswordPage = (props) => {
             e.preventDefault();
 
             if (flags.showNewPassword) {
-                usersApi.resetPassword({email: data.email, ...passwords})
+                userApi.resetPassword({email: data.email, ...passwords})
             } else {
                 if (flags.showCode) {
                     const cb = () => {
                         setFlags({showNewPassword: true})
                     };
-                    usersApi.checkResetKey(data, cb);
+                    userApi.checkResetKey(data, cb);
                 } else {
                     const cb = () => {
                         setFlags({showCode: true})
                     };
-                    usersApi.checkEmail(data, cb);
+                    userApi.checkEmail(data, cb);
                 }
             }
         },

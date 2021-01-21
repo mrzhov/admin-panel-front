@@ -1,10 +1,12 @@
 $white: #ffffff;
-$blue: #1c45ef;
-$blueGradient: radial-gradient(circle, rgba(21,57,198,1) 0%, rgba(0,119,255,1) 100%);
-$darkBlue: #1539c6;
+$lightBlue: #2196f3;
+$deepLightBlue: #1485dd;
+$blue: #254bf3;
+$blueGradient: radial-gradient(circle, rgba(20,128,214,1) 0%, rgba(9,97,166,1) 100%);
+$darkBlue: #183fdb;
 $veryDarkBlue: #001737;
 $dark: #3c3c46;
-$deepGray: #646464;
+$deepGray: #8d8d8d;
 $gray: #dee2e6;
 $lightGrey: #f3f3f3;
 
@@ -15,11 +17,12 @@ $auth_page_bg: $blueGradient;
 $sidebar_bg: $blue;
 $sidebar_btn_active: $darkBlue;
 
-$btn_primary_bg_hover: $darkBlue;
+$btn_primary_bg: $lightBlue;
+$btn_primary_bg_hover: $deepLightBlue;
 $btn_primary_color: $white;
 
 $input_primary: $dark;
 $input_primary_placeholder: $deepGray;
-$input_primary_active: $darkBlue;
+$input_primary_active: $deepLightBlue;
 
 $table_color_hover: $darkBlue;

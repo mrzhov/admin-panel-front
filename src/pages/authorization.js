@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 
 import '../scss/pages/authorization.scss'
 
-import {login} from '../api/authUserApi';
+import {login} from '../api/userApi';
 import Button from '../components/button';
 import Input from '../components/Input';
 import logo from "../image/logo.svg";

@@ -3,85 +3,24 @@ import {useDispatch} from 'react-redux';
 
 import request from '../lib/request';
 
-import {store} from '../redux/createStore';
-import {CLOSE_RESTORE_PASSWORD, END_FETCHING, START_FETCHING} from "../redux/actions/commonFlags";
-import {
-    CREATE_USER,
-    DELETE_USER,
-    GET_CONFIRMED_USERS,
-    GET_USER,
-    GET_USER_PAGES,
-    GET_USERS,
-    UPDATE_USER
-} from "../redux/actions/users";
+import { store } from '../redux/createStore';
+import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
+import { GET_USERS } from "../redux/actions/users";
 
 const failed = response => {
     alert(response.message);
 };
 
 class UsersApi {
-
     dispatch;
 
     constructor(dispatch) {
         this.dispatch = dispatch;
     }
 
-    checkEmail = (body, cb) => {
-        const success = response => {
-            if (response.data.success) {
-                if (cb) cb();
-            }
-        };
-
-        request('/users/check_email', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            success,
-            failed
-        });
-    };
-
-    checkResetKey = (body, cb) => {
-        const success = response => {
-            if (response.data.success) {
-                if (cb) cb();
-            }
-        };
-
-        request('/users/check-reset-key', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            success,
-            failed
-        });
-    };
-
-    resetPassword = (body, cb) => {
-        const success = response => {
-            if (response.data.success) {
-                this.dispatch({
-                    type: CLOSE_RESTORE_PASSWORD
-                });
-                if (cb) cb();
-            }
-        };
-
-        request('/users/reset-password', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            success,
-            failed
-        });
-    };
-
     createUser = (body, cb) => {
         const success = () => {
-            this.dispatch({
-                type: CREATE_USER
-            });
-
-            if (cb) cb();
+            if (cb && typeof cb === 'function') cb();
         };
 
         request('/users', {
@@ -103,7 +42,7 @@ class UsersApi {
                 type: END_FETCHING
             });
 
-            if (cb) cb();
+            if (cb && typeof cb === 'function') cb();
         };
 
         this.dispatch({
@@ -111,19 +50,18 @@ class UsersApi {
         });
 
         request('/users/list', {
+            query,
             success,
-            query
+            failed
         });
     }
 
     getUser = (id, cb) => {
         const success = response => {
-            this.dispatch({type: GET_USER});
-
             const ownerName = response.owner.name;
             const data = response;
             data.ownerName = ownerName;
-            if (cb) cb(data);
+            if (cb && typeof cb === 'function') cb(data);
         };
 
         request(`/users/${id}`, {success});
@@ -131,9 +69,7 @@ class UsersApi {
 
     getUserPages = (cb) => {
         const success = response => {
-            this.dispatch({type: GET_USER_PAGES});
-
-            if (cb) cb(response);
+            if (cb && typeof cb === 'function') cb(response);
         };
 
         request('/users/pages', {success});
@@ -141,9 +77,7 @@ class UsersApi {
 
     updateUser = (body, id, cb) => {
         const success = () => {
-            this.dispatch({type: UPDATE_USER});
-
-            if (cb) cb();
+            if (cb && typeof cb === 'function') cb();
         };
 
         request(`/users/${id}`, {
@@ -155,9 +89,7 @@ class UsersApi {
 
     deleteUser = (id, cb) => {
         const success = () => {
-            this.dispatch({type: DELETE_USER})
-
-            if (cb) cb();
+            if (cb && typeof cb === 'function') cb();
         };
 
         request(`/users/${id}`, {
@@ -168,7 +100,7 @@ class UsersApi {
 
     changePassword = (body, cb) => {
         const success = () => {
-            if (cb) cb();
+            if (cb && typeof cb === 'function') cb();
         };
 
         request('/users/change-password', {
@@ -181,17 +113,14 @@ class UsersApi {
 
     static async getConfirmedUsers(timetableId, eventId) {
         const success = (response) => {
-            store.dispatch({
-                type: GET_CONFIRMED_USERS,
-                response
-            });
+
         };
 
         await request(`/timetables/${timetableId}/events/${eventId}/confirmed_users`, {success});
     }
 }
 
-export default function useUsers() {
+export default function useUsersApi() {
     const dispatch = useDispatch();
 
     return useMemo(() => new UsersApi(dispatch), []);

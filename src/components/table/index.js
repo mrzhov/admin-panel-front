@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 
-import withLoader from '../withLoader';
-
 import './style.scss';
 import Pagination from "../pagination";
 import {useSelector} from "react-redux";
@@ -39,15 +37,15 @@ const Table = props => {
     return (
         <>
             <div
-                className='table-container'
+                className='tableContainer'
                 style={props.style || {}}
             >
                 <table className='table'>
-                    <thead className={`thead ${props.sort ? 'theadSort' : null}`}>
-                    <tr className='tr'>
+                    <thead className={`${props.sort ? 'theadSort' : null}`}>
+                    <tr>
                         {props.options.map((option, i) => (
                             <th
-                                className={`th${option.className ? ` ${option.className}` : ''} ${option.name !== 'actions'}`}
+                                className={`${option.className ? ` ${option.className}` : ''} ${option.name !== 'actions'}`}
                                 style={option.name === 'actions' || option.name === 'users' ? {cursor: 'default'} : null}
                                 key={i}
                                 onClick={() => (option.name === 'actions' || option.name === 'users') ? null : setSortingField(option.name)}
@@ -61,28 +59,25 @@ const Table = props => {
                     </tr>
                     </thead>
                     {!isFetching && (
-                        <tbody className='tbody'>
-                        {props.rows.map(item => (
-                            <tr
-                                className='tr'
-                                key={item._id || item.id || item.gamerId}
-                            >
-                                {props.options.map((option, j) => (
-                                    <td
-                                        className={`td${
-                                            option.className ? ` ${option.className}` : ''
-                                        }`}
-                                        style={item[option.name] instanceof Array ? {'whiteSpace': 'pre-line'} : null}
-                                        key={`${item._id}-${j}`}
-                                    >
-                                        {item[option.name] instanceof Array
-                                            ? item[option.name].map(el => el + '\n')
-                                            : item[option.name]
-                                        }
-                                    </td>
-                                ))}
-                            </tr>
-                        ))}
+                        <tbody>
+                            {props.rows.map(item => (
+                                <tr
+                                    key={item._id || item.id || item.gamerId}
+                                >
+                                    {props.options.map((option, j) => (
+                                        <td
+                                            className={`${ option.className ? ` ${option.className}` : '' }`}
+                                            style={item[option.name] instanceof Array ? {'whiteSpace': 'pre-line'} : null}
+                                            key={`${item._id}-${j}`}
+                                        >
+                                            {item[option.name] instanceof Array
+                                                ? item[option.name].map(el => el + '\n')
+                                                : item[option.name]
+                                            }
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
                         </tbody>
                     )}
                 </table>
@@ -91,11 +86,11 @@ const Table = props => {
                         <p>Nothing found</p>
                     </div>
                 )}
-                {isFetching && (
-                    <div className='spinner-container'>
-                        <Spinner/>
-                    </div>
-                )}
+                {/*{isFetching && (*/}
+                {/*    <div className='spinner-container'>*/}
+                {/*        <Spinner/>*/}
+                {/*    </div>*/}
+                {/*)}*/}
             </div>
             {/*{!isFetching && (*/}
             {/*    <Pagination count={props.totalAmount}/>*/}
@@ -104,4 +99,4 @@ const Table = props => {
     )
 }
 
-export default withLoader(Table);
+export default Table;
