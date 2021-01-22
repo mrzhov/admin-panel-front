@@ -23,6 +23,15 @@ const initialState = {
     list: [],
     totalAmount: 0,
   },
+  couponTypes: {
+    list: [],
+    totalAmount: 0,
+  },
+  coupons: {
+    list: [],
+    totalAmount: 0,
+    currentGeneratedCoupons: [],
+  }
 };
 
 export default initialState;

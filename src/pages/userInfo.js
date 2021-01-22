@@ -75,7 +75,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Name</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.name}</p>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Role</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.role}</p>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Email</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.email}</p>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Balance</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.balance}$</p>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Minimum balance</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.minBalance}$</p>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Initial Discount</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.initDiscount}%</p>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@ const UserPage = ({match}) => {
                                     <div className="cardList__title">
                                         <h6>Coupon Discount</h6>
                                     </div>
-                                    <div className="cardList__subTitle">
+                                    <div className="cardList__subtitle">
                                         <p>{agent.couponDiscount}%</p>
                                     </div>
                                 </div>

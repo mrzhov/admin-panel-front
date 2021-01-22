@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import Checkbox from '../components/Checkbox'
 import FormControl from "../components/FormControl";
 import routes from "../route/routes";
+import {getTitlePage} from "../lib/functions";
 
 const initialState = {
     role: '',
@@ -95,21 +96,13 @@ const UserPage = ({history, match}) => {
         [user]
     );
 
-    const getTitlePage = () => {
-        if (id && id !== 'new') {
-            return <h3>Change agent information</h3>
-        } else {
-            return <h3>Create agent</h3>
-        }
-    }
-
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper mainPage__center'>
                 <div className='formContainer'>
                     <div className="form">
                         <div className='form__title'>
-                            {getTitlePage()}
+                            {getTitlePage(id, 'agent')}
                         </div>
                         <form onSubmit={handleSubmit}>
                             <FormControl

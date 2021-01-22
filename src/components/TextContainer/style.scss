@@ -1,0 +1,14 @@
+.textContainer {
+  background: #eeeeee;
+  font-size: 14px;
+  border: 1px solid #eeeeee;
+  margin: 0;
+
+  &:nth-child(2n) {
+    background: #ffffff;
+  }
+
+  &__wrapper {
+    padding: 20px;
+  }
+}

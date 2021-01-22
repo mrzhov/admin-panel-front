@@ -1,6 +1,7 @@
 @import '../../scss/_variables';
 
 .sidebar {
+  position: fixed;
   min-height: 100vh;
   width: 270px;
   background: $sidebar_bg;

@@ -29,7 +29,7 @@ $table_min_width: 800px;
 
     th {
       padding: $cell_padding;
-      text-align: left;
+      text-align: center;
       white-space: nowrap;
     }
   }
@@ -57,15 +57,15 @@ $table_min_width: 800px;
 
     td {
       padding: $cell_padding;
-      text-align: left;
+      text-align: center;
 
-      color: $dark;
+      color: $table_cell_color;
 
       vertical-align: middle;
     }
 
     .tableBoldFont {
-      font-weight: 800;
+      font-weight: 900;
     }
   }
 }

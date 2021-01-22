@@ -1,9 +1,9 @@
 @import "src/scss/variables";
 
 .mainPage {
-  width: calc(100% - 270px);
+  width: 100%;
   min-height: calc(100vh - 63px);
-  padding-top: 63px;
+  padding: 63px 0 0 270px;
   display: flex;
   flex-direction: column;
 
@@ -16,7 +16,8 @@
 
   &__center {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
   &__header {
@@ -41,13 +42,12 @@
 }
 
 .formContainer {
-  flex: 0 0 50%;
   max-width: 50%;
+  width: 100%;
   background: $white;
   border: none;
   border-radius: 5px;
   box-shadow: 0 0 8px 6px rgba(0,0,0,.02);
-  height: fit-content;
 }
 
 .form {
