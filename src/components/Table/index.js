@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import './style.scss';
 import Pagination from "../Pagination";
-import { useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import Spinner from "../Spinner";
+import { SET_SORT_CONFIG } from "../../redux/actions/commonFlags";
 
 const Table = props => {
     const [sortConfig, setSortConfig] = useState(null);
@@ -11,17 +12,9 @@ const Table = props => {
 
     useEffect(() => {
         if (sortConfig) {
-            if (props.setSortingField) {
-                props.setSortingField(sortConfig);
-            }
+            props.setStoreSortConfig(sortConfig);
         }
     }, [sortConfig])
-
-    useEffect(() => {
-        if (props.parentSortConfig && !props.parentSortConfig.sortField) {
-            setSortConfig(null);
-        }
-    }, [props.parentSortConfig]);
 
     const setSortingField = (value) => {
         let direction = 1;
@@ -96,4 +89,13 @@ const Table = props => {
     )
 }
 
-export default Table;
+const mapDispatchToProps = dispatch => ({
+    setStoreSortConfig: sortConfig => {
+        dispatch({
+            type: SET_SORT_CONFIG,
+            sortConfig
+        });
+    }
+});
+
+export default connect(null, mapDispatchToProps)(Table);

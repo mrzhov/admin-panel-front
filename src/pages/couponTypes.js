@@ -16,11 +16,7 @@ const CouponTypes = ({history}) => {
     const couponTypes = useSelector(state => state.couponTypes.list);
     const totalAmount = useSelector(state => state.couponTypes.totalAmount);
     const authUserRole = useSelector(state => state.authUser.role);
-
-    const [sortConfig, setSortConfig] = useState({
-        sortField: '',
-        sortDirection: ''
-    });
+    const sortConfig = useSelector(state => state.commonFlags.sortConfig)
 
     useEffect(() => {
         getCouponTypes();
@@ -75,8 +71,6 @@ const CouponTypes = ({history}) => {
                     rows={couponTypes}
                     tableActionItems={item => tableActionItems(item)}
                     totalAmount={totalAmount}
-                    setSortConfig={config => setSortConfig(config)}
-                    sortConfig={sortConfig}
                 />
             </div>
         </div>

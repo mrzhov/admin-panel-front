@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../Table';
 import TableActions from '../TableActions';
 
-const TableContainer = ({tableOptions, rows, tableActionItems, totalAmount, setSortConfig, sortConfig}) => {
+const TableContainer = ({tableOptions, rows, tableActionItems, totalAmount}) => {
     const transformCouponDiscount = (user) => {
         if (user.promo.promoType) {
             if (user.promo.promoType === 'Fixed') {
@@ -43,8 +43,6 @@ const TableContainer = ({tableOptions, rows, tableActionItems, totalAmount, setS
             }))}
             sort={true}
             totalAmount={totalAmount}
-            setSortingField={config => setSortConfig(config)}
-            parentSortConfig={sortConfig}
         />
     );
 };

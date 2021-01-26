@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import {CLOSE_RESTORE_PASSWORD, END_FETCHING, OPEN_RESTORE_PASSWORD, START_FETCHING} from "../actions/commonFlags";
+import {CLOSE_RESTORE_PASSWORD, END_FETCHING, OPEN_RESTORE_PASSWORD, START_FETCHING, SET_SORT_CONFIG} from "../actions/commonFlags";
 
 export default function (state = initialState.commonFlags, action) {
     switch (action.type) {
@@ -22,6 +22,11 @@ export default function (state = initialState.commonFlags, action) {
             return {
                 ...state,
                 restorePassword: false
+            };
+        case SET_SORT_CONFIG:
+            return {
+                ...state,
+                sortConfig: action.sortConfig
             };
 
         default:

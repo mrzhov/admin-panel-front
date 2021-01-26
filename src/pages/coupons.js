@@ -16,11 +16,7 @@ const Coupons = () => {
     const coupons = useSelector(state => state.coupons.list);
     const totalAmount = useSelector(state => state.coupons.totalAmount);
     const authUserRole = useSelector(state => state.authUser.role)
-
-    const [sortConfig, setSortConfig] = useState({
-        sortField: '',
-        sortDirection: ''
-    });
+    const sortConfig = useSelector(state => state.commonFlags.sortConfig)
 
     useEffect(() => {
         getCoupons();
@@ -68,8 +64,6 @@ const Coupons = () => {
                     rows={coupons}
                     tableActionItems={item => tableActionItems(item)}
                     totalAmount={totalAmount}
-                    setSortConfig={config => setSortConfig(config)}
-                    sortConfig={sortConfig}
                 />
             </div>
         </div>

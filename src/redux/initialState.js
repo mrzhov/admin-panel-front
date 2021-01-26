@@ -4,7 +4,11 @@ import {USER_ID, USER_IS_SUPER, USER_ROLE, USER_TOKEN} from "../lib/_variables";
 const initialState = {
   commonFlags: {
     isFetching: false,
-    restorePassword: false
+    restorePassword: false,
+    sortConfig: {
+      sortField: '',
+      sortDirection: ''
+    }
   },
   pages: {
     list: getPages(getLocalStorage(USER_ROLE), getLocalStorage(USER_IS_SUPER)) || []

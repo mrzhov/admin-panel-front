@@ -15,10 +15,7 @@ const UsersPage = ({history}) => {
 
     const users = useSelector(state => state.users.list);
     const totalAmount = useSelector(state => state.users.totalAmount);
-    const [sortConfig, setSortConfig] = useState({
-        sortField: '',
-        sortDirection: ''
-    });
+    const sortConfig = useSelector(state => state.commonFlags.sortConfig)
 
     useEffect(() => {
         getUsers();
@@ -74,8 +71,6 @@ const UsersPage = ({history}) => {
                     rows={users}
                     tableActionItems={item => tableActionItems(item)}
                     totalAmount={totalAmount}
-                    setSortConfig={config => setSortConfig(config)}
-                    sortConfig={sortConfig}
                 />
             </div>
         </div>
