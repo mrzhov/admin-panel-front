@@ -199,9 +199,7 @@ export const getQueryString = (param, search = '') => {
     return param ? params[param] : params;
 };
 
-export function pushHistory(query, isReplace) {
-    const {history} = this.props;
-
+export function pushHistory(query, isReplace, history) {
     const formatedQuery = {
         ...getQueryString(),
         ...query

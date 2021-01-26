@@ -4,10 +4,10 @@ import {Link} from 'react-router-dom';
 
 import useUsersApi from '../api/usersApi';
 import Button from '../components/Button';
-import Table from '../components/Table';
-import TableActions from '../components/TableActions';
 import {getQueryString} from '../lib/functions';
+import {usersOptions} from '../lib/tableOptions';
 import routes from '../route/routes';
+import TableContainer from "../components/TableContainer";
 
 const UsersPage = ({history}) => {
     const usersApi = useUsersApi();
@@ -15,7 +15,6 @@ const UsersPage = ({history}) => {
 
     const users = useSelector(state => state.users.list);
     const totalAmount = useSelector(state => state.users.totalAmount);
-
     const [sortConfig, setSortConfig] = useState({
         sortField: '',
         sortDirection: ''
@@ -33,17 +32,33 @@ const UsersPage = ({history}) => {
         })
     }, [page, sortConfig]);
 
-    const transformCouponDiscount = (user) => {
-        if (user.promo.promoType) {
-            if (user.promo.promoType === 'Fixed') {
-                return `${user.initDiscount}% -> ${user.couponDiscount}%`
-            } else {
-                return `${user.initDiscount}% -> ${user.initDiscount}% + ${user.promo.discount}%`
+    const tableActionItems = item => (
+        [
+            {
+                icon: 'info',
+                tooltipText: 'Agent information',
+                onClick: () =>
+                    history.push(
+                        routes.userInfo.path.replace(':id', item._id)
+                    )
+            },
+            {
+                icon: 'edit',
+                tooltipText: 'Change information',
+                onClick: () =>
+                    history.push(
+                        routes.userPage.path.replace(':id', item._id)
+                    )
+            },
+            {
+                icon: 'delete',
+                tooltipText: 'Remove agent',
+                onClick: () =>
+                    window.confirm('Do you really want to delete the agent?') &&
+                    usersApi.deleteUser(item._id, getUsers)
             }
-        } else {
-            return `${user.initDiscount}%`
-        }
-    }
+        ]
+    )
 
     return (
         <div className='mainPage'>
@@ -54,85 +69,13 @@ const UsersPage = ({history}) => {
                         <Button>Create</Button>
                     </Link>
                 </div>
-
-                <Table
-                    options={[
-                        {
-                            name: 'name',
-                            value: 'User'
-                        },
-                        {
-                            name: 'email',
-                            value: 'Email'
-                        },
-                        {
-                            name: 'balance',
-                            value: 'Balance',
-                            className: 'tableBoldFont'
-                        },
-                        {
-                            name: 'minBalance',
-                            value: 'MinBalance',
-                            className: 'tableBoldFont'
-                        },
-                        {
-                            name: 'couponDiscount',
-                            value: 'Coupon Discount'
-                        },
-                        {
-                            name: 'role',
-                            value: 'Role'
-                        },
-                        {
-                            name: 'isSuper',
-                            value: 'Super'
-                        },
-                        {
-                            name: 'actions',
-                            value: ''
-                        }
-                    ]}
-                    rows={users.map(user => ({
-                        ...user,
-                        balance: `${Math.floor(user.balance)}$`,
-                        minBalance: `${Math.floor(user.minBalance)}$`,
-                        couponDiscount: transformCouponDiscount(user),
-                        isSuper: user.isSuper ? "yes" : "no",
-                        actions: (
-                            <TableActions
-                                items={[
-                                    {
-                                        icon: 'info',
-                                        tooltipText: 'Agent information',
-                                        onClick: () =>
-                                            history.push(
-                                                routes.userInfo.path.replace(':id', user._id)
-                                            )
-                                    },
-                                    {
-                                        icon: 'edit',
-                                        tooltipText: 'Change information',
-                                        onClick: () =>
-                                            history.push(
-                                                routes.userPage.path.replace(':id', user._id)
-                                            )
-                                    },
-                                    {
-                                        icon: 'delete',
-                                        tooltipText: 'Remove agent',
-                                        onClick: () =>
-                                            window.confirm('Do you really want to delete the agent?') &&
-                                            usersApi.deleteUser(user._id, getUsers)
-                                    }
-                                ]}
-                            />
-                        )
-                    }))}
-                    // sort={true}
-                    // filter={!!filterValue}
-                    // totalAmount={totalAgents}
-                    // setSortingField={config => setSortConfig(config)}
-                    // parentSortConfig={sortConfig}
+                <TableContainer
+                    tableOptions={usersOptions}
+                    rows={users}
+                    tableActionItems={item => tableActionItems(item)}
+                    totalAmount={totalAmount}
+                    setSortConfig={config => setSortConfig(config)}
+                    sortConfig={sortConfig}
                 />
             </div>
         </div>

@@ -4,17 +4,17 @@ import {Link} from 'react-router-dom';
 
 import useCouponTypes from '../api/couponTypesApi';
 import Button from '../components/Button';
-import Table from '../components/Table';
-import TableActions from '../components/TableActions';
 import {getQueryString} from '../lib/functions';
 import routes from '../route/routes';
+import TableContainer from "../components/TableContainer";
+import { couponTypesOptions } from "../lib/tableOptions";
 
 const CouponTypes = ({history}) => {
     const couponTypesApi = useCouponTypes();
     const {page} = getQueryString();
 
     const couponTypes = useSelector(state => state.couponTypes.list);
-    const totalCouponTypes = useSelector(state => state.couponTypes.totalAmount);
+    const totalAmount = useSelector(state => state.couponTypes.totalAmount);
     const authUserRole = useSelector(state => state.authUser.role);
 
     const [sortConfig, setSortConfig] = useState({
@@ -34,6 +34,31 @@ const CouponTypes = ({history}) => {
         });
     }, [page, sortConfig]);
 
+    const tableActionItems = item => {
+        if (authUserRole && authUserRole === 'Admin') {
+            return (
+                [
+                    {
+                        icon: 'edit',
+                        tooltipText: 'Change coupon type',
+                        onClick: () =>
+                            history.push(
+                                routes.couponTypePage.path.replace(':id', item._id)
+                            )
+                    },
+                    {
+                        icon: 'delete',
+                        tooltipText: 'Remove coupon type',
+                        onClick: () =>
+                            window.confirm('Do you really want to delete the couponType?') &&
+                            couponTypesApi.deleteCouponType(item._id, getCouponTypes)
+                    }
+                ]
+            )
+        }
+        return []
+    }
+
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper'>
@@ -45,68 +70,13 @@ const CouponTypes = ({history}) => {
                         </Link>
                     )}
                 </div>
-
-                <Table
-                    options={[
-                        {
-                            name: 'limit',
-                            value: 'Limit'
-                        },
-                        {
-                            name: 'duration',
-                            value: 'Duration'
-                        },
-                        {
-                            name: 'price',
-                            value: 'Price in dollars',
-                            className: 'tableBoldFont'
-                        },
-                        {
-                            name: 'priceYuan',
-                            value: 'Price in yuan',
-                            className: 'tableBoldFont'
-                        },
-                        {
-                            name: 'description',
-                            value: 'Description'
-                        },
-                        {
-                            name: 'actions',
-                            value: ''
-                        }
-                    ]}
-                    rows={couponTypes.map(couponType => ({
-                        ...couponType,
-                        duration: `${couponType.duration} days`,
-                        price: `${Math.floor(couponType.price)}$`,
-                        priceYuan: `${Math.floor(couponType.priceYuan)} yuan`,
-                        actions: authUserRole && authUserRole === 'Admin' && (
-                            <TableActions
-                                items={[
-                                    {
-                                        icon: 'edit',
-                                        tooltipText: 'Change coupon type',
-                                        onClick: () =>
-                                            history.push(
-                                                routes.couponTypePage.path.replace(':id', couponType._id)
-                                            )
-                                    },
-                                    {
-                                        icon: 'delete',
-                                        tooltipText: 'Remove coupon type',
-                                        onClick: () =>
-                                            window.confirm('Do you really want to delete the couponType?') &&
-                                            couponTypesApi.deleteCouponType(couponType._id, getCouponTypes)
-                                    }
-                                ]}
-                            />
-                        )
-                    }))}
-                    // sort={true}
-                    // filter={!!filterValue}
-                    // totalAmount={totalCouponTypes}
-                    // setSortingField={config => setSortConfig(config)}
-                    // parentSortConfig={sortConfig}
+                <TableContainer
+                    tableOptions={couponTypesOptions}
+                    rows={couponTypes}
+                    tableActionItems={item => tableActionItems(item)}
+                    totalAmount={totalAmount}
+                    setSortConfig={config => setSortConfig(config)}
+                    sortConfig={sortConfig}
                 />
             </div>
         </div>

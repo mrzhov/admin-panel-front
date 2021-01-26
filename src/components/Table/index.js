@@ -1,25 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './style.scss';
 import Pagination from "../Pagination";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import Spinner from "../Spinner";
 
 const Table = props => {
     const [sortConfig, setSortConfig] = useState(null);
     const isFetching = useSelector(state => state.commonFlags.isFetching);
 
-    // useEffect(() => {
-    //     if (sortConfig) {
-    //         props.setSortingField ? props.setSortingField(sortConfig) : null
-    //     }
-    // }, [sortConfig])
-    //
-    // useEffect(() => {
-    //     if (props.parentSortConfig && !props.parentSortConfig.sortField) {
-    //         setSortConfig(null);
-    //     }
-    // }, [props.parentSortConfig]);
+    useEffect(() => {
+        if (sortConfig) {
+            if (props.setSortingField) {
+                props.setSortingField(sortConfig);
+            }
+        }
+    }, [sortConfig])
+
+    useEffect(() => {
+        if (props.parentSortConfig && !props.parentSortConfig.sortField) {
+            setSortConfig(null);
+        }
+    }, [props.parentSortConfig]);
 
     const setSortingField = (value) => {
         let direction = 1;
@@ -45,8 +47,8 @@ const Table = props => {
                     <tr>
                         {props.options.map((option, i) => (
                             <th
-                                className={`${option.className ? ` ${option.className}` : ''} ${option.name !== 'actions'}`}
-                                style={option.name === 'actions' || option.name === 'users' ? {cursor: 'default'} : null}
+                                className={`${option.className ? `${option.className}` : ''}${sortConfig && sortConfig.sortField === option.name ? ' th_active' : ''}`}
+                                style={option.name === 'actions' || option.name === 'users' ? { cursor: 'default' } : null}
                                 key={i}
                                 onClick={() => (option.name === 'actions' || option.name === 'users') ? null : setSortingField(option.name)}
                             >
@@ -60,41 +62,36 @@ const Table = props => {
                     </thead>
                     {!isFetching && (
                         <tbody>
-                            {props.rows.map(item => (
-                                <tr
-                                    key={item._id || item.id || item.gamerId}
-                                >
-                                    {props.options.map((option, j) => (
-                                        <td
-                                            className={`${ option.className ? ` ${option.className}` : '' }`}
-                                            style={item[option.name] instanceof Array ? {'whiteSpace': 'pre-line'} : null}
-                                            key={`${item._id}-${j}`}
-                                        >
-                                            {item[option.name] instanceof Array
-                                                ? item[option.name].map(el => el + '\n')
-                                                : item[option.name]
-                                            }
-                                        </td>
-                                    ))}
-                                </tr>
-                            ))}
+                        {props.rows.map(item => (
+                            <tr
+                                key={item._id || item.id || item.gamerId}
+                            >
+                                {props.options.map((option, j) => (
+                                    <td
+                                        className={`${option.className ? ` ${option.className}` : ''}`}
+                                        style={item[option.name] instanceof Array ? { 'whiteSpace': 'pre-line' } : null}
+                                        key={`${item._id}-${j}`}
+                                    >
+                                        {item[option.name] instanceof Array
+                                            ? item[option.name].map(el => el + '\n')
+                                            : item[option.name]
+                                        }
+                                    </td>
+                                ))}
+                            </tr>
+                        ))}
                         </tbody>
                     )}
                 </table>
-                {!isFetching && props.filter && !props.rows.length && (
-                    <div className='noFound'>
-                        <p>Nothing found</p>
-                    </div>
-                )}
-                {/*{isFetching && (*/}
-                {/*    <div className='spinner-container'>*/}
-                {/*        <Spinner/>*/}
-                {/*    </div>*/}
-                {/*)}*/}
             </div>
-            {/*{!isFetching && (*/}
-            {/*    <Pagination count={props.totalAmount}/>*/}
-            {/*)}*/}
+            {!isFetching && (
+                <Pagination count={props.totalAmount}/>
+            )}
+            {isFetching && (
+                <div className='spinnerContainer'>
+                    <Spinner/>
+                </div>
+            )}
         </>
     )
 }
