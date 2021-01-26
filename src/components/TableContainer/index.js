@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../Table';
 import TableActions from '../TableActions';
 
-const TableContainer = ({tableOptions, rows, tableActionItems, totalAmount}) => {
+const TableContainer = ({tableOptions, rows, tableActionItems = () => {}, totalAmount = 0}) => {
     const transformCouponDiscount = (user) => {
         if (user.promo.promoType) {
             if (user.promo.promoType === 'Fixed') {

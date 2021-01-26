@@ -36,14 +36,16 @@ class CouponsApi {
 
     getCoupons = (query, cb) => {
         const success = response => {
-            this.dispatch({
-                type: GET_COUPONS,
-                response
-            });
+            if (!query.hasOwnProperty('isActivated')) {
+                this.dispatch({
+                    type: GET_COUPONS,
+                    response
+                });
+            }
             this.dispatch({
                 type: END_FETCHING
             });
-            if (cb && typeof cb === 'function') cb();
+            if (cb && typeof cb === 'function') cb(response);
         };
 
         this.dispatch({

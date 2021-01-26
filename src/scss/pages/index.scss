@@ -39,6 +39,11 @@
       }
     }
   }
+
+  &__twoTableContainer {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .formContainer {

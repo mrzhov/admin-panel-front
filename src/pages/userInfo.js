@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react';
-import {useSelector} from "react-redux";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from "react-redux";
 
 import useUserApi from '../api/usersApi';
 import useLegacyState from '../hooks/useLegacyState';
 
 import '../scss/pages/userInfo.scss'
 import Avatar from "../image/avatar.jpg";
+import useCoupons from "../api/couponsApi";
+import { activatedCouponsOptions, unactivatedCouponsOptions } from "../lib/tableOptions";
+import TableContainer from "../components/TableContainer";
 
 const initialState = {
     role: '',
@@ -19,20 +22,23 @@ const initialState = {
     ownerName: ''
 };
 
-const UserPage = ({match}) => {
+const UserPage = ({ match }) => {
     const usersApi = useUserApi();
-    // const couponsApi = useCoupons();
+    const couponsApi = useCoupons();
     // const depositsApi = useDeposits();
 
-    const {id} = match.params;
+    const { id } = match.params;
     const authUserId = useSelector(state => state.authUser.id)
+    const sortConfig = useSelector(state => state.commonFlags.sortConfig)
 
     const [agent, setUser] = useLegacyState(initialState);
+    const [activatedCoupons, setActivatedCoupons] = useState([]);
+    const [unactivatedCoupons, setUnActivatedCoupons] = useState([]);
 
     useEffect(() => {
         const userId = id === 'me' ? authUserId : id;
         usersApi.getUser(userId, data => {
-            const {role, name, email, balance, minBalance, initDiscount, couponDiscount, isSuper} = data;
+            const { role, name, email, balance, minBalance, initDiscount, couponDiscount, isSuper } = data;
             setUser({
                 role,
                 name,
@@ -45,6 +51,25 @@ const UserPage = ({match}) => {
             })
         });
     }, [id]);
+
+    useEffect(() => {
+        getCoupons({ isActivated: true });
+        getCoupons({ isActivated: false });
+    }, [id, sortConfig]);
+
+    const getCoupons = useCallback((config) => {
+        const cb = response => {
+            config.isActivated
+                ? setActivatedCoupons(response.data)
+                : setUnActivatedCoupons(response.data)
+        };
+        couponsApi.getCoupons({
+            id: id === 'me' ? authUserId : id,
+            sortField: sortConfig.sortField,
+            sortDirection: sortConfig.sortDirection,
+            isActivated: config.isActivated
+        }, cb)
+    }, [id, sortConfig]);
 
     return (
         <div className='mainPage'>
@@ -136,6 +161,16 @@ const UserPage = ({match}) => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className='mainPage__twoTableContainer'>
+                    <TableContainer
+                        tableOptions={activatedCouponsOptions}
+                        rows={activatedCoupons}
+                    />
+                    <TableContainer
+                        tableOptions={unactivatedCouponsOptions}
+                        rows={unactivatedCoupons}
+                    />
                 </div>
             </div>
         </div>

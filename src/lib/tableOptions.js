@@ -110,3 +110,53 @@ export const couponOptions = [
         value: ''
     }
 ]
+export const activatedCouponsOptions = [
+    {
+        name: 'code',
+        value: 'Code'
+    },
+    {
+        name: 'price',
+        value: 'Price in dollars',
+        className: 'tableBoldFont'
+    },
+    {
+        name: 'limit',
+        value: 'Limit'
+    },
+    {
+        name: 'duration',
+        value: 'Duration'
+    },
+    {
+        name: 'activatedAt',
+        value: 'Activated'
+    },
+    {
+        name: 'gamerName',
+        value: 'GamerName'
+    }
+]
+export const unactivatedCouponsOptions = [
+    {
+        name: 'code',
+        value: 'Code'
+    },
+    {
+        name: 'price',
+        value: 'Price in dollars',
+        className: 'tableBoldFont'
+    },
+    {
+        name: 'limit',
+        value: 'Limit'
+    },
+    {
+        name: 'duration',
+        value: 'Duration'
+    },
+    {
+        name: 'createdAt',
+        value: 'Created'
+    },
+]
