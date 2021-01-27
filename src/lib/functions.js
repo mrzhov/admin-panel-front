@@ -55,65 +55,65 @@ export const getPages = (role, isSuper) => {
         case ADMIN:
             pagesList.push({
                 name: 'Agents',
-                url: '/admin/users'
+                url: '/users'
             })
             pagesList.push({
                 name: 'Coupons',
-                url: '/admin/coupons'
+                url: '/coupons'
             })
             pagesList.push({
                 name: 'Coupon types',
-                url: '/admin/coupon-types'
+                url: '/coupon-types'
             })
             pagesList.push({
                 name: 'Wallets',
-                url: '/admin/wallets'
+                url: '/wallets'
             })
             pagesList.push({
                 name: 'Deposits',
-                url: '/admin/deposits'
+                url: '/deposits'
             })
             pagesList.push({
                 name: 'Promotions',
-                url: '/admin/promo'
+                url: '/promo'
             })
             pagesList.push({
                 name: 'Applications',
-                url: '/admin/apps'
+                url: '/apps'
             })
             pagesList.push({
                 name: 'Contacts',
-                url: '/admin/contacts'
+                url: '/contacts'
             })
             break;
         case AGENT:
             pagesList.push({
                 name: 'Agents',
-                url: '/admin/users'
+                url: '/users'
             })
             pagesList.push({
                 name: 'Coupons',
-                url: '/admin/coupons'
+                url: '/coupons'
             })
             pagesList.push({
                 name: 'Coupon types',
-                url: '/admin/coupon-types'
+                url: '/coupon-types'
             })
             if (isSuper) {
                 pagesList.push({
                     name: 'Deposits',
-                    url: '/admin/deposits'
+                    url: '/deposits'
                 })
             }
             break;
         case SUB_AGENT:
             pagesList.push({
                 name: 'Coupons',
-                url: '/admin/coupons'
+                url: '/coupons'
             })
             pagesList.push({
                 name: 'Coupon types',
-                url: '/admin/coupon-types'
+                url: '/coupon-types'
             })
             break;
 

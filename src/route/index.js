@@ -28,8 +28,8 @@ class AppRoute extends Component {
                 const RouteComponent = route.component;
                 return <RouteComponent {...props} />;
             } else {
-                if (this.props.location.pathname !== '/admin/start') {
-                    return <Redirect to={{pathname: '/admin/start'}}/>
+                if (this.props.location.pathname !== '/users/me') {
+                    return <Redirect to={{pathname: '/users/me'}}/>
                 } else {
                     const RouteComponent = route.component;
                     return <RouteComponent {...props} />;
@@ -40,25 +40,25 @@ class AppRoute extends Component {
 
     checkRouteDefence(role, isSuper, route) {
         const agentRoutePath = [
-            '/admin/users/:id/edit',
-            '/admin/users',
-            '/admin/users/:id',
-            '/admin/users/:id/change-password',
-            '/admin/coupons/:id',
-            '/admin/coupons',
-            '/admin/coupon-types/:id',
-            '/admin/coupon-types',
+            '/users/:id/edit',
+            '/users',
+            '/users/:id',
+            '/users/:id/change-password',
+            '/coupons/:id',
+            '/coupons',
+            '/coupon-types/:id',
+            '/coupon-types',
         ]
         const depositRoute = [
-            '/admin/deposits/:id',
-            '/admin/deposits'
+            '/deposits/:id',
+            '/deposits'
         ]
         const subAgentRoutePath = [
-            '/admin/users/:id/change-password',
-            '/admin/coupons/:id',
-            '/admin/coupons',
-            '/admin/coupon-types/:id',
-            '/admin/coupon-types',
+            '/users/:id/change-password',
+            '/coupons/:id',
+            '/coupons',
+            '/coupon-types/:id',
+            '/coupon-types',
         ]
 
         switch (role) {
@@ -99,7 +99,7 @@ class AppRoute extends Component {
 
         return <Switch>
             {result}
-            <Redirect from="/admin/**" to="/admin/start"/>
+            <Redirect from="/**" to="/users/me"/>
         </Switch>;
     }
 }

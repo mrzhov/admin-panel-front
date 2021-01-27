@@ -9,36 +9,36 @@ import CouponTypes from '../pages/couponTypes';
 
 export default {
     userPage: {
-        path: '/admin/users/:id/edit',
+        path: '/users/:id/edit',
         component: User
     },
     usersPage: {
-        path: '/admin/users',
+        path: '/users',
         component: Users
     },
     userInfo: {
-        path: '/admin/users/:id',
+        path: '/users/:id',
         component: UserInfo
     },
     userChangePassword: {
-        path: '/admin/users/:id/change-password',
+        path: '/users/:id/change-password',
         component: UserChangePassword
     },
 
     couponPage: {
-        path: '/admin/coupons/:id',
+        path: '/coupons/:id',
         component: Coupon
     },
     coupons: {
-        path: '/admin/coupons',
+        path: '/coupons',
         component: Coupons
     },
     couponTypePage: {
-        path: '/admin/coupon-types/:id',
+        path: '/coupon-types/:id',
         component: CouponType
     },
     couponTypesPage: {
-        path: '/admin/coupon-types',
+        path: '/coupon-types',
         component: CouponTypes
     },
 };

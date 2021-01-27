@@ -1,0 +1,47 @@
+@import '../../scss/_variables';
+
+.tabsContainer {
+  .tableContainer {
+    margin-top: 0;
+    box-shadow: 0 15px 8px 6px rgba(0,0,0,.02);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
+
+.tabsList {
+  display: flex;
+}
+
+.tabItem {
+  background: $white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: all .1s ease-in-out;
+
+  button {
+    padding: 15px 30px;
+  }
+
+  &:first-child {
+    border-top-right-radius: 0;
+  }
+
+  &:last-child {
+    border-top-left-radius: 0;
+  }
+
+  &:hover {
+    background: $lightBlue;
+    button {
+      color: $white;
+    }
+  }
+
+  &_active {
+    background: $lightBlue;
+    button {
+      color: $white;
+    }
+  }
+}

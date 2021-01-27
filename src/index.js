@@ -17,7 +17,7 @@ const Root = () => (
     <Provider store={store}>
       <Route
           component={App}
-          path='/admin'
+          path='/'
       />
     </Provider>
   </BrowserRouter>

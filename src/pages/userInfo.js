@@ -9,6 +9,8 @@ import Avatar from "../image/avatar.jpg";
 import useCoupons from "../api/couponsApi";
 import { activatedCouponsOptions, unactivatedCouponsOptions } from "../lib/tableOptions";
 import TableContainer from "../components/TableContainer";
+import TabsContainer from "../components/TabsContainer";
+import { getRandom } from "../lib/functions";
 
 const initialState = {
     role: '',
@@ -70,6 +72,27 @@ const UserPage = ({ match }) => {
             isActivated: config.isActivated
         }, cb)
     }, [id, sortConfig]);
+
+    const tableTabs = [
+        {
+            id: getRandom(),
+            tabName: 'Activated coupons',
+            item:
+                <TableContainer
+                    tableOptions={activatedCouponsOptions}
+                    rows={activatedCoupons}
+                />
+        },
+        {
+            id: getRandom(),
+            tabName: 'Unactivated coupons',
+            item:
+                <TableContainer
+                    tableOptions={unactivatedCouponsOptions}
+                    rows={unactivatedCoupons}
+                />
+        },
+    ]
 
     return (
         <div className='mainPage'>
@@ -162,16 +185,7 @@ const UserPage = ({ match }) => {
                         </div>
                     </div>
                 </div>
-                <div className='mainPage__twoTableContainer'>
-                    <TableContainer
-                        tableOptions={activatedCouponsOptions}
-                        rows={activatedCoupons}
-                    />
-                    <TableContainer
-                        tableOptions={unactivatedCouponsOptions}
-                        rows={unactivatedCoupons}
-                    />
-                </div>
+                <TabsContainer items={tableTabs}/>
             </div>
         </div>
     );
