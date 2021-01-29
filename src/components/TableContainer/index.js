@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../Table';
 import TableActions from '../TableActions';
 
-const TableContainer = ({tableOptions, rows, tableActionItems = () => {}, totalAmount = 0}) => {
+const TableContainer = ({tableOptions = [], rows = [], tableActionItems = () => {}, totalAmount = 0}) => {
     const transformCouponDiscount = (user) => {
         if (user.promo.promoType) {
             if (user.promo.promoType === 'Fixed') {
@@ -27,7 +27,9 @@ const TableContainer = ({tableOptions, rows, tableActionItems = () => {}, totalA
                 isSuper: item.isSuper ? "yes" : "no",
                 duration: `${item.duration} days`,
                 price: `${Math.floor(item.price)}$`,
+                amountUsd: `${Math.floor(item.amountUsd)}$`,
                 priceYuan: `${Math.floor(item.priceYuan)} yuan`,
+                amountCurrency: `${Math.floor(item.amountCurrency)} yuan`,
                 createdAt: new Date(item.createdAt).toLocaleString(),
                 activatedAt: item.isActivated
                     ? item.activatedAt

@@ -1,45 +1,35 @@
-import {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import { useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import request from '../lib/request';
-import {START_FETCHING, END_FETCHING} from "../redux/actions/commonFlags";
-import {CLEAR_CURRENT_GENERATED_COUPONS, CREATE_COUPON, GET_COUPONS} from "../redux/actions/coupons";
+import { GET_DEPOSITS } from "../redux/actions/deposits";
+import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
+import { GET_COUPONS } from "../redux/actions/coupons";
 
 const failed = response => {
     alert(response.message);
 };
 
-class CouponsApi {
+class DepositsApi {
     dispatch;
 
     constructor(dispatch) {
         this.dispatch = dispatch;
     }
 
-    createCoupon = (body, cb) => {
+    getDeposits = (query, cb) => {
         const success = response => {
-            if (cb && typeof cb === 'function') cb(response);
-        };
-
-        request('/coupons', {
-            body: JSON.stringify(body),
-            method: 'POST',
-            success,
-            failed,
-        });
-    };
-
-    getCoupons = (query, cb) => {
-        const success = response => {
-            if (!query.hasOwnProperty('isActivated')) {
+            if (!query.hasOwnProperty('ownerId')) {
                 this.dispatch({
-                    type: GET_COUPONS,
+                    type: GET_DEPOSITS,
                     response
                 });
             }
+
             this.dispatch({
                 type: END_FETCHING
             });
+
             if (cb && typeof cb === 'function') cb(response);
         };
 
@@ -47,30 +37,43 @@ class CouponsApi {
             type: START_FETCHING
         });
 
-        request('/coupons', {
+        request('/deposits', {
             query,
             success,
             failed,
         });
     };
 
-    getCoupon = (id, cb) => {
-        const success = response => {
-            if (cb && typeof cb === 'function') cb(response);
+    createDeposit = (body, cb) => {
+        const success = () => {
+            if (cb && typeof cb === 'function') cb();
         };
 
-        request(`/coupons/${id}`, {
+        request('/deposits', {
+            body: JSON.stringify(body),
+            method: 'POST',
             success,
             failed,
         });
     };
 
-    updateCoupon = (body, id, cb) => {
+    getDeposit = (id, cb) => {
+        const success = response => {
+            if (cb && typeof cb === 'function') cb(response);
+        };
+
+        request(`/deposits/${id}`, {
+          success,
+          failed
+        });
+    };
+
+    updateDeposit = (body, id, cb) => {
         const success = () => {
             if (cb && typeof cb === 'function') cb();
         };
 
-        request(`/coupons/${id}`, {
+        request(`/deposits/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
             success,
@@ -78,12 +81,12 @@ class CouponsApi {
         });
     };
 
-    deleteCoupon = (id, cb) => {
+    deleteDeposit = (id, cb) => {
         const success = () => {
             if (cb && typeof cb === 'function') cb();
         };
 
-        request(`/coupons/${id}`, {
+        request(`/deposits/${id}`, {
             method: 'DELETE',
             success,
             failed,
@@ -91,8 +94,8 @@ class CouponsApi {
     };
 }
 
-export default function useCoupons() {
+export default function useDeposits() {
     const dispatch = useDispatch();
 
-    return useMemo(() => new CouponsApi(dispatch), []);
+    return useMemo(() => new DepositsApi(dispatch), []);
 }

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from "react-router-dom";
 
@@ -26,6 +26,7 @@ const Coupon = ({match}) => {
     const couponTypesApi = useCouponTypes();
 
     const [coupon, setCoupon] = useLegacyState(initialState);
+    const [generatedCoupons, setGeneratedCoupons] = useState([]);
     const [flags, setFlags] = useLegacyState({copied: false})
 
     const {id} = match.params;
@@ -33,7 +34,6 @@ const Coupon = ({match}) => {
     const users = useSelector(state => state.users.list);
     const user = useSelector(state => state.authUser);
     const couponTypes = useSelector(state => state.couponTypes.list);
-    const currentGeneratedCoupons = useSelector(state => state.coupons.currentGeneratedCoupons);
 
     const getUsers = useCallback(() => {
         usersApi.getUsers();
@@ -43,17 +43,12 @@ const Coupon = ({match}) => {
         couponTypesApi.getCouponTypes();
     }, [id]);
 
-    const clearCurrentGeneratedCoupons = useCallback(() => {
-        couponsApi.clearCurrentGeneratedCoupons();
-    }, [currentGeneratedCoupons])
-
     useEffect(() => {
         if (id && id !== 'new') {
             couponsApi.getCoupon(id, ({data}) => setCoupon(data));
         }
 
         setCoupon({creator: user.id});
-        clearCurrentGeneratedCoupons();
         getUsers();
         getCouponTypes()
     }, [id]);
@@ -75,14 +70,14 @@ const Coupon = ({match}) => {
         e => {
             e.preventDefault();
 
-            const cb = () => {};
-
             coupon.owner = coupon.owner.value;
             coupon.couponType = coupon.couponType.value;
             if (id && id !== 'new') {
-                couponsApi.updateCoupon(coupon, id, cb);
+                couponsApi.updateCoupon(coupon, id);
             } else {
-                couponsApi.createCoupon(coupon, cb);
+                couponsApi.createCoupon(coupon, (response) => {
+                    setGeneratedCoupons(response)
+                });
             }
         },
         [coupon]
@@ -104,8 +99,8 @@ const Coupon = ({match}) => {
 
     const copyAllCodes = () => {
         let generatedCodes = '';
-        currentGeneratedCoupons.forEach((el, index) => {
-            if (index !== currentGeneratedCoupons.length - 1) {
+        generatedCoupons.forEach((el, index) => {
+            if (index !== generatedCoupons.length - 1) {
                 generatedCodes = generatedCodes + el.code + '\n';
             } else {
                 generatedCodes = generatedCodes + el.code;
@@ -127,7 +122,7 @@ const Coupon = ({match}) => {
             <div className='form__title'>
                 <h3>Generated list</h3>
             </div>
-            {currentGeneratedCoupons.map((el, index) => <TextContainer text={el.code} key={index}/>)}
+            {generatedCoupons.map((el, index) => <TextContainer text={el.code} key={index}/>)}
             <Button
                 variant='large'
                 onClick={copyAllCodes}
@@ -196,7 +191,7 @@ const Coupon = ({match}) => {
                         </form>
                     </div>
                 </div>
-                {id && id === 'new' && Boolean(currentGeneratedCoupons.length) && getGeneratedList()}
+                {id && id === 'new' && Boolean(generatedCoupons.length) && getGeneratedList()}
             </div>
         </div>
     );

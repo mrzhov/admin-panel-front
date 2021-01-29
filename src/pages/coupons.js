@@ -2,12 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import useCoupons from '../api/couponsApi';
 import Button from '../components/Button';
+import TableContainer from "../components/TableContainer";
+
+import useCoupons from '../api/couponsApi';
 import { getQueryString } from '../lib/functions';
 import routes from '../route/routes';
 import { couponOptions } from "../lib/tableOptions";
-import TableContainer from "../components/TableContainer";
 
 const Coupons = () => {
     const couponsApi = useCoupons();

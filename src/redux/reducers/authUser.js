@@ -3,7 +3,7 @@ import initialState from '../initialState';
 import {LOGIN, LOGOUT} from "../actions/user";
 import {USER_ID, USER_IS_SUPER, USER_ROLE, USER_TOKEN} from "../../lib/_variables";
 
-export default function (state = initialState.authUser, action) {
+export default (state = initialState.authUser, action) => {
   switch (action.type) {
     case LOGIN:
       setLocalStorage(USER_TOKEN, action.response.data.accessToken);

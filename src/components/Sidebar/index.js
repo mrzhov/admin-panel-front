@@ -18,7 +18,6 @@ const SideBar = props => (
                     activeClassName='sidebar__link_active'
                     className='sidebar__link'
                     key={i}
-                    //onClick={this.handleClick}
                     to={page.url}
                 >
                     <span>{page.name}</span>

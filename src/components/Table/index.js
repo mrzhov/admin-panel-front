@@ -76,6 +76,11 @@ const Table = props => {
                         </tbody>
                     )}
                 </table>
+                {!isFetching && !props.rows.length && (
+                    <div className='noFound'>
+                        <p>Nothing found</p>
+                    </div>
+                )}
             </div>
             {!isFetching && (
                 <Pagination count={props.totalAmount}/>

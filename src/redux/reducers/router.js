@@ -1,7 +1,7 @@
 import { SET_LOCATION } from '../../api/router';
 import initialState from '../initialState';
 
-export default function(state = initialState.router, action) {
+export default (state = initialState.router, action) => {
   switch (action.type) {
     case SET_LOCATION:
       return {

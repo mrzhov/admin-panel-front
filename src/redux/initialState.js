@@ -34,8 +34,15 @@ const initialState = {
   coupons: {
     list: [],
     totalAmount: 0,
-    currentGeneratedCoupons: [],
-  }
+  },
+  wallets: {
+    list: [],
+    totalAmount: 0,
+  },
+  deposits: {
+    list: [],
+    totalAmount: 0
+  },
 };
 
 export default initialState;

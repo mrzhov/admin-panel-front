@@ -1,35 +1,30 @@
 import React, {useCallback, useEffect} from 'react';
+import { Link } from "react-router-dom";
 
-import useCouponTypes from '../api/couponTypesApi';
 import Button from '../components/Button';
 import FormControl from '../components/FormControl';
+
+import useWallet from '../api/walletsApi';
 import useLegacyState from '../hooks/useLegacyState';
 import routes from '../route/routes';
-import {Link} from "react-router-dom";
-import {getTitlePage} from "../lib/functions";
+import { getTitlePage } from '../lib/functions';
 
 const initialState = {
-    id: '',
-    duration: '',
-    limit: '',
-    price: '',
-    priceYuan: '',
+    name: '',
+    address: '',
     description: '',
-    isActive: true
 };
 
-const CouponType = ({history, match}) => {
-    const couponTypesApi = useCouponTypes();
+const Wallet = ({history, match}) => {
+    const walletsApi = useWallet();
 
-    const [couponType, setCouponType] = useLegacyState(initialState);
+    const [wallet, setWallet] = useLegacyState(initialState);
 
     const {id} = match.params;
 
     useEffect(() => {
         if (id && id !== 'new') {
-            couponTypesApi.getCouponType(id, ({data}) => {
-                setCouponType(data)
-            });
+            walletsApi.getWallet(id, ({data}) => setWallet(data));
         }
     }, [id]);
 
@@ -37,28 +32,24 @@ const CouponType = ({history, match}) => {
         name => e => {
             const {value} = e.target;
 
-            if (name === 'limit') {
-                setCouponType({[name]: value.replace(/[^0-9\/]/g, "")})
-            } else {
-                setCouponType({[name]: value})
-            }
+            setWallet({[name]: value});
         },
-        [couponType]
+        [wallet]
     );
 
     const handleSubmit = useCallback(
         e => {
             e.preventDefault();
 
-            const cb = () => history.push(routes.couponTypesPage.path);
+            const cb = () => history.push(routes.walletsPage.path);
 
             if (id && id !== 'new') {
-                couponTypesApi.updateCouponType(couponType, id, cb);
+                walletsApi.updateWallet(wallet, id, cb);
             } else {
-                couponTypesApi.createCouponType(couponType, cb);
+                walletsApi.createWallet(wallet, cb);
             }
         },
-        [couponType]
+        [wallet]
     );
 
     return (
@@ -67,53 +58,35 @@ const CouponType = ({history, match}) => {
                 <div className='formContainer'>
                     <div className="form">
                         <div className='form__title'>
-                            {getTitlePage(id, 'coupon type')}
+                            {getTitlePage(id, 'wallet')}
                         </div>
                         <form onSubmit={handleSubmit}>
                             <FormControl
-                                label='Duration'
                                 className='formItem'
-                                maxLength={60}
-                                onChange={handleInput('duration')}
-                                required
-                                type='number'
-                                value={couponType.duration}
-                            />
-                            <FormControl
-                                label='Limit'
-                                className='formItem'
-                                onChange={handleInput('limit')}
-                                required
-                                value={couponType.limit}
-                            />
-                            <FormControl
-                                label='Price in dollars '
-                                className='formItem'
+                                label='Name'
                                 min='0'
-                                onChange={handleInput('price')}
+                                onChange={handleInput('name')}
                                 required
                                 step='1'
-                                type='number'
-                                value={couponType.price}
+                                value={wallet.name}
                             />
                             <FormControl
-                                label='Price in yuan'
                                 className='formItem'
+                                label='Address'
                                 min='0'
-                                onChange={handleInput('priceYuan')}
+                                onChange={handleInput('address')}
                                 required
                                 step='1'
-                                type='number'
-                                value={couponType.priceYuan}
+                                value={wallet.address}
                             />
                             <FormControl
+                                className='formItem'
                                 label='Description'
-                                className='formItem'
-                                maxLength={60}
-                                minLength={3}
+                                min='0'
                                 onChange={handleInput('description')}
-                                textarea
-                                value={couponType.description}
+                                required
+                                step='1'
+                                value={wallet.description}
                             />
                             <div className='form__actions'>
                                 <Button
@@ -122,7 +95,7 @@ const CouponType = ({history, match}) => {
                                 >
                                     {id && id === 'new' ? 'Create' : 'Save'}
                                 </Button>
-                                <Link to='/coupon-types'>
+                                <Link to='/wallets'>
                                     <Button
                                         type='button'
                                         variant='small'
@@ -140,4 +113,4 @@ const CouponType = ({history, match}) => {
     );
 };
 
-export default CouponType;
+export default Wallet;

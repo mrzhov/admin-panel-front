@@ -7,6 +7,8 @@ import authUser from './authUser';
 import users from './users';
 import couponTypes from './couponTypes';
 import coupons from './coupons';
+import deposits from './deposits';
+import wallets from "./wallets";
 
 export default combineReducers({
   router,
@@ -15,5 +17,7 @@ export default combineReducers({
   authUser,
   users,
   couponTypes,
-  coupons
+  coupons,
+  wallets,
+  deposits
 });

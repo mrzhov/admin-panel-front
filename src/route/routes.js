@@ -6,6 +6,10 @@ import Coupon from '../pages/coupon';
 import Coupons from '../pages/coupons';
 import CouponType from '../pages/couponType';
 import CouponTypes from '../pages/couponTypes';
+import Wallet from "../pages/wallet";
+import Wallets from "../pages/wallets";
+import Deposits from "../pages/deposits";
+import Deposit from "../pages/deposit";
 
 export default {
     userPage: {
@@ -40,5 +44,23 @@ export default {
     couponTypesPage: {
         path: '/coupon-types',
         component: CouponTypes
+    },
+
+    walletPage: {
+        path: '/wallets/:id',
+        component: Wallet
+    },
+    walletsPage: {
+        path: '/wallets',
+        component: Wallets
+    },
+
+    depositPage: {
+        path: '/deposits/:id',
+        component: Deposit
+    },
+    depositsPage: {
+        path: '/deposits',
+        component: Deposits
     },
 };

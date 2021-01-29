@@ -160,3 +160,45 @@ export const unactivatedCouponsOptions = [
         value: 'Created'
     },
 ]
+export const walletsOptions = [
+    {
+        name: 'name',
+        value: 'Name'
+    },
+    {
+        name: 'address',
+        value: 'Address'
+    },
+    {
+        name: 'description',
+        value: 'Description'
+    },
+    {
+        name: 'actions',
+        value: ''
+    }
+]
+export const depositsOptions = [
+    {
+        name: 'name',
+        value: 'Name'
+    },
+    {
+        name: 'amountUsd',
+        value: 'Amount',
+        className: 'tableBoldFont'
+    },
+    {
+        name: 'amountCurrency',
+        value: 'Currency amount',
+        className: 'tableBoldFont'
+    },
+    {
+        name: 'walletAddress',
+        value: 'Wallet address'
+    },
+    {
+        name: 'userName',
+        value: 'User'
+    }
+]

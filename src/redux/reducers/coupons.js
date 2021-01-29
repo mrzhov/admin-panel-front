@@ -5,7 +5,7 @@ import {
 } from '../actions/coupons';
 import initialState from '../initialState';
 
-export default function (state = initialState.coupons, action) {
+export default (state = initialState.coupons, action) => {
     switch (action.type) {
         case GET_COUPONS:
             return {
@@ -13,17 +13,17 @@ export default function (state = initialState.coupons, action) {
                 list: action.response.data,
                 totalAmount: action.response.totalAmount
             };
-        case CREATE_COUPON:
-            return {
-                ...state,
-                currentGeneratedCoupons: action.response,
-                list: [...state.list.concat(action.response)]
-            }
-        case CLEAR_CURRENT_GENERATED_COUPONS:
-            return {
-                ...state,
-                currentGeneratedCoupons: []
-            }
+        // case CREATE_COUPON:
+        //     return {
+        //         ...state,
+        //         currentGeneratedCoupons: action.response,
+        //         list: [...state.list.concat(action.response)]
+        //     }
+        // case CLEAR_CURRENT_GENERATED_COUPONS:
+        //     return {
+        //         ...state,
+        //         currentGeneratedCoupons: []
+        //     }
         default:
             return state;
     }
