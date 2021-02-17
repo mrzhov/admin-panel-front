@@ -20,7 +20,7 @@ const initialState = {
     quantity: ''
 };
 
-const Coupon = ({match}) => {
+const Coupon = ({history, match}) => {
     const couponsApi = useCoupons();
     const usersApi = useUsers();
     const couponTypesApi = useCouponTypes();
@@ -178,15 +178,14 @@ const Coupon = ({match}) => {
                                 >
                                     {id && id === 'new' ? 'Generate' : 'Save'}
                                 </Button>
-                                <Link to='/admin/coupons'>
-                                    <Button
-                                        type='button'
-                                        variant='small'
-                                        className='secondary'
-                                    >
-                                        Back
-                                    </Button>
-                                </Link>
+                                <Button
+                                    type='button'
+                                    variant='small'
+                                    className='secondary'
+                                    onClick={history.goBack}
+                                >
+                                    Back
+                                </Button>
                             </div>
                         </form>
                     </div>

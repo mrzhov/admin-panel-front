@@ -209,15 +209,14 @@ const Deposit = ({ history, match }) => {
                                 >
                                     {id && id === 'new' ? 'Create' : 'Save'}
                                 </Button>
-                                <Link to='/deposits'>
-                                    <Button
-                                        type='button'
-                                        variant='small'
-                                        className='secondary'
-                                    >
-                                        Back
-                                    </Button>
-                                </Link>
+                                <Button
+                                    type='button'
+                                    variant='small'
+                                    className='secondary'
+                                    onClick={history.goBack}
+                                >
+                                    Back
+                                </Button>
                             </div>
                         </form>
                         {/*{loadingFlags.loading && loadingFlags.showSpinner && (*/}
