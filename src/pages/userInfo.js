@@ -13,15 +13,14 @@ import Avatar from "../image/avatar.jpg";
 import '../scss/pages/userInfo.scss'
 
 const initialState = {
-    role: '',
     name: '',
+    role: '',
+    isSuper: '',
     email: '',
     balance: '',
     minBalance: '',
     initDiscount: '',
     couponDiscount: '',
-    isSuper: '',
-    ownerName: ''
 };
 
 const tableTabsInitState = [
@@ -59,28 +58,17 @@ const UserPage = ({ match }) => {
     const couponsApi = useCoupons();
     const depositsApi = useDeposits();
 
-    const { id } = match.params;
     const authUserId = useSelector(state => state.authUser.id)
     const sortConfig = useSelector(state => state.commonFlags.sortConfig)
 
-    const [agent, setUser] = useLegacyState(initialState);
+    const [agent, setAgent] = useLegacyState(initialState);
     const [tableTabs, setTableTabs] = useState(tableTabsInitState);
+
+    const { id } = match.params;
 
     useEffect(() => {
         const userId = id === 'me' ? authUserId : id;
-        usersApi.getUser(userId, data => {
-            const { role, name, email, balance, minBalance, initDiscount, couponDiscount, isSuper } = data;
-            setUser({
-                role,
-                name,
-                email,
-                balance,
-                minBalance,
-                initDiscount,
-                couponDiscount,
-                isSuper
-            })
-        });
+        usersApi.getUser(userId, ({ data }) => setAgent(data));
     }, [id]);
 
     useEffect(() => {
@@ -89,12 +77,10 @@ const UserPage = ({ match }) => {
         getDeposits({ ownerId: id === 'me' ? authUserId : id });
     }, [id, sortConfig]);
 
-    const getDeposits = useCallback((config) => {
+    const getDeposits = useCallback(config => {
         const cb = response => {
             const newTableTabs = tableTabs.map(el => {
-                if (el.tabName === 'Deposits') {
-                    el.properties.rows = response.data
-                }
+                el.properties.rows = el.tabName === 'Deposits' && response.data
                 return el;
             })
             setTableTabs(newTableTabs);
@@ -106,19 +92,12 @@ const UserPage = ({ match }) => {
             ownerId: config.ownerId
         }, cb);
     }, [id, sortConfig]);
-
-    const getCoupons = useCallback((config) => {
+    const getCoupons = useCallback(config => {
         const cb = response => {
             const newTableTabs = tableTabs.map(el => {
-                if (config.isActivated) {
-                    if (el.tabName === 'Activated coupons') {
-                        el.properties.rows = response.data
-                    }
-                } else {
-                    if (el.tabName === 'Unactivated coupons') {
-                        el.properties.rows = response.data
-                    }
-                }
+                config.isActivated
+                    ? el.properties.rows = el.tabName === 'Activated coupons' && response.data
+                    : el.properties.rows = el.tabName === 'Unactivated coupons' && response.data
                 return el;
             })
             setTableTabs(newTableTabs);
@@ -131,96 +110,108 @@ const UserPage = ({ match }) => {
         }, cb)
     }, [id, sortConfig]);
 
+    const userInfoMiniConfig = [
+        {
+            title: 'Avatar',
+            value: Avatar
+        },
+        {
+            title: 'Name',
+            value: agent.name
+        },
+        {
+            title: 'Role',
+            value: agent.role
+        },
+        {
+            title: 'Email',
+            value: agent.email
+        },
+    ]
+    const userInfoMiniTemplate = config => (
+        <div className='userInfoCard userInfoCard_small'>
+            <div className="userInfoCard__wrapper">
+                <div className="smallCard">
+                    {config.map((el, i) => (
+                        <div className="smallCard__item" key={i}>
+                            {(() => {
+                                switch (el.title) {
+                                    case 'Avatar':
+                                        return <img src={el.value} alt="Avatar"/>
+                                    case 'Name':
+                                        return <h3>{el.value}</h3>
+                                    default:
+                                        return <p>{el.value}</p>
+                                }
+                            })()}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+    const userInfoConfig = [
+        {
+            title: 'Name',
+            value: agent.name
+        },
+        {
+            title: 'Role',
+            value: agent.role
+        },
+        {
+            title: 'Super agent',
+            value: agent.isSuper ? 'yes' : 'no'
+        },
+        {
+            title: 'Email',
+            value: agent.email
+        },
+        {
+            title: 'Balance',
+            value: `${agent.balance}$`
+        },
+        {
+            title: 'Minimum balance',
+            value: `${agent.minBalance}$`
+        },
+        {
+            title: 'Initial Discount',
+            value: `${agent.initDiscount}%`
+        },
+        {
+            title: 'Coupon Discount',
+            value: `${agent.couponDiscount}%`
+        },
+    ]
+    const userInfoTemplate = config => (
+        <div className='userInfoCard userInfoCard_list'>
+            <div className="userInfoCard__wrapper">
+                <div className="cardList">
+                    {config.map((el, i) => (
+                        <div className="cardList__itemContainer" key={i}>
+                            {i !== 0 && <hr/>}
+                            <div className="cardList__item">
+                                <div className="cardList__title">
+                                    <h6>{el.title}</h6>
+                                </div>
+                                <div className="cardList__subtitle">
+                                    <p>{el.value}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    )
+
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper'>
                 <div className='mainPage__userInfo'>
-                    <div className='userInfoCard userInfoCard_small'>
-                        <div className="userInfoCard__wrapper">
-                            <div className="smallCard">
-                                <div className="smallCard__item">
-                                    <img src={Avatar} alt="Avatar"/>
-                                </div>
-                                <div className="smallCard__item">
-                                    <h3>{agent.name}</h3>
-                                </div>
-                                <div className="smallCard__item">
-                                    <p>{agent.role}</p>
-                                </div>
-                                <div className="smallCard__item">
-                                    <p>{agent.email}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='userInfoCard userInfoCard_list'>
-                        <div className="userInfoCard__wrapper">
-                            <div className="cardList">
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Name</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.name}</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Role</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.role}</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Email</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.email}</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Balance</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.balance}$</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Minimum balance</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.minBalance}$</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Initial Discount</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.initDiscount}%</p>
-                                    </div>
-                                </div>
-                                <hr/>
-                                <div className="cardList__item">
-                                    <div className="cardList__title">
-                                        <h6>Coupon Discount</h6>
-                                    </div>
-                                    <div className="cardList__subtitle">
-                                        <p>{agent.couponDiscount}%</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {userInfoMiniTemplate(userInfoMiniConfig)}
+                    {userInfoTemplate(userInfoConfig)}
                 </div>
                 <TabsContainer items={tableTabs}/>
             </div>

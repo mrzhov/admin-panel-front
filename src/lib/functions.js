@@ -1,21 +1,12 @@
 import queryString from 'query-string';
 import moment from 'moment';
 
-import {ADMIN, AGENT, SUB_AGENT} from './_variables';
+import { ADMIN, AGENT, SUB_AGENT } from './_variables';
 import React from "react";
-
-export const getTitlePage = (id, type) => {
-    if (id && id !== 'new') {
-        return <h3>Change {type} information</h3>
-    } else {
-        return <h3>Create {type}</h3>
-    }
-}
 
 export const setLocalStorage = (name, item) => {
     localStorage.setItem(name, JSON.stringify(item));
 };
-
 export const getLocalStorage = name => {
     let response = 'Name is not found';
     if (name) {
@@ -47,10 +38,8 @@ export const getLocalStorage = name => {
 
     return response;
 };
-
 export const getPages = (role, isSuper) => {
     const pagesList = []
-
     switch (role) {
         case ADMIN:
             pagesList.push({
@@ -123,7 +112,6 @@ export const getPages = (role, isSuper) => {
 
     return pagesList
 }
-
 export const truncate = (str, maxlength) => {
     if (typeof str !== 'string') {
         return str;
@@ -134,7 +122,6 @@ export const truncate = (str, maxlength) => {
 
     return str;
 };
-
 export const getQueryParameter = (parameter, isParams = false) => {
     let name = false;
     const params = {};
@@ -168,14 +155,12 @@ export const getQueryParameter = (parameter, isParams = false) => {
 
     return name;
 };
-
 export const getValue = (key, value) => {
     if (Array.isArray(value)) {
         return value.map(val => getValue(key, val)).join('&');
     }
     return `${key}=${encodeURIComponent(value)}`;
 };
-
 export const getQueryParametres = (obj = {}) => {
     let res = '';
 
@@ -192,13 +177,11 @@ export const getQueryParametres = (obj = {}) => {
     }
     return res;
 };
-
 export const getQueryString = (param, search = '') => {
     const params = queryString.parse(search || window.location.search);
 
     return param ? params[param] : params;
 };
-
 export function pushHistory(query, isReplace, history) {
     const formatedQuery = {
         ...getQueryString(),
@@ -219,14 +202,6 @@ export function pushHistory(query, isReplace, history) {
         })}`
     );
 }
-
-export const getRandom = () =>
-    String(
-        Math.random()
-            .toString(36)
-            .replace(/[.\d]/g, '')
-    );
-
 export const formatDate = (date, options = {}) => {
     let format = 'DD/MM/YYYY';
 
@@ -234,3 +209,17 @@ export const formatDate = (date, options = {}) => {
 
     return moment(date).format(format);
 };
+export const cbSuccessRequest = cb => {
+    cb && typeof cb === 'function' && cb();
+};
+export const getRandom = () =>
+    String(
+        Math.random()
+            .toString(36)
+            .replace(/[.\d]/g, '')
+    );
+export const getTitlePage = (id, type) => (
+    id && id !== 'new'
+        ? <h3>Change {type} information</h3>
+        : <h3>Create {type}</h3>
+)

@@ -1,22 +1,22 @@
-import React, {useState, createRef, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Link, withRouter} from 'react-router-dom';
+import React, { useState, createRef, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import Transition from 'react-transition-group/Transition'
 
 import './style.scss';
-import {logout} from '../../api/userApi';
+import { logout } from '../../api/authApi';
 import Avatar from "./img/avatar.jpg";
 import routes from "../../route/routes";
 import Button from "../Button";
 
 const Dropdown = props => {
-    const [flags, setFlags] = useState({showDropdown: false});
+    const [flags, setFlags] = useState({ showDropdown: false });
     const wrapperRef = createRef();
 
     useEffect(() => {
         const handleClickOutside = event => {
             if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-                setFlags({showDropdown: false})
+                setFlags({ showDropdown: false })
             }
         };
 
@@ -26,15 +26,11 @@ const Dropdown = props => {
         };
     }, [wrapperRef]);
 
-    const handleLogout = () => {
-        props.logout();
-    }
-
     return (
         <div className='dropdown' ref={wrapperRef}>
             <button
                 className={`dropdown__toggle ${flags.showDropdown ? 'dropdown__toggle_active' : ''}`}
-                onClick={() => setFlags({showDropdown: !flags.showDropdown})}
+                onClick={() => setFlags({ showDropdown: !flags.showDropdown })}
             >
                 <img src={Avatar} alt="Avatar"/>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +48,7 @@ const Dropdown = props => {
                             >
                                 <Link to={routes.userInfo.path.replace(':id', 'me')}>
                                     <button
-                                        onClick={() => setFlags({showDropdown: false})}
+                                        onClick={() => setFlags({ showDropdown: false })}
                                     >
                                         <div className='dropdownMenu__item'>
                                             <span>User info</span>
@@ -61,7 +57,7 @@ const Dropdown = props => {
                                 </Link>
                                 <Link to={routes.userChangePassword.path.replace(':id', 'me')}>
                                     <button
-                                        onClick={() => setFlags({showDropdown: false})}
+                                        onClick={() => setFlags({ showDropdown: false })}
                                     >
                                         <div className='dropdownMenu__item'>
                                             <span>Change password</span>
@@ -69,7 +65,7 @@ const Dropdown = props => {
                                     </button>
                                 </Link>
                                 <Link to='/admin'>
-                                    <button onClick={handleLogout}>
+                                    <button onClick={props.logout}>
                                         <div className='dropdownMenu__item'>
                                             <span>Sign out</span>
                                         </div>

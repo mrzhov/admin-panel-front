@@ -1,52 +1,37 @@
-import {useMemo} from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import request from '../lib/request';
-import {START_FETCHING, END_FETCHING} from "../redux/actions/commonFlags";
-import {CLEAR_CURRENT_GENERATED_COUPONS, CREATE_COUPON, GET_COUPONS} from "../redux/actions/coupons";
+import { START_FETCHING, END_FETCHING } from "../redux/actions/commonFlags";
+import { GET_COUPONS } from "../redux/actions/coupons";
+import { cbSuccessRequest } from "../lib/functions";
+import { useMemo } from "react";
 
 const failed = response => {
     alert(response.message);
 };
 
 class CouponsApi {
-    dispatch;
-
     constructor(dispatch) {
         this.dispatch = dispatch;
     }
 
     createCoupon = (body, cb) => {
-        const success = response => {
-            if (cb && typeof cb === 'function') cb(response);
-        };
-
         request('/coupons', {
             body: JSON.stringify(body),
             method: 'POST',
-            success,
+            success: response => cbSuccessRequest(cb(response)),
             failed,
         });
     };
 
     getCoupons = (query, cb) => {
         const success = response => {
-            if (!query.hasOwnProperty('isActivated')) {
-                this.dispatch({
-                    type: GET_COUPONS,
-                    response
-                });
-            }
-            this.dispatch({
-                type: END_FETCHING
-            });
-            if (cb && typeof cb === 'function') cb(response);
+            if (!query.hasOwnProperty('isActivated'))
+                this.dispatch({ type: GET_COUPONS, response });
+            this.dispatch({ type: END_FETCHING });
+            cbSuccessRequest(cb);
         };
-
-        this.dispatch({
-            type: START_FETCHING
-        });
-
+        this.dispatch({ type: START_FETCHING });
         request('/coupons', {
             query,
             success,
@@ -55,44 +40,31 @@ class CouponsApi {
     };
 
     getCoupon = (id, cb) => {
-        const success = response => {
-            if (cb && typeof cb === 'function') cb(response);
-        };
-
         request(`/coupons/${id}`, {
-            success,
+            success: response => cbSuccessRequest(cb(response)),
             failed,
         });
     };
 
     updateCoupon = (body, id, cb) => {
-        const success = () => {
-            if (cb && typeof cb === 'function') cb();
-        };
-
         request(`/coupons/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success,
+            success: cbSuccessRequest(cb),
             failed,
         });
     };
 
     deleteCoupon = (id, cb) => {
-        const success = () => {
-            if (cb && typeof cb === 'function') cb();
-        };
-
         request(`/coupons/${id}`, {
             method: 'DELETE',
-            success,
+            success: cbSuccessRequest(cb),
             failed,
         });
     };
 }
 
-export default function useCoupons() {
+export default () => {
     const dispatch = useDispatch();
-
     return useMemo(() => new CouponsApi(dispatch), []);
 }

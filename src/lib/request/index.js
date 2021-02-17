@@ -1,8 +1,8 @@
-import {logout} from '../../api/userApi';
-import {store} from '../../redux/createStore';
+import { logout } from '../../api/authApi';
+import { store } from '../../redux/createStore';
 
 import getQueryParameters from './functions';
-import {envConfig} from "../configs/env";
+import { envConfig } from "../configs/env";
 
 const adminApi = envConfig[process.env.NODE_ENV].adminApi;
 
@@ -35,11 +35,11 @@ const request = async (pathname, options = defaultRequestOptions) => {
 
     if (query) path += `?${getQueryParameters(query)}`;
 
-    const requestOptions = {method};
+    const requestOptions = { method };
 
     if (body) requestOptions.body = body;
     if (headers) requestOptions.headers = headers;
-    else requestOptions.headers = {'Content-Type': 'application/json'};
+    else requestOptions.headers = { 'Content-Type': 'application/json' };
 
     const state = store.getState();
     if (state.authUser.accessToken)
@@ -47,14 +47,14 @@ const request = async (pathname, options = defaultRequestOptions) => {
 
     try {
         const serverRequest = await fetch(path, requestOptions);
-        let response = {status: 'Development request error'};
+        let response = { status: 'Development request error' };
 
         if (options.isBlob) response = await serverRequest.blob();
         else response = await serverRequest.json();
 
         const status = await serverRequest.status;
         const statuses = successStatuses || [200];
-        const errorsStatuses = {...errors, ...defaultErrors};
+        const errorsStatuses = { ...errors, ...defaultErrors };
 
         if (statuses.indexOf(status) !== -1) {
             if (success) success(response, status);
