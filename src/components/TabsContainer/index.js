@@ -1,21 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { getQueryString, pushHistory, runCallback } from "../../lib/functions";
 
 import './style.scss'
+import { useSelector } from "react-redux";
+import { withRouter } from "react-router";
 
-const TabsContainer = (props) => {
-    const [items, setItems] = useState([])
+const TabsContainer = ({ tabs, history }) => {
+    const sortConfig = useSelector(state => state.commonFlags.sortConfig);
+    const [items, setItems] = useState([]);
+
+    const { page } = getQueryString();
 
     useEffect(() => {
-        const newItems = [];
-        props.items.forEach((el, index) => {
-            const newItem = Object.assign({}, el)
-            newItem.active = index === 0;
-            newItems.push(newItem);
+        const newItems = tabs.map((el, i) => {
+            const newItem = { ...el };
+            newItem.active = i === 0;
+            return newItem;
         })
         setItems(newItems);
-    }, [props.items]);
+    }, []);
 
-    const setActiveTab = (item) => {
+    useEffect(() => {
+        items.forEach(el => {
+            if (el.active)
+                runCallback(el.fetchData.func, { ...el.fetchData.params, ...sortConfig, page })
+        })
+    }, [items, sortConfig, page])
+
+    const setActiveTab = item => {
+        pushHistory({ page: '' }, true, history);
         setItems(
             items.map(el => {
                 el.active = item.id === el.id;
@@ -26,21 +39,21 @@ const TabsContainer = (props) => {
     return (
         <div className='tabsContainer'>
             <div className='tabsList'>
-                {Array.from(items).map((item, i) => (
-                    <div className={`tabItem${item.active ? ' tabItem_active' : ''}`} key={i}>
-                        <button onClick={() => setActiveTab(item)}>
-                            {item.tabName}
+                {items.map(el => (
+                    <div className={`tabItem${el.active ? ' tabItem_active' : ''}`} key={el.id}>
+                        <button onClick={() => setActiveTab(el)}>
+                            {el.tabName}
                         </button>
                     </div>
                 ))}
             </div>
-            {Array.from(items).map((el, i) => (
-                <div className="itemContainer" key={i}>
-                    {el.active && el.item(el.properties)}
+            {items.map(el => (
+                <div className="itemContainer" key={el.id}>
+                    {el.active && el.template(el.properties)}
                 </div>
             ))}
         </div>
     );
 };
 
-export default TabsContainer;
+export default withRouter(TabsContainer);

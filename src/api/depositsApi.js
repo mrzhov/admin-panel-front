@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import request from '../lib/request';
 import { GET_DEPOSITS } from "../redux/actions/deposits";
 import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
-import { cbSuccessRequest } from "../lib/functions";
+import { runCallback } from "../lib/functions";
 
 const failed = response => {
     alert(response.message);
@@ -20,7 +20,7 @@ class DepositsApi {
             if (!query.hasOwnProperty('ownerId'))
                 this.dispatch({ type: GET_DEPOSITS, response });
             this.dispatch({ type: END_FETCHING });
-            cbSuccessRequest(cb);
+            runCallback(cb, response);
         };
         this.dispatch({ type: START_FETCHING });
         request('/deposits', {
@@ -34,14 +34,14 @@ class DepositsApi {
         request('/deposits', {
             body: JSON.stringify(body),
             method: 'POST',
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed,
         });
     };
 
     getDeposit = (id, cb) => {
         request(`/deposits/${id}`, {
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed
         });
     };
@@ -50,7 +50,7 @@ class DepositsApi {
         request(`/deposits/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed,
         });
     };
@@ -58,7 +58,7 @@ class DepositsApi {
     deleteDeposit = (id, cb) => {
         request(`/deposits/${id}`, {
             method: 'DELETE',
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed,
         });
     };

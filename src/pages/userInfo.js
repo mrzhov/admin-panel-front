@@ -8,11 +8,11 @@ import useCoupons from "../api/couponsApi";
 import useDeposits from "../api/depositsApi";
 import useLegacyState from '../hooks/useLegacyState';
 import { activatedCouponsOptions, depositsOptions, unactivatedCouponsOptions } from "../lib/tableOptions";
-import { getRandom } from "../lib/functions";
+import { getRandom, pushHistory } from "../lib/functions";
 import Avatar from "../image/avatar.jpg";
 import '../scss/pages/userInfo.scss'
 
-const initialState = {
+const agentInitState = {
     name: '',
     role: '',
     isSuper: '',
@@ -22,93 +22,123 @@ const initialState = {
     initDiscount: '',
     couponDiscount: '',
 };
-
 const tableTabsInitState = [
     {
         id: getRandom(),
         tabName: 'Deposits',
-        item: props => <TableContainer {...props} />,
+        template: props => <TableContainer {...props} />,
         properties: {
             tableOptions: depositsOptions,
-            rows: []
-        }
+            rows: [],
+            totalAmount: 0
+        },
+        fetchData: {}
     },
     {
         id: getRandom(),
         tabName: 'Activated coupons',
-        item: props => <TableContainer {...props} />,
+        template: props => <TableContainer {...props} />,
         properties: {
             tableOptions: activatedCouponsOptions,
-            rows: []
-        }
+            rows: [],
+            totalAmount: 0
+        },
+        fetchData: {}
     },
     {
         id: getRandom(),
         tabName: 'Unactivated coupons',
-        item: props => <TableContainer {...props} />,
+        template: props => <TableContainer {...props} />,
         properties: {
             tableOptions: unactivatedCouponsOptions,
-            rows: []
-        }
+            rows: [],
+            totalAmount: 0
+        },
+        fetchData: {}
     },
 ];
 
-const UserPage = ({ match }) => {
+const UserPage = ({ match, history }) => {
     const usersApi = useUserApi();
     const couponsApi = useCoupons();
     const depositsApi = useDeposits();
 
+    const { id } = match.params;
     const authUserId = useSelector(state => state.authUser.id)
-    const sortConfig = useSelector(state => state.commonFlags.sortConfig)
+    const currentId = id === 'me' ? authUserId : id;
 
-    const [agent, setAgent] = useLegacyState(initialState);
+    const [agent, setAgent] = useLegacyState(agentInitState);
     const [tableTabs, setTableTabs] = useState(tableTabsInitState);
 
-    const { id } = match.params;
-
     useEffect(() => {
-        const userId = id === 'me' ? authUserId : id;
-        usersApi.getUser(userId, ({ data }) => setAgent(data));
+        pushHistory({ page: '' }, true, history);
+        usersApi.getUser(currentId, ({ data }) => setAgent(data));
+        setTableTabsCb();
     }, [id]);
 
-    useEffect(() => {
-        getCoupons({ isActivated: true });
-        getCoupons({ isActivated: false });
-        getDeposits({ ownerId: id === 'me' ? authUserId : id });
-    }, [id, sortConfig]);
-
-    const getDeposits = useCallback(config => {
+    const setTableTabsCb = () => {
+        const newTableTabs = tableTabs.map(el => {
+            switch (el.tabName) {
+                case 'Deposits':
+                    el.fetchData.func = getDeposits;
+                    break;
+                case 'Activated coupons':
+                    el.fetchData.func = getCoupons;
+                    el.fetchData.params = { isActivated: true };
+                    break;
+                case 'Unactivated coupons':
+                    el.fetchData.func = getCoupons;
+                    el.fetchData.params = { isActivated: false };
+                    break;
+                default:
+                    break;
+            }
+            return el;
+        })
+        setTableTabs(newTableTabs);
+    }
+    const setTableTabsProps = (el, response) => {
+        el.properties.rows = response.data || [];
+        el.properties.totalAmount = response.totalAmount || 0;
+        return el;
+    }
+    const getDeposits = useCallback(({ sortField, sortDirection, page }) => {
         const cb = response => {
             const newTableTabs = tableTabs.map(el => {
-                el.properties.rows = el.tabName === 'Deposits' && response.data
+                if (el.tabName === 'Deposits')
+                    el = setTableTabsProps(el, response);
                 return el;
-            })
+            });
             setTableTabs(newTableTabs);
         };
         depositsApi.getDeposits({
-            id: id === 'me' ? authUserId : id,
-            sortField: sortConfig.sortField,
-            sortDirection: sortConfig.sortDirection,
-            ownerId: config.ownerId
+            id: currentId,
+            ownerId: currentId,
+            sortField,
+            sortDirection,
+            page
         }, cb);
-    }, [id, sortConfig]);
-    const getCoupons = useCallback(config => {
+    }, [id]);
+    const getCoupons = useCallback(({ sortField, sortDirection, isActivated, page }) => {
         const cb = response => {
             const newTableTabs = tableTabs.map(el => {
-                config.isActivated
-                    ? el.properties.rows = el.tabName === 'Activated coupons' && response.data
-                    : el.properties.rows = el.tabName === 'Unactivated coupons' && response.data
+                if (isActivated && el.tabName === 'Activated coupons') {
+                    el = setTableTabsProps(el, response);
+                } else if (el.tabName === 'Unactivated coupons') {
+                    el = setTableTabsProps(el, response);
+                }
                 return el;
             })
             setTableTabs(newTableTabs);
         };
         couponsApi.getCoupons({
-            id: id === 'me' ? authUserId : id,
-            sortField: sortConfig.sortField,
-            sortDirection: sortConfig.sortDirection,
-            isActivated: config.isActivated
+            id: currentId,
+            isActivated,
+            sortField,
+            sortDirection,
+            page
         }, cb)
-    }, [id, sortConfig]);
+    }, [id]);
 
     const userInfoMiniConfig = [
         {
@@ -213,7 +243,7 @@ const UserPage = ({ match }) => {
                     {userInfoMiniTemplate(userInfoMiniConfig)}
                     {userInfoTemplate(userInfoConfig)}
                 </div>
-                <TabsContainer items={tableTabs}/>
+                <TabsContainer tabs={tableTabs}/>
             </div>
         </div>
     );

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import request from '../lib/request';
 import { START_FETCHING, END_FETCHING } from "../redux/actions/commonFlags";
 import { GET_USERS } from "../redux/actions/users";
-import { cbSuccessRequest } from "../lib/functions";
+import { runCallback } from "../lib/functions";
 
 const failed = response => {
     alert(response.message);
@@ -19,7 +19,7 @@ class UsersApi {
         request('/users', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed
         });
     };
@@ -28,7 +28,7 @@ class UsersApi {
         const success = response => {
             this.dispatch({ type: GET_USERS, response });
             this.dispatch({ type: END_FETCHING });
-            cbSuccessRequest(cb);
+            runCallback(cb);
         };
         this.dispatch({ type: START_FETCHING });
         request('/users/list', {
@@ -40,7 +40,7 @@ class UsersApi {
 
     getUser = (id, cb) => {
         request(`/users/${id}`, {
-            success: response => cbSuccessRequest(cb(response)),
+            success: response => runCallback(cb, response),
             failed
         });
     };
@@ -49,7 +49,7 @@ class UsersApi {
         request(`/users/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed
         });
     };
@@ -57,7 +57,7 @@ class UsersApi {
     deleteUser = (id, cb) => {
         request(`/users/${id}`, {
             method: 'DELETE',
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed
         });
     };
@@ -66,7 +66,7 @@ class UsersApi {
         request('/users/change-password', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed
         });
     };

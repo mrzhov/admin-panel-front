@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import request from '../lib/request';
 import { GET_WALLETS } from "../redux/actions/wallets";
 import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
-import { cbSuccessRequest } from "../lib/functions";
+import { runCallback } from "../lib/functions";
 import { useMemo } from "react";
 
 const failed = response => {
@@ -19,7 +19,7 @@ class WalletsApi {
     const success = response => {
       this.dispatch({ type: GET_WALLETS, response });
       this.dispatch({ type: END_FETCHING });
-      cbSuccessRequest(cb);
+      runCallback(cb);
     };
     this.dispatch({ type: START_FETCHING });
     request('/wallets', {
@@ -33,14 +33,14 @@ class WalletsApi {
     request('/wallets', {
       body: JSON.stringify(body),
       method: 'POST',
-      success: cbSuccessRequest(cb),
+      success: runCallback(cb),
       failed,
     });
   };
 
   getWallet = (id, cb) => {
     request(`/wallets/${id}`, {
-      success: response => cbSuccessRequest(cb(response)),
+      success: response => runCallback(cb, response),
       failed
     });
   };
@@ -49,7 +49,7 @@ class WalletsApi {
     request(`/wallets/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
-      success: cbSuccessRequest(cb),
+      success: runCallback(cb),
       failed,
     });
   };
@@ -57,7 +57,7 @@ class WalletsApi {
   deleteWallet = (id, cb) => {
     request(`/wallets/${id}`, {
       method: 'DELETE',
-      success: cbSuccessRequest(cb),
+      success: runCallback(cb),
       failed,
     });
   };

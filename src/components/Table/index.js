@@ -11,21 +11,15 @@ const Table = props => {
     const isFetching = useSelector(state => state.commonFlags.isFetching);
 
     useEffect(() => {
-        if (sortConfig) {
-            props.setStoreSortConfig(sortConfig);
-        }
+        if (sortConfig) props.setStoreSortConfig(sortConfig);
     }, [sortConfig])
 
-    const setSortingField = (value) => {
+    const setSortingField = value => {
         let direction = 1;
-        let config = {};
-        config.sortField = value;
-
-        if (sortConfig && sortConfig.sortField === value) {
-            config.sortDirection = sortConfig.sortDirection === 1 ? -1 : 1
-        } else {
-            config.sortDirection = direction
-        }
+        let config = { sortField: value };
+        sortConfig && sortConfig.sortField === value
+            ? config.sortDirection = sortConfig.sortDirection === 1 ? -1 : 1
+            : config.sortDirection = direction
         setSortConfig(config);
     }
 

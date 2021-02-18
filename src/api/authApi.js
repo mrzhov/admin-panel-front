@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 
 import request from "../lib/request";
-import { getPages, cbSuccessRequest } from "../lib/functions";
+import { getPages, runCallback } from "../lib/functions";
 import { CLOSE_RESTORE_PASSWORD } from "../redux/actions/commonFlags";
 import { LOGIN, LOGOUT } from "../redux/actions/user";
 import { ADD_PAGES } from "../redux/actions/pages";
@@ -20,7 +20,7 @@ class AuthApi {
         request('/users/check-email', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: response => response.data.success && cbSuccessRequest(cb),
+            success: response => response.data.success && runCallback(cb),
             failed
         });
     };
@@ -29,7 +29,7 @@ class AuthApi {
         request('/users/check-reset-key', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: response => response.data.success && cbSuccessRequest(cb),
+            success: response => response.data.success && runCallback(cb),
             failed
         });
     };
@@ -38,7 +38,7 @@ class AuthApi {
         const success = response => {
             if (response.data.success) {
                 this.dispatch({ type: CLOSE_RESTORE_PASSWORD });
-                cbSuccessRequest(cb);
+                runCallback(cb);
             }
         };
 
@@ -58,7 +58,7 @@ export default () => {
 
 export const login = (data, cb) => dispatch => {
     const success = response => {
-        cbSuccessRequest(cb);
+        runCallback(cb);
         dispatch({type: LOGIN, response});
         dispatch({
             type: ADD_PAGES,

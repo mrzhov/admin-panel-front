@@ -179,7 +179,6 @@ export const getQueryParametres = (obj = {}) => {
 };
 export const getQueryString = (param, search = '') => {
     const params = queryString.parse(search || window.location.search);
-
     return param ? params[param] : params;
 };
 export function pushHistory(query, isReplace, history) {
@@ -209,8 +208,8 @@ export const formatDate = (date, options = {}) => {
 
     return moment(date).format(format);
 };
-export const cbSuccessRequest = cb => {
-    cb && typeof cb === 'function' && cb();
+export const runCallback = (cb, params) => {
+    cb && typeof cb === 'function' && cb(params);
 };
 export const getRandom = () =>
     String(

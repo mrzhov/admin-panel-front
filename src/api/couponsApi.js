@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import request from '../lib/request';
 import { START_FETCHING, END_FETCHING } from "../redux/actions/commonFlags";
 import { GET_COUPONS } from "../redux/actions/coupons";
-import { cbSuccessRequest } from "../lib/functions";
+import { runCallback } from "../lib/functions";
 import { useMemo } from "react";
 
 const failed = response => {
@@ -19,7 +19,7 @@ class CouponsApi {
         request('/coupons', {
             body: JSON.stringify(body),
             method: 'POST',
-            success: response => cbSuccessRequest(cb(response)),
+            success: response => runCallback(cb, response),
             failed,
         });
     };
@@ -29,7 +29,7 @@ class CouponsApi {
             if (!query.hasOwnProperty('isActivated'))
                 this.dispatch({ type: GET_COUPONS, response });
             this.dispatch({ type: END_FETCHING });
-            cbSuccessRequest(cb);
+            runCallback(cb, response);
         };
         this.dispatch({ type: START_FETCHING });
         request('/coupons', {
@@ -41,7 +41,7 @@ class CouponsApi {
 
     getCoupon = (id, cb) => {
         request(`/coupons/${id}`, {
-            success: response => cbSuccessRequest(cb(response)),
+            success: response => runCallback(cb, response),
             failed,
         });
     };
@@ -50,7 +50,7 @@ class CouponsApi {
         request(`/coupons/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed,
         });
     };
@@ -58,7 +58,7 @@ class CouponsApi {
     deleteCoupon = (id, cb) => {
         request(`/coupons/${id}`, {
             method: 'DELETE',
-            success: cbSuccessRequest(cb),
+            success: runCallback(cb),
             failed,
         });
     };
