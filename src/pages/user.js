@@ -1,17 +1,15 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import useUsersApi from '../api/usersApi';
-import Button from '../components/Button';
 import useLegacyState from '../hooks/useLegacyState';
-import {useSelector} from "react-redux";
-import {ADMIN, AGENT, SUB_AGENT} from "../lib/_variables";
-import {Link} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ADMIN, AGENT, SUB_AGENT } from "../lib/_variables";
 import Checkbox from '../components/Checkbox'
 import FormControl from "../components/FormControl";
+import { getTitlePage, getFormActions } from "../lib/templates";
 import routes from "../route/routes";
-import {getTitlePage} from "../lib/functions";
 
-const initialState = {
+const userInitState = {
     role: '',
     email: '',
     name: '',
@@ -20,82 +18,63 @@ const initialState = {
     isSuper: false
 };
 
-const UserPage = ({history, match}) => {
-    const [user, setUser] = useLegacyState(initialState);
-    const {id} = match.params;
+const UserPage = ({ history, match }) => {
     const usersApi = useUsersApi();
-
-    const authUserRole = useSelector(state => state.authUser.role)
+    const [user, setUser] = useLegacyState(userInitState);
+    const { id } = match.params;
+    const authUserRole = useSelector(state => state.authUser.role);
 
     useEffect(() => {
         if (id && id !== 'new') {
-            usersApi.getUser(id, data => {
-                const {role, name, email, minBalance, initDiscount, isSuper} = data;
-                setUser({
-                    role: {value: role, label: role},
-                    name,
-                    email,
-                    minBalance,
-                    initDiscount,
-                    isSuper
-                })
+            usersApi.getUser(id, ({ data }) => {
+                data.role = { value: data.role, label: data.role };
+                setUser(data);
             });
         }
     }, [id]);
+
+    const handleSelect = useCallback(option => {
+        setUser({
+            role: option,
+            isSuper: option.value === 'Admin'
+        });
+    }, [user])
+
+    const handleInput = useCallback(name => e => {
+        setUser({ [name]: e.target.value });
+    }, [user]);
+
+    const handleCheck = useCallback(() => {
+        setUser({ isSuper: !user.isSuper });
+    }, [user.isSuper]);
+
+    const handleSubmit = useCallback(e => {
+        e.preventDefault();
+        const cb = () => history.push(routes.usersPage.path);
+        const body = { ...user, role: user.role.value };
+        id && id !== 'new'
+            ? usersApi.updateUser(body, id, cb)
+            : usersApi.createUser(body, cb);
+    }, [user]);
 
     const getRoles = () => {
         switch (authUserRole) {
             case ADMIN:
                 return [
-                    {value: 'Admin', label: 'Admin'},
-                    {value: 'Agent', label: 'Agent'},
-                    {value: 'Sub-Agent', label: 'Sub-Agent'}
-                ]
+                    { value: 'Admin', label: 'Admin' },
+                    { value: 'Agent', label: 'Agent' },
+                    { value: 'Sub-Agent', label: 'Sub-Agent' }
+                ];
             case AGENT:
                 return [
-                    {value: 'Sub-Agent', label: 'Sub-Agent'}
-                ]
+                    { value: 'Sub-Agent', label: 'Sub-Agent' }
+                ];
             case SUB_AGENT:
-                return []
+                return [];
+            default:
+                break;
         }
-    }
-
-    const handleSelect = useCallback(name => value => {
-        setUser({[name]: value});
-
-        value === 'Admin'
-            ? setUser({isSuper: true})
-            : setUser({isSuper: false})
-    }, [user])
-
-    const handleInput = useCallback(
-        name => e => {
-            const {value} = e.target;
-
-            setUser({[name]: value});
-        },
-        [user]
-    );
-
-    const handleCheck = useCallback(() => {
-        setUser({isSuper: !user.isSuper});
-    }, [user.isSuper]);
-
-    const handleSubmit = useCallback(
-        e => {
-            e.preventDefault();
-            const cb = () => history.push(routes.usersPage.path);
-
-            user.role = user.role.value;
-            if (id && id !== 'new') {
-                usersApi.updateUser(user, id, cb);
-            } else {
-                usersApi.createUser(user, cb);
-            }
-        },
-        [user]
-    );
-
+    };
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper mainPage__center'>
@@ -106,88 +85,65 @@ const UserPage = ({history, match}) => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <FormControl
+                                label='Select'
                                 className='formItem'
-                                onChange={handleSelect('role')}
-                                options={getRoles()}
                                 placeholder='Role'
                                 required
-                                select
                                 value={user.role}
-                            />
-                            <FormControl
-                                label='Email'
-                                className='formItem'
-                                maxLength={60}
-                                minLength={3}
-                                onChange={handleInput('email')}
-                                required
-                                value={user.email}
+                                onChange={handleSelect}
+                                select
+                                options={getRoles()}
                             />
                             <FormControl
                                 label='Name'
                                 className='formItem'
-                                maxLength={60}
-                                minLength={3}
-                                onChange={handleInput('name')}
                                 required
                                 value={user.name}
+                                onChange={handleInput('name')}
+                                minLength={3}
+                                maxLength={60}
                             />
-                            {id === 'new' && (
-                                <FormControl
-                                    label='Password'
-                                    className='formItem'
-                                    maxLength={60}
-                                    minLength={3}
-                                    onChange={handleInput('password')}
-                                    required
-                                    type='password'
-                                    value={user.password}
-                                />
-                            )}
+                            <FormControl
+                                label='Email'
+                                className='formItem'
+                                type='email'
+                                required
+                                value={user.email}
+                                onChange={handleInput('email')}
+                                minLength={3}
+                                maxLength={60}
+                            />
                             <FormControl
                                 label='Initial Coupon Discount %'
                                 className='formItem'
-                                max='100'
-                                min='0'
-                                onChange={handleInput('initDiscount')}
-                                required
-                                step='1'
                                 type='number'
+                                step='1'
+                                min='0'
+                                max='100'
+                                required
                                 value={user.initDiscount}
+                                onChange={handleInput('initDiscount')}
                             />
                             <FormControl
-                                label='Min Balance'
+                                label='Min Balance $'
                                 className='formItem'
-                                onChange={handleInput('minBalance')}
-                                required
-                                min='-10000'
-                                step='1'
                                 type='number'
+                                step='1'
+                                min='-10000'
+                                required
                                 value={user.minBalance}
+                                onChange={handleInput('minBalance')}
                             />
                             {authUserRole === ADMIN && (
                                 <Checkbox
                                     label='SuperAgent'
                                     onChange={handleCheck}
                                     value={user.isSuper}
+                                    disabled={user.role.value !== 'Agent'}
+                                    className={user.role.value === 'Agent' && 'checkbox_active'}
                                 />
                             )}
-                            <div className='form__actions'>
-                                <Button
-                                    type='submit'
-                                    variant='small'
-                                >
-                                    {id && id === 'new' ? 'Create' : 'Save'}
-                                </Button>
-                                <Button
-                                    type='button'
-                                    variant='small'
-                                    className='secondary'
-                                    onClick={history.goBack}
-                                >
-                                    Back
-                                </Button>
-                            </div>
+                            {getFormActions(id, history)}
                         </form>
                     </div>
                 </div>

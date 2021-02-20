@@ -63,6 +63,7 @@ class Select extends React.Component {
                         autoComplete="off"
                         required={this.props.required}
                         value={this.props.value}
+                        onChange={this.props.onChange}
                     />
                 )}
             </div>

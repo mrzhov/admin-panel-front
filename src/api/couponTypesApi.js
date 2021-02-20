@@ -33,14 +33,14 @@ class CouponTypesApi {
         request('/coupon-types', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };
 
     getCouponType = (id, cb) => {
         request(`/coupon-types/${id}`, {
-            success: runCallback(cb),
+            success: response => runCallback(cb(response)),
             failed
         });
     };
@@ -49,7 +49,7 @@ class CouponTypesApi {
         request(`/coupon-types/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };
@@ -57,7 +57,7 @@ class CouponTypesApi {
     deleteCouponType = (id, cb) => {
         request(`/coupon-types/${id}`, {
             method: 'DELETE',
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };

@@ -1,66 +1,60 @@
-import React, {useCallback, useEffect} from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import useCouponTypes from '../api/couponTypesApi';
-import Button from '../components/Button';
 import FormControl from '../components/FormControl';
 import useLegacyState from '../hooks/useLegacyState';
 import routes from '../route/routes';
-import {Link} from "react-router-dom";
-import {getTitlePage} from "../lib/functions";
+import { getFormActions, getTitlePage } from "../lib/templates";
 
-const initialState = {
-    id: '',
-    duration: '',
+const couponTypeInitState = {
     limit: '',
     price: '',
-    priceYuan: '',
-    description: '',
-    isActive: true
+    duration: '',
 };
 
-const CouponType = ({history, match}) => {
+const CouponType = ({ history, match }) => {
     const couponTypesApi = useCouponTypes();
-
-    const [couponType, setCouponType] = useLegacyState(initialState);
-
-    const {id} = match.params;
+    const [couponType, setCouponType] = useLegacyState(couponTypeInitState);
+    const { id } = match.params;
 
     useEffect(() => {
         if (id && id !== 'new') {
-            couponTypesApi.getCouponType(id, ({data}) => {
+            couponTypesApi.getCouponType(id, ({ data }) => {
+                data.limit = { value: data.limit, label: data.limit };
                 setCouponType(data)
             });
         }
     }, [id]);
 
-    const handleInput = useCallback(
-        name => e => {
-            const {value} = e.target;
+    const handleSelect = useCallback(limit => {
+        setCouponType({ limit });
+    }, [couponType])
 
-            if (name === 'limit') {
-                setCouponType({[name]: value.replace(/[^0-9\/]/g, "")})
-            } else {
-                setCouponType({[name]: value})
-            }
-        },
-        [couponType]
-    );
+    const handleInput = useCallback(name => e => {
+        setCouponType({ [name]: e.target.value })
+    }, [couponType]);
 
-    const handleSubmit = useCallback(
-        e => {
-            e.preventDefault();
+    const handleSubmit = useCallback(e => {
+        e.preventDefault();
+        const cb = () => history.push(routes.couponTypesPage.path);
+        const body = { ...couponType, limit: couponType.limit.value };
+        id && id !== 'new'
+            ? couponTypesApi.updateCouponType(body, id, cb)
+            : couponTypesApi.createCouponType(body, cb);
+    }, [couponType]);
 
-            const cb = () => history.push(routes.couponTypesPage.path);
-
-            if (id && id !== 'new') {
-                couponTypesApi.updateCouponType(couponType, id, cb);
-            } else {
-                couponTypesApi.createCouponType(couponType, cb);
-            }
-        },
-        [couponType]
-    );
-
+    const getLimits = () => {
+        return [
+            { value: '1/2', label: '1/2' },
+            { value: '2/4', label: '2/4' },
+            { value: '5/10', label: '5/10' },
+            { value: '10/20', label: '10/20' },
+            { value: '20/40', label: '20/40' },
+            { value: '25/50', label: '25/50' },
+            { value: '50/100', label: '50/100' },
+            { value: '100/200', label: '100/200' },
+        ];
+    };
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper mainPage__center'>
@@ -71,66 +65,36 @@ const CouponType = ({history, match}) => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             <FormControl
-                                label='Duration'
-                                className='formItem'
-                                maxLength={60}
-                                onChange={handleInput('duration')}
-                                required
-                                type='number'
-                                value={couponType.duration}
-                            />
-                            <FormControl
                                 label='Limit'
                                 className='formItem'
-                                onChange={handleInput('limit')}
+                                placeholder='Limit'
                                 required
                                 value={couponType.limit}
+                                onChange={handleSelect}
+                                select
+                                options={getLimits()}
                             />
                             <FormControl
-                                label='Price in dollars '
+                                label='Price in dollars'
                                 className='formItem'
-                                min='0'
-                                onChange={handleInput('price')}
-                                required
-                                step='1'
                                 type='number'
+                                step='1'
+                                min='1'
+                                required
                                 value={couponType.price}
+                                onChange={handleInput('price')}
                             />
                             <FormControl
-                                label='Price in yuan'
+                                label='Duration'
                                 className='formItem'
-                                min='0'
-                                onChange={handleInput('priceYuan')}
-                                required
-                                step='1'
                                 type='number'
-                                value={couponType.priceYuan}
+                                step='1'
+                                min='1'
+                                required
+                                value={couponType.duration}
+                                onChange={handleInput('duration')}
                             />
-                            <FormControl
-                                label='Description'
-                                className='formItem'
-                                maxLength={60}
-                                minLength={3}
-                                onChange={handleInput('description')}
-                                textarea
-                                value={couponType.description}
-                            />
-                            <div className='form__actions'>
-                                <Button
-                                    type='submit'
-                                    variant='small'
-                                >
-                                    {id && id === 'new' ? 'Create' : 'Save'}
-                                </Button>
-                                <Button
-                                    type='button'
-                                    variant='small'
-                                    className='secondary'
-                                    onClick={history.goBack}
-                                >
-                                    Back
-                                </Button>
-                            </div>
+                            {getFormActions(id, history)}
                         </form>
                     </div>
                 </div>

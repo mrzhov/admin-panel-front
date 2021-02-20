@@ -22,13 +22,15 @@ class Input extends React.Component {
                 <Component
                     className='Input__TextField'
                     id={this.ID}
+                    required={props.required}
+                    style={props.style}
+                    value={props.value}
+                    onChange={props.onChange}
+                    type={props.type}
                     maxLength={props.maxLength}
                     minLength={props.minLength}
-                    required={props.required}
-                    onChange={props.onChange}
-                    style={props.style}
-                    type={props.type}
-                    value={props.value}
+                    min={props.min}
+                    max={props.max}
                 />
             );
         return (

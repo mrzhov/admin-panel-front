@@ -19,7 +19,7 @@ class UsersApi {
         request('/users', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };
@@ -49,7 +49,7 @@ class UsersApi {
         request(`/users/${id}`, {
             method: 'PUT',
             body: JSON.stringify(body),
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };
@@ -57,7 +57,7 @@ class UsersApi {
     deleteUser = (id, cb) => {
         request(`/users/${id}`, {
             method: 'DELETE',
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };
@@ -66,7 +66,7 @@ class UsersApi {
         request('/users/change-password', {
             method: 'POST',
             body: JSON.stringify(body),
-            success: runCallback(cb),
+            success: () => runCallback(cb),
             failed
         });
     };

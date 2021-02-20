@@ -217,8 +217,3 @@ export const getRandom = () =>
             .toString(36)
             .replace(/[.\d]/g, '')
     );
-export const getTitlePage = (id, type) => (
-    id && id !== 'new'
-        ? <h3>Change {type} information</h3>
-        : <h3>Create {type}</h3>
-)

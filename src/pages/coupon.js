@@ -10,7 +10,7 @@ import FormControl from '../components/FormControl';
 import useLegacyState from '../hooks/useLegacyState';
 import useCouponTypes from '../api/couponTypesApi';
 import useUsers from '../api/usersApi';
-import {getTitlePage} from '../lib/functions';
+import {getTitlePage} from "../lib/templates";
 import TextContainer from '../components/TextContainer';
 
 const initialState = {
@@ -70,12 +70,13 @@ const Coupon = ({history, match}) => {
         e => {
             e.preventDefault();
 
-            coupon.owner = coupon.owner.value;
-            coupon.couponType = coupon.couponType.value;
+            const couponToServer = {...coupon};
+            couponToServer.owner = coupon.owner.value;
+            couponToServer.couponType = coupon.couponType.value;
             if (id && id !== 'new') {
-                couponsApi.updateCoupon(coupon, id);
+                couponsApi.updateCoupon(couponToServer, id);
             } else {
-                couponsApi.createCoupon(coupon, (response) => {
+                couponsApi.createCoupon(couponToServer, response => {
                     setGeneratedCoupons(response)
                 });
             }
@@ -89,14 +90,12 @@ const Coupon = ({history, match}) => {
             value: user._id
         }))
     }
-
     function getCouponTypeOptions() {
         return couponTypes.map(ct => ({
             label: `${ct.limit} limit, ${ct.duration} day, ${ct.price}$, ${ct.priceYuan} yuan`,
             value: ct._id
         }))
     }
-
     const copyAllCodes = () => {
         let generatedCodes = '';
         generatedCoupons.forEach((el, index) => {
@@ -116,7 +115,6 @@ const Coupon = ({history, match}) => {
 
         setFlags({copied: true});
     };
-
     const getGeneratedList = () => (
         <div className='generatedList'>
             <div className='form__title'>

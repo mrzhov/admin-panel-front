@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -23,11 +23,7 @@ const CouponTypes = ({history}) => {
     }, [page, sortConfig]);
 
     const getCouponTypes = useCallback(() => {
-        couponTypesApi.getCouponTypes({
-            page,
-            sortField: sortConfig.sortField,
-            sortDirection: sortConfig.sortDirection
-        });
+        couponTypesApi.getCouponTypes({ page, ...sortConfig });
     }, [page, sortConfig]);
 
     const tableActionItems = item => {
@@ -54,7 +50,6 @@ const CouponTypes = ({history}) => {
         }
         return []
     }
-
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper'>

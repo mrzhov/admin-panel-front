@@ -63,12 +63,12 @@ const UserPage = ({ match, history }) => {
     const couponsApi = useCoupons();
     const depositsApi = useDeposits();
 
+    const [agent, setAgent] = useLegacyState(agentInitState);
+    const [tableTabs, setTableTabs] = useState(tableTabsInitState);
+
     const { id } = match.params;
     const authUserId = useSelector(state => state.authUser.id)
     const currentId = id === 'me' ? authUserId : id;
-
-    const [agent, setAgent] = useLegacyState(agentInitState);
-    const [tableTabs, setTableTabs] = useState(tableTabsInitState);
 
     useEffect(() => {
         pushHistory({ page: '' }, true, history);

@@ -9,7 +9,7 @@ import useDeposit from '../api/depositsApi';
 import useUsers from '../api/usersApi';
 import useWallets from '../api/walletsApi';
 import useLegacyState from "../hooks/useLegacyState";
-import { getTitlePage } from "../lib/functions";
+import { getTitlePage } from "../lib/templates";
 import routes from "../route/routes";
 
 const initialState = {
@@ -36,7 +36,7 @@ const Deposit = ({ history, match }) => {
     const authUserId = useSelector(state => state.authUser.id)
 
     const getUsers = useCallback(() => {
-        usersApi.getUsers() ;
+        usersApi.getUsers();
     }, [id]);
 
     const getWallets = useCallback(() => {

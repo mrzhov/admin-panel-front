@@ -7,7 +7,7 @@ import FormControl from '../components/FormControl';
 import useWallet from '../api/walletsApi';
 import useLegacyState from '../hooks/useLegacyState';
 import routes from '../route/routes';
-import { getTitlePage } from '../lib/functions';
+import {getTitlePage} from "../lib/templates";
 
 const initialState = {
     name: '',

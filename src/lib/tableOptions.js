@@ -40,22 +40,13 @@ export const couponTypesOptions = [
         value: 'Limit'
     },
     {
-        name: 'duration',
-        value: 'Duration'
-    },
-    {
         name: 'price',
         value: 'Price in dollars',
         className: 'tableBoldFont'
     },
     {
-        name: 'priceYuan',
-        value: 'Price in yuan',
-        className: 'tableBoldFont'
-    },
-    {
-        name: 'description',
-        value: 'Description'
+        name: 'duration',
+        value: 'Duration'
     },
     {
         name: 'actions',

@@ -13,7 +13,7 @@
     width: 20px;
     height: 20px;
 
-    cursor: pointer;
+    cursor: default;
 
     &:after {
       content: '';
@@ -27,13 +27,7 @@
       height: 100%;
 
       border-radius: 3px;
-      border: 1px solid $deepLightBlue;
-    }
-
-    &:hover {
-      &:before {
-        opacity: 0.2;
-      }
+      border: 1px solid $deepGray;
     }
 
     &:before {
@@ -67,8 +61,21 @@
     padding-left: 12px;
 
     font-size: 14px;
-    color: $deepLightBlue;
+    color: $deepGray;
 
-    cursor: pointer;
+    cursor: default;
+  }
+
+  &_active {
+    .checkbox__input {
+      cursor: pointer;
+      &:after {
+        border: 1px solid $dark;
+      }
+    }
+    .checkbox__label {
+      cursor: pointer;
+      color: $dark;
+    }
   }
 }
