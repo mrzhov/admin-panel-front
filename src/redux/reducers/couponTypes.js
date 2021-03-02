@@ -1,4 +1,4 @@
-import {GET_COUPON_TYPES} from '../actions/couponTypes';
+import {GET_COUPON_TYPES} from '../actionTypes/couponTypes';
 import initialState from '../initialState';
 
 export default (state = initialState.couponTypes, action) => {

@@ -7,7 +7,7 @@ import { login } from '../api/authApi';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import logo from "../image/logo.svg";
-import { OPEN_RESTORE_PASSWORD } from "../redux/actions/commonFlags";
+import { OPEN_RESTORE_PASSWORD } from "../redux/actionTypes/commonFlags";
 
 const AuthorizationPage = props => {
     const [form, setForm] = useState({ email: '', password: '' });

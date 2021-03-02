@@ -62,6 +62,14 @@
     margin-bottom: 25px;
   }
 
+  &__checkboxes {
+    padding: 5px;
+  }
+
+  &__subtitle {
+    padding-left: 3px;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;
@@ -73,5 +81,14 @@
         margin-right: 0;
       }
     }
+  }
+}
+
+.checkboxContainer {
+  border: 1px solid $gray;
+  padding: 5px;
+
+  &_allCheckbox {
+    border: none;
   }
 }

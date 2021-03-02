@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import request from '../lib/request';
-import { START_FETCHING, END_FETCHING } from "../redux/actions/commonFlags";
-import { GET_USERS } from "../redux/actions/users";
+import { START_FETCHING, END_FETCHING } from "../redux/actionTypes/commonFlags";
+import { GET_USERS } from "../redux/actionTypes/users";
 import { runCallback } from "../lib/functions";
 
 const failed = response => {

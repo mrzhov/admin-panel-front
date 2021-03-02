@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { connect, useSelector } from "react-redux";
+
+import Pagination from "../Pagination";
+import { SET_SORT_CONFIG } from "../../redux/actionTypes/commonFlags";
+import Loader from "../Loader";
 
 import './style.scss';
-import Pagination from "../Pagination";
-import { connect, useSelector } from "react-redux";
-import Spinner from "../Spinner";
-import { SET_SORT_CONFIG } from "../../redux/actions/commonFlags";
 
 const Table = props => {
     const [sortConfig, setSortConfig] = useState(null);
@@ -81,7 +82,7 @@ const Table = props => {
             )}
             {isFetching && (
                 <div className='spinnerContainer'>
-                    <Spinner/>
+                    <Loader />
                 </div>
             )}
         </>

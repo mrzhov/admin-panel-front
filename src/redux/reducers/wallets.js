@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import { GET_WALLETS } from "../actions/wallets";
+import { GET_WALLETS } from "../actionTypes/wallets";
 
 export default (state = initialState.wallets, action) => {
   switch (action.type) {

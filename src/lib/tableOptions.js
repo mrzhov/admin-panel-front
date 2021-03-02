@@ -193,3 +193,33 @@ export const depositsOptions = [
         value: 'User'
     }
 ]
+export const promotionsOptions = [
+    {
+        name: 'name',
+        value: 'Name'
+    },
+    {
+        name: 'duration',
+        value: 'Duration'
+    },
+    {
+        name: 'discount',
+        value: 'Discount'
+    },
+    {
+        name: 'type',
+        value: 'Type'
+    },
+    {
+        name: 'usersName',
+        value: 'Agents'
+    },
+    {
+        name: 'actsTill',
+        value: 'Date of completion'
+    },
+    {
+        name: 'actions',
+        value: ''
+    }
+]

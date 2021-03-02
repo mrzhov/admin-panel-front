@@ -43,18 +43,16 @@ const CouponType = ({ history, match }) => {
             : couponTypesApi.createCouponType(body, cb);
     }, [couponType]);
 
-    const getLimits = () => {
-        return [
-            { value: '1/2', label: '1/2' },
-            { value: '2/4', label: '2/4' },
-            { value: '5/10', label: '5/10' },
-            { value: '10/20', label: '10/20' },
-            { value: '20/40', label: '20/40' },
-            { value: '25/50', label: '25/50' },
-            { value: '50/100', label: '50/100' },
-            { value: '100/200', label: '100/200' },
-        ];
-    };
+    const getLimits = () => [
+        { value: '1/2', label: '1/2' },
+        { value: '2/4', label: '2/4' },
+        { value: '5/10', label: '5/10' },
+        { value: '10/20', label: '10/20' },
+        { value: '20/40', label: '20/40' },
+        { value: '25/50', label: '25/50' },
+        { value: '50/100', label: '50/100' },
+        { value: '100/200', label: '100/200' },
+    ];
     return (
         <div className='mainPage'>
             <div className='mainPage__wrapper mainPage__center'>

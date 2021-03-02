@@ -1,8 +1,8 @@
 import {useDispatch} from 'react-redux';
 
 import request from '../lib/request';
-import { GET_WALLETS } from "../redux/actions/wallets";
-import { END_FETCHING, START_FETCHING } from "../redux/actions/commonFlags";
+import { GET_WALLETS } from "../redux/actionTypes/wallets";
+import { END_FETCHING, START_FETCHING } from "../redux/actionTypes/commonFlags";
 import { runCallback } from "../lib/functions";
 import { useMemo } from "react";
 

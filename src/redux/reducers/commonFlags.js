@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import {CLOSE_RESTORE_PASSWORD, END_FETCHING, OPEN_RESTORE_PASSWORD, START_FETCHING, SET_SORT_CONFIG} from "../actions/commonFlags";
+import {CLOSE_RESTORE_PASSWORD, END_FETCHING, OPEN_RESTORE_PASSWORD, START_FETCHING, SET_SORT_CONFIG} from "../actionTypes/commonFlags";
 
 export default (state = initialState.commonFlags, action) => {
     switch (action.type) {

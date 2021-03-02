@@ -1,5 +1,5 @@
 import initialState from '../initialState';
-import { GET_DEPOSITS } from "../actions/deposits";
+import { GET_DEPOSITS } from "../actionTypes/deposits";
 
 export default (state = initialState.deposits, action) => {
   switch (action.type) {

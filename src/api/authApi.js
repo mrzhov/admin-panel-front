@@ -2,9 +2,9 @@ import { useDispatch } from 'react-redux';
 
 import request from "../lib/request";
 import { getPages, runCallback } from "../lib/functions";
-import { CLOSE_RESTORE_PASSWORD } from "../redux/actions/commonFlags";
-import { LOGIN, LOGOUT } from "../redux/actions/user";
-import { ADD_PAGES } from "../redux/actions/pages";
+import { CLOSE_RESTORE_PASSWORD } from "../redux/actionTypes/commonFlags";
+import { LOGIN, LOGOUT } from "../redux/actionTypes/user";
+import { ADD_PAGES } from "../redux/actionTypes/pages";
 import { useMemo } from "react";
 
 const failed = response => {

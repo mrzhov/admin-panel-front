@@ -1,4 +1,4 @@
-import {GET_USERS} from '../actions/users';
+import {GET_USERS} from '../actionTypes/users';
 import initialState from '../initialState';
 
 export default (state = initialState.users, action) => {

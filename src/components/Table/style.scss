@@ -87,8 +87,9 @@ $table_min_width: 800px;
 }
 
 .spinnerContainer {
-  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 300px;
-  margin: 0 auto;
   padding-top: 200px;
 }

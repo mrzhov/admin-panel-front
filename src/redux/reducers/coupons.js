@@ -2,7 +2,7 @@ import {
     CLEAR_CURRENT_GENERATED_COUPONS,
     CREATE_COUPON,
     GET_COUPONS,
-} from '../actions/coupons';
+} from '../actionTypes/coupons';
 import initialState from '../initialState';
 
 export default (state = initialState.coupons, action) => {

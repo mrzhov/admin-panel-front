@@ -43,6 +43,10 @@ const initialState = {
     list: [],
     totalAmount: 0
   },
+  promotions: {
+    list: [],
+    totalAmount: 0,
+  },
 };
 
 export default initialState;

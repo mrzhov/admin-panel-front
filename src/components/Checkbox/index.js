@@ -21,12 +21,11 @@ export default class extends React.Component {
         style={this.props.style}
       >
         <input
-          checked={this.props.value}
+          checked={this.props.value || ''}
           className='checkbox__input'
           disabled={this.props.disabled}
           id={this.props.label || ''}
           onChange={this.props.onChange}
-          readOnly={this.props.readOnly}
           type='checkbox'
         />
         {this.props.label && (

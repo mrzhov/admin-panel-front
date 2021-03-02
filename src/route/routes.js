@@ -10,6 +10,8 @@ import Wallet from "../pages/wallet";
 import Wallets from "../pages/wallets";
 import Deposits from "../pages/deposits";
 import Deposit from "../pages/deposit";
+import Promotions from "../pages/promotions";
+import Promo from "../pages/promo";
 
 export default {
     userPage: {
@@ -62,5 +64,14 @@ export default {
     depositsPage: {
         path: '/deposits',
         component: Deposits
+    },
+
+    promoPage: {
+        path: '/promo/:id',
+        component: Promo
+    },
+    promotionsPage: {
+        path: '/promo',
+        component: Promotions
     },
 };

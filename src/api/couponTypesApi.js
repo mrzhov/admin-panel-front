@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 
 import request from '../lib/request';
-import { START_FETCHING, END_FETCHING } from "../redux/actions/commonFlags";
-import { GET_COUPON_TYPES } from "../redux/actions/couponTypes";
+import { START_FETCHING, END_FETCHING } from "../redux/actionTypes/commonFlags";
+import { GET_COUPON_TYPES } from "../redux/actionTypes/couponTypes";
 import { runCallback } from "../lib/functions";
 import { useMemo } from "react";
 

@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {connect} from 'react-redux';
 
 import useUserApi from '../api/authApi';
-import {CLOSE_RESTORE_PASSWORD} from "../redux/actions/commonFlags";
+import {CLOSE_RESTORE_PASSWORD} from "../redux/actionTypes/commonFlags";
 import useLegacyState from "../hooks/useLegacyState";
 import Button from '../components/Button';
 import Input from '../components/Input';

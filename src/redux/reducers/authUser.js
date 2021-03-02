@@ -1,6 +1,6 @@
 import {setLocalStorage} from '../../lib/functions';
 import initialState from '../initialState';
-import {LOGIN, LOGOUT} from "../actions/user";
+import {LOGIN, LOGOUT} from "../actionTypes/user";
 import {USER_ID, USER_IS_SUPER, USER_ROLE, USER_TOKEN} from "../../lib/_variables";
 
 export default (state = initialState.authUser, action) => {
