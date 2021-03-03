@@ -4,17 +4,22 @@ import Table from '../Table';
 import TableActions from '../TableActions';
 
 const TableContainer = ({tableOptions = [], rows = [], tableActionItems = () => {}, totalAmount = 0}) => {
-    // const transformCouponDiscount = (user) => {
-    //     if (user.promo.promoType) {
-    //         if (user.promo.promoType === 'Fixed') {
-    //             return `${user.initDiscount}% -> ${user.couponDiscount}%`
-    //         } else {
-    //             return `${user.initDiscount}% -> ${user.initDiscount}% + ${user.promo.discount}%`
-    //         }
-    //     } else {
-    //         return `${user.initDiscount}%`
-    //     }
-    // }
+    const transformCouponDiscount = (user) => {
+        let couponDiscount = `${user.initDiscount}%`;
+        if (user.promo) {
+            switch (user.promoType) {
+                case 'Fixed':
+                    couponDiscount = `${user.initDiscount}% -> ${user.couponDiscount}%`;
+                    break;
+                case 'Additional':
+                    couponDiscount = `${user.initDiscount}% -> ${user.initDiscount}% + ${user.promoDiscount}%`;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return couponDiscount;
+    }
 
     return (
         <Table
@@ -23,7 +28,7 @@ const TableContainer = ({tableOptions = [], rows = [], tableActionItems = () => 
                 ...item,
                 balance: `${Math.floor(item.balance)}$`,
                 minBalance: `${Math.floor(item.minBalance)}$`,
-                couponDiscount: `${Math.floor(item.couponDiscount)}%`,
+                couponDiscount: transformCouponDiscount(item),
                 isSuper: item.isSuper ? "yes" : "no",
                 duration: `${item.duration} days`,
                 price: `${Math.floor(item.price)}$`,
