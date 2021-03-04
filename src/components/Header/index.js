@@ -1,21 +1,14 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
-
-import './style.scss';
+import { withRouter } from 'react-router-dom';
 import Dropdown from "../Dropdown";
 
-const Header = props => {
+import './index.scss';
+
+const Header = () => {
     return (
         <nav className='header'>
             <div className='header__wrapper'>
-                {/*<div className='header__support'>*/}
-                {/*    <span>Support: </span>*/}
-                {/*    <ul>*/}
-                {/*        <li>Email: <span>test@gmail.com</span></li>*/}
-                {/*        <li>Phone: <span>+79999999999</span></li>*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
-                <Dropdown />
+                <Dropdown/>
             </div>
         </nav>
     )

@@ -1,10 +1,9 @@
 import React from 'react';
-import {NavLink, withRouter} from 'react-router-dom';
-
-import './style.scss';
+import { NavLink } from 'react-router-dom';
 import logo from "../../image/logo.svg";
+import './index.scss';
 
-const SideBar = props => (
+const SideBar = ({ options }) => (
     <nav className='sidebar'>
         <div className='sidebar__header'>
             <div className='sidebar__logo'>
@@ -13,7 +12,7 @@ const SideBar = props => (
             </div>
         </div>
         <div className='sidebar__menu'>
-            {props.options.map((page, i) => (
+            {options.map((page, i) => (
                 <NavLink
                     activeClassName='sidebar__link_active'
                     className='sidebar__link'
@@ -27,4 +26,4 @@ const SideBar = props => (
     </nav>
 )
 
-export default withRouter(SideBar);
+export default SideBar;

@@ -1,7 +1,7 @@
-import User from '../pages/user';
-import Users from '../pages/users';
-import UserInfo from '../pages/userInfo';
-import UserChangePassword from '../pages/userChangePassword';
+import Agent from '../pages/agent';
+import Agents from '../pages/agents';
+import AgentInfo from '../pages/agentInfo';
+import ChangePassword from '../pages/changePassword';
 import Coupon from '../pages/coupon';
 import Coupons from '../pages/coupons';
 import CouponType from '../pages/couponType';
@@ -11,31 +11,31 @@ import Wallets from "../pages/wallets";
 import Deposits from "../pages/deposits";
 import Deposit from "../pages/deposit";
 import Promotions from "../pages/promotions";
-import Promo from "../pages/promo";
+import Promotion from "../pages/promotion";
 
 export default {
-    userPage: {
-        path: '/users/:id/edit',
-        component: User
+    agentPage: {
+        path: '/agents/:id/edit',
+        component: Agent
     },
-    usersPage: {
-        path: '/users',
-        component: Users
+    agentsPage: {
+        path: '/agents',
+        component: Agents
     },
-    userInfo: {
-        path: '/users/:id',
-        component: UserInfo
+    agentInfoPage: {
+        path: '/agents/:id',
+        component: AgentInfo
     },
-    userChangePassword: {
-        path: '/users/:id/change-password',
-        component: UserChangePassword
+    changePasswordPage: {
+        path: '/agents/:id/change-password',
+        component: ChangePassword
     },
 
     couponPage: {
         path: '/coupons/:id',
         component: Coupon
     },
-    coupons: {
+    couponsPage: {
         path: '/coupons',
         component: Coupons
     },
@@ -66,9 +66,9 @@ export default {
         component: Deposits
     },
 
-    promoPage: {
+    promotionPage: {
         path: '/promo/:id',
-        component: Promo
+        component: Promotion
     },
     promotionsPage: {
         path: '/promo',

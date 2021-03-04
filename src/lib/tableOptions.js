@@ -1,4 +1,4 @@
-export const usersOptions = [
+export const agentsOptions = [
     {
         name: 'name',
         value: 'User'
@@ -191,6 +191,10 @@ export const depositsOptions = [
     {
         name: 'userName',
         value: 'User'
+    },
+    {
+        name: 'actions',
+        value: ''
     }
 ]
 export const promotionsOptions = [
@@ -211,7 +215,7 @@ export const promotionsOptions = [
         value: 'Type'
     },
     {
-        name: 'usersName',
+        name: 'agentsName',
         value: 'Agents'
     },
     {

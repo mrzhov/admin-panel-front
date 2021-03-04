@@ -6,7 +6,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import createStore from './redux/createStore';
 
-import App from './app/app';
+import App from './app';
 
 import './scss/index.scss';
 

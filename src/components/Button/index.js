@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import './Button.scss';
+import './index.scss';
 
 export default class Button extends Component {
   static defaultProps = {

@@ -1,112 +1,63 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Redirect, Route, Switch} from 'react-router-dom';
-
-import RouteController from '../api/router';
-
+import React from 'react';
+import { useSelector } from "react-redux";
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Routes from './routes';
-import {ADMIN, AGENT, SUB_AGENT} from "../lib/_variables";
+import { ADMIN, AGENT, SUB_AGENT } from "../lib/_variables";
+import { agentRoutePath, subAgentRoutePath, superAgentRoutePath } from "../lib/routePaths";
 
-class AppRoute extends Component {
-    componentDidMount() {
-        if (!this.props.location) {
-            RouteController.set(null, this.props.location);
+const AppRoute = ({ location }) => {
+    const userRole = useSelector(state => state.user.role);
+    const userIsSuper = useSelector(state => state.user.isSuper);
+
+    const routeRender = route => props => {
+        if (!checkRouteDefence(route) && location.pathname !== '/agents') {
+            return <Redirect to={{ pathname: '/agents' }}/>
         }
+        const RouteComponent = route.component;
+        return <RouteComponent {...props} />;
     }
-
-    shouldComponentUpdate(nextProps) {
-        if (nextProps.location !== this.props.location) {
-            RouteController.set(this.props.location, nextProps.location);
-        }
-
-        return true;
-    }
-
-    routeRender(route) {
-        return props => {
-            if (this.checkRouteDefence(this.props.userRole, this.props.userIsSuper, route)) {
-                const RouteComponent = route.component;
-                return <RouteComponent {...props} />;
-            } else {
-                if (this.props.location.pathname !== '/users/me') {
-                    return <Redirect to={{pathname: '/users/me'}}/>
-                } else {
-                    const RouteComponent = route.component;
-                    return <RouteComponent {...props} />;
-                }
-            }
-        };
-    }
-
-    checkRouteDefence(role, isSuper, route) {
-        const agentRoutePath = [
-            '/users/:id/edit',
-            '/users',
-            '/users/:id',
-            '/users/:id/change-password',
-            '/coupons/:id',
-            '/coupons',
-            '/coupon-types/:id',
-            '/coupon-types',
-        ]
-        const depositRoute = [
-            '/deposits/:id',
-            '/deposits'
-        ]
-        const subAgentRoutePath = [
-            '/users/:id/change-password',
-            '/coupons/:id',
-            '/coupons',
-            '/coupon-types/:id',
-            '/coupon-types',
-        ]
-
-        switch (role) {
+    const checkRouteDefence = route => {
+        let result = false;
+        switch (userRole) {
             case ADMIN:
-                return true
+                result = true;
+                break;
             case AGENT:
-                if (isSuper) {
-                    return agentRoutePath.concat(depositRoute).includes(route.path)
-                } else {
-                    return agentRoutePath.includes(route.path)
-                }
+                userIsSuper
+                    ? result = superAgentRoutePath.includes(route.path)
+                    : result = agentRoutePath.includes(route.path);
+                break;
             case SUB_AGENT:
-                return subAgentRoutePath.includes(route.path)
+                result = subAgentRoutePath.includes(route.path);
+                break;
             default:
                 break;
         }
+        return result;
     }
 
-    render() {
-        const result = [];
-
+    const routesTemplate = () => {
+        const routes = [];
         for (const key in Routes) {
-            if (Routes.hasOwnProperty(key)) {
-                const route = Routes[key];
-                const $key =
-                    typeof route.path === 'string' ? route.path : route.path[0];
-
-                result.push(
-                    <Route
-                        exact
-                        key={$key}
-                        path={route.path}
-                        render={this.routeRender(route)}
-                    />
-                );
-            }
+            const route = Routes[key];
+            routes.push(
+                <Route
+                    exact
+                    key={route.path}
+                    path={route.path}
+                    render={routeRender(route)}
+                />
+            )
         }
-
-        return <Switch>
-            {result}
-            <Redirect from="/**" to="/users/me"/>
-        </Switch>;
+        return routes;
     }
+
+    return (
+        <Switch>
+            {routesTemplate()}
+            <Redirect from="/**" to="/agents"/>
+        </Switch>
+    )
 }
 
-const mapStateToProps = (state) => ({
-    userRole: state.authUser.role,
-    userIsSuper: state.authUser.isSuper
-});
-
-export default connect(mapStateToProps)(AppRoute);
+export default AppRoute;

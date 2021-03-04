@@ -57,7 +57,7 @@ class PromotionsApi {
     deletePromo = (id, cb) => {
         request(`/promotions/${id}`, {
             method: 'DELETE',
-            success: () => runCallback(cb),
+            success: response => runCallback(cb(response)),
             failed,
         });
     };

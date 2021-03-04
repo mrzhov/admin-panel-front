@@ -1,15 +1,14 @@
 import React, { useState, createRef, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Transition from 'react-transition-group/Transition'
-
-import './style.scss';
-import { logout } from '../../api/authApi';
+import useUserApi from '../../api/userApi';
 import Avatar from "./img/avatar.jpg";
 import routes from "../../route/routes";
-import Button from "../Button";
 
-const Dropdown = props => {
+import './index.scss';
+
+const Dropdown = () => {
+    const userApi = useUserApi();
     const [flags, setFlags] = useState({ showDropdown: false });
     const wrapperRef = createRef();
 
@@ -46,26 +45,22 @@ const Dropdown = props => {
                             <div
                                 className={`dropdownMenu dropdownMenu_${state}`}
                             >
-                                <Link to={routes.userInfo.path.replace(':id', 'me')}>
-                                    <button
-                                        onClick={() => setFlags({ showDropdown: false })}
-                                    >
+                                <Link to={routes.agentInfoPage.path.replace(':id', 'me')}>
+                                    <button onClick={() => setFlags({ showDropdown: false })}>
                                         <div className='dropdownMenu__item'>
                                             <span>User info</span>
                                         </div>
                                     </button>
                                 </Link>
-                                <Link to={routes.userChangePassword.path.replace(':id', 'me')}>
-                                    <button
-                                        onClick={() => setFlags({ showDropdown: false })}
-                                    >
+                                <Link to={routes.changePasswordPage.path.replace(':id', 'me')}>
+                                    <button onClick={() => setFlags({ showDropdown: false })}>
                                         <div className='dropdownMenu__item'>
                                             <span>Change password</span>
                                         </div>
                                     </button>
                                 </Link>
-                                <Link to='/admin'>
-                                    <button onClick={props.logout}>
+                                <Link to='/'>
+                                    <button onClick={userApi.logout}>
                                         <div className='dropdownMenu__item'>
                                             <span>Sign out</span>
                                         </div>
@@ -80,10 +75,4 @@ const Dropdown = props => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    logout: (...args) => dispatch(logout(...args))
-});
-
-export default withRouter(
-    connect(null, mapDispatchToProps)(Dropdown)
-);
+export default Dropdown;

@@ -1,0 +1,104 @@
+@import "./variables";
+
+.mainPage {
+  width: 100%;
+  min-height: calc(100vh - 63px);
+  padding: 63px 0 0 270px;
+  display: flex;
+  flex-direction: column;
+
+  &__wrapper {
+    background: $app_background;
+    padding: 25px 30px;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $gray;
+    padding: 0 5px 25px 5px;
+  }
+
+  &__userInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .userInfoCard {
+      &:first-child {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  &__twoTableContainer {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.formContainer {
+  max-width: 50%;
+  width: 100%;
+  background: $white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 8px 6px rgba(0,0,0,.02);
+}
+
+.form {
+  padding: 30px;
+
+  &__title {
+    margin-bottom: 25px;
+  }
+
+  &__checkboxes {
+    padding: 5px;
+    margin-top: 5px;
+  }
+
+  &__subtitle {
+    padding-left: 3px;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+
+    button {
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .checkbox {
+    margin-top: 5px;
+  }
+}
+
+.checkboxContainer {
+  border: 1px solid $gray;
+  padding: 5px;
+
+  .checkbox {
+    margin-top: 0;
+  }
+
+  &_allCheckbox {
+    border: 1px solid $gray;
+    border-top: none;
+  }
+}

@@ -1,10 +1,9 @@
 import {combineReducers} from 'redux';
 
-import router from './router';
 import commonFlags from './commonFlags';
 import pages from './pages';
-import authUser from './authUser';
-import users from './users';
+import user from './user';
+import agents from './agents';
 import couponTypes from './couponTypes';
 import coupons from './coupons';
 import wallets from "./wallets";
@@ -12,11 +11,10 @@ import deposits from './deposits';
 import promotions from './promotions';
 
 export default combineReducers({
-  router,
   commonFlags,
   pages,
-  authUser,
-  users,
+  user,
+  agents,
   couponTypes,
   coupons,
   wallets,

@@ -1,8 +1,8 @@
-import { logout } from '../../api/authApi';
 import { store } from '../../redux/createStore';
 
 import getQueryParameters from './functions';
 import { envConfig } from "../configs/env";
+import { LOGOUT } from "../../redux/actionTypes/user";
 
 const adminApi = envConfig[process.env.NODE_ENV].adminApi;
 
@@ -42,8 +42,7 @@ const request = async (pathname, options = defaultRequestOptions) => {
     else requestOptions.headers = { 'Content-Type': 'application/json' };
 
     const state = store.getState();
-    if (state.authUser.accessToken)
-        requestOptions.headers['x-access-token'] = state.authUser.accessToken;
+    if (state.user.accessToken) requestOptions.headers['x-access-token'] = state.user.accessToken;
 
     try {
         const serverRequest = await fetch(path, requestOptions);
@@ -60,7 +59,7 @@ const request = async (pathname, options = defaultRequestOptions) => {
             if (success) success(response, status);
         } else {
             if (status === 401) {
-                store.dispatch(logout());
+                store.dispatch({ type: LOGOUT });
             }
 
             if (failed) {
